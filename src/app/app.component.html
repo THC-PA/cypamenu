@@ -1,23 +1,33 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
+<!--<div style="text-align:center">
   <h1>
     {{ title }}
   </h1> 
-</div>
+</div> -->
+<mat-toolbar> {{ title }}</mat-toolbar>
 
+<mat-form-field class="example-form-field">
+  <input matInput type="text" placeholder="Search Text" [(ngModel)]="searchText">
+</mat-form-field>
 
-<input style="width: 200px; height: 20px;" [(ngModel)]="searchText"/>
-<button style="margin-left: 5px; width: 50px; height: 20px;" (click)="search()">Search</button>
+<button (click)="search()" mat-button color="primary">Search</button>
+<!--
+<input matInput style="width: 200px; height: 20px;" [(ngModel)]="searchText"/>
+<button style="margin-left: 5px; width: 50px; height: 20px;" (click)="search()">Search</button> -->
 <div style="height:10px;"></div>
 
 <div *ngIf="fullMenu && fullMenu.total_rows > 0">
-  <div *ngFor="let item of fullMenu.data">
-      <div>type: {{ item.category }}  Name: {{ item.name }}</div>
+  <div *ngFor="let item of fullMenu.data | sortBy: 'category':'asc'">
+      <!--<div>type: {{ item.category }}  Name: {{ item.name }}</div>-->
+      <mat-card>
+        <h2>{{ item.category }}</h2>
+        <h3>{{ item.name }}</h3>
+      </mat-card>
   </div>
 </div>
 
 <div *ngIf="fullMenu.total_rows === undefined && searchComplete">
-  No items found.
+  <mat-card>No Items Found.</mat-card>
 </div>
 
 <router-outlet></router-outlet>
