@@ -20,8 +20,8 @@
   <div *ngFor="let item of fullMenu.data | sortBy: 'category':'asc'">
       <!--<div>type: {{ item.category }}  Name: {{ item.name }}</div>-->
       <mat-card>
-        <h2>{{ item.category }}</h2>
-        <h3>{{ item.name }}</h3>
+        <h4>{{ item.category }}</h4>
+        <h5>{{ item.name }}</h5>
       </mat-card>
   </div>
 </div>
