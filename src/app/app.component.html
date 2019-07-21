@@ -11,13 +11,10 @@
 </mat-form-field>
 
 <button (click)="search()" mat-button color="primary">Search</button>
-<!--
-<input matInput style="width: 200px; height: 20px;" [(ngModel)]="searchText"/>
-<button style="margin-left: 5px; width: 50px; height: 20px;" (click)="search()">Search</button> -->
 <div style="height:10px;"></div>
 
 <div *ngIf="fullMenu && fullMenu.total_rows > 0">
-  <div *ngFor="let item of fullMenu.data | sortBy: 'category':'asc'">
+  <div *ngFor="let item of fullMenu.data | sortBy: 'category':'asc' let lastCat = item.catgetory">
       <!--<div>type: {{ item.category }}  Name: {{ item.name }}</div>-->
       <mat-card>
         <h4>{{ item.category }}</h4>

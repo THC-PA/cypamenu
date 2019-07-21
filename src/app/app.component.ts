@@ -44,4 +44,9 @@ export class AppComponent {
         });
     }
 
+    processMenuResults(){
+      // TODO: Add code to create a list per category???
+      // how to know what categories?  hard code list types?  No need i don't think.
+      // Could I create a list for each distinct category? Object per category, since I need a title?  IDK
+    }
 }
