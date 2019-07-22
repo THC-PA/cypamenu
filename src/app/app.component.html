@@ -13,14 +13,112 @@
 <button (click)="search()" mat-button color="primary">Search</button>
 <div style="height:10px;"></div>
 
+<!-- 
 <div *ngIf="fullMenu && fullMenu.total_rows > 0">
-  <div *ngFor="let item of fullMenu.data | sortBy: 'category':'asc' let lastCat = item.catgetory">
-      <!--<div>type: {{ item.category }}  Name: {{ item.name }}</div>-->
+  <div *ngFor="let item of fullMenu.data | sortBy: 'category':'asc' let lastCat = item.catgetory"> 
       <mat-card>
         <h4>{{ item.category }}</h4>
         <h5>{{ item.name }}</h5>
       </mat-card>
   </div>
+</div>--> 
+
+
+<!--
+<div *ngIf="flowers && flowers.length > 0">
+  <div *ngFor="let item of flowers">
+    <mat-card>
+      <h4>{{ item.name }}</h4>
+    </mat-card>
+  </div>
+</div>-->
+
+<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="flowers && flowers.length > 0">
+    <mat-card-title>Flower</mat-card-title>
+    <div *ngFor="let item of flowers | sortBy: 'brand':'asc'">
+      <mat-card> 
+          <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
+        thc: {{ item.bt_potency_thc || 0 }}%
+        thca: {{ item.bt_potency_thca || 0 }}%  
+        price: ${{ item.price_point.prices[0].price}}
+      </mat-card>
+    </div>
+</div>
+
+<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="vapes && vapes.length > 0">
+    <mat-card-title>Vapes</mat-card-title>
+    <div *ngFor="let item of vapes | sortBy: 'brand':'asc'">
+      <mat-card>
+          <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
+        thc: {{ item.bt_potency_thc|| 0  }}%
+        thca: {{ item.bt_potency_thca|| 0  }}%
+        price: ${{ item.price_point.prices[0].price}}
+      </mat-card>
+    </div>
+</div>
+
+<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="concentrates && concentrates.length > 0">
+    <mat-card-title>Concentrates</mat-card-title>
+    <div *ngFor="let item of concentrates | sortBy: 'brand':'asc'">
+      <mat-card>
+          <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
+        thc: {{ item.bt_potency_thc || 0 }}%
+        thca: {{ item.bt_potency_thca || 0 }}%
+        price: ${{ item.price_point.prices[0].price}}
+      </mat-card>
+    </div>
+</div>
+
+<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="tinctures && tinctures.length > 0">
+    <mat-card-title>Tinctures</mat-card-title>
+    <div *ngFor="let item of tinctures | sortBy: 'brand':'asc'">
+      <mat-card>
+          <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
+        thc: {{ item.bt_potency_thc|| 0  }}%
+        thca: {{ item.bt_potency_thca|| 0  }}%
+        price: ${{ item.price_point.prices[0].price}}
+      </mat-card>
+    </div>
+</div>
+
+<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="capsules && capsules.length > 0">
+    <mat-card-title>Capsules</mat-card-title>
+    <div *ngFor="let item of capsules | sortBy: 'brand':'asc'">
+      <mat-card>
+          <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
+        thc: {{ item.bt_potency_thc|| 0  }}%
+        thca: {{ item.bt_potency_thca || 0 }}%
+        price: ${{ item.price_point.prices[0].price}}
+      </mat-card>
+    </div>
+</div>
+
+<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="topicals && topicals.length > 0">
+    <mat-card-title>Topicals</mat-card-title>
+    <div *ngFor="let item of topicals | sortBy: 'brand':'asc'">
+      <mat-card>
+          <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
+        thc: {{ item.bt_potency_thc || 0 }}%
+        thca: {{ item.bt_potency_thca || 0 }}%
+        price: ${{ item.price_point.prices[0].price}}
+      </mat-card>
+    </div>
+</div>
+
+<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="accessories && accessories.length > 0">
+    <mat-card-title>Accessories</mat-card-title>
+    <div *ngFor="let item of accessories | sortBy: 'brand':'asc'">
+      <mat-card>
+          <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
+       
+        price: ${{ item.price_point.prices[0].price}}
+        <br/>
+      </mat-card>
+    </div>
+</div>
+
+<div *ngIf="fullMenu.total_rows === undefined && searchComplete">
+  <mat-card>No Items Found.</mat-card>
 </div>
 
 <div *ngIf="fullMenu.total_rows === undefined && searchComplete">

@@ -1,5 +1,6 @@
 import { Product } from 'src/models/product.model';
 import { ProductStrain } from 'src/models/productStrain.model';
+import { PricePoint } from 'src/models/pricePoint.model';
 
 export class InventoryItem {
     id: number;
@@ -15,6 +16,7 @@ export class InventoryItem {
     bt_potency_thca: number;
     cultivator: string;
     product: Product;
-    productStrain: ProductStrain;
+    product_train: ProductStrain;
+    price_point: PricePoint;
     //store: Store;
 }
