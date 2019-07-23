@@ -23,16 +23,16 @@ export class AppComponent {
   accessories: Array<InventoryItem> = [];
   searchComplete: boolean = false;
   searchText: string = '';
-  sortBy: string = 'bt_potency_thca'
-  selectedStore = '229';
+  sortBy: string = 'bt_potency_thca';
   categories:string[] = ['all', 'flower', 'vapes', 'concentrates',
     'tinctures', 'tinctures', 'topicals', 'accessories'];
-   
   stores: Store[] = [
     new Store('New Kensington', '229'),
     new Store('Butler', '202'),
     new Store('Pittsburgh', '203')
   ];
+
+  selectedStore = '229';
   
 selected = 'domain';
 
@@ -50,7 +50,7 @@ selected = 'domain';
       if (this.selectedCategory !== 'all') {
         baseUrl += '&category=' + this.selectedCategory;
       }
-
+ 
       let headers = new HttpHeaders();
       headers = headers.set('Accept', ['application/json','text/plain','*/*'])
         .set('ordering_app_id', 'fab9d05c-1bbd-47f0-a1e9-1d2ca132af0d')
@@ -99,6 +99,7 @@ selected = 'domain';
     clearResults() {
       this.searchComplete = false;
       this.flowers = [];
+      this.capsules = [];
       this.concentrates = [];
       this.topicals = [];
       this.vapes = [];

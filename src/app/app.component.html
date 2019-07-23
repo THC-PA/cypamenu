@@ -17,15 +17,22 @@
     </mat-form-field>-->
 
 </mat-toolbar>
+<!--<div>New Kensington: 229    Butler: 202    Pittsburgh: 203</div> -->
+<mat-form-field style="margin-left: 30px;" >
+    <select matNativeControl placeholder="store" [(ngModel)]="selectedStore" name="store">
+      <option *ngFor="let store of stores" [value]="store.id">
+        {{store.name}}
+      </option>
+    </select>
+</mat-form-field>
 
-<mat-form-field>
+<mat-form-field style="margin-left: 30px;" >
     <select matNativeControl placeholder="category" [(ngModel)]="selectedCategory" name="category">
-      
       <option *ngFor="let cat of categories" [value]="cat">
         {{cat}}
       </option>
     </select>
-  </mat-form-field>
+</mat-form-field>
 
 <mat-form-field style="margin-left: 30px;"  class="example-form-field">
   <input matInput type="text" placeholder="Search Text" [(ngModel)]="searchText">
