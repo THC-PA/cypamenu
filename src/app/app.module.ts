@@ -5,17 +5,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component'; 
 import { HttpClientModule } from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatIconModule, MatToolbarModule} from '@angular/material';
+import {MatButtonModule, MatCheckboxModule, MatIconModule, MatToolbarModule, MatSelectModule} from '@angular/material';
 import { MatCardModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule, MatTableModule, MatPaginatorModule, MatSortModule } 
 from '@angular/material';
 import { SortByPipe } from './pipes/sortBy.pipe';
+import { ImagePreloadDirective } from './directives/imagePreload.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SortByPipe
+    SortByPipe,
+    ImagePreloadDirective
   ],
   imports: [
     BrowserModule,
@@ -31,9 +33,10 @@ import { SortByPipe } from './pipes/sortBy.pipe';
     MatSortModule,
     MatPaginatorModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSelectModule
   ],
-  exports: [SortByPipe],
+  exports: [SortByPipe, ImagePreloadDirective],
   providers: [],
   bootstrap: [AppComponent]
 })

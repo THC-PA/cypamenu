@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Menu } from 'src/models/menu.model';
 import { InventoryItem } from 'src/models/inventoryItem.model';
+import { Store } from 'src/models/store.model';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,8 @@ import { InventoryItem } from 'src/models/inventoryItem.model';
 })
 export class AppComponent {
   title = 'CY+ New Kensington Menu';
+  selectedCategory = 'all';
+
   fullMenu: Menu = new Menu();
   flowers: Array<InventoryItem> = [];
   concentrates: Array<InventoryItem> = [];
@@ -20,17 +23,38 @@ export class AppComponent {
   accessories: Array<InventoryItem> = [];
   searchComplete: boolean = false;
   searchText: string = '';
+  sortBy: string = 'bt_potency_thca'
+  selectedStore = '229';
+  categories:string[] = ['all', 'flower', 'vapes', 'concentrates',
+    'tinctures', 'tinctures', 'topicals', 'accessories'];
+   
+  stores: Store[] = [
+    new Store('New Kensington', '229'),
+    new Store('Butler', '202'),
+    new Store('Pittsburgh', '203')
+  ];
+  
+selected = 'domain';
 
   constructor(private httpClient: HttpClient){}
 
     search() {
       this.clearResults();
 
-      let baseUrl: string = 'https://api.crescolabs.com/p/inventory?limit=1000&search=' + this.searchText;
+      let baseUrl: string = 'https://api.crescolabs.com/p/inventory?limit=1000';
+
+      if (this.searchText !== null && this.searchText !== undefined && this.searchText !== '') {
+        baseUrl += '&search=' + this.searchText;
+      }
+
+      if (this.selectedCategory !== 'all') {
+        baseUrl += '&category=' + this.selectedCategory;
+      }
+
       let headers = new HttpHeaders();
       headers = headers.set('Accept', ['application/json','text/plain','*/*'])
         .set('ordering_app_id', 'fab9d05c-1bbd-47f0-a1e9-1d2ca132af0d')
-        .set('store_id', '229')
+        .set('store_id', this.selectedStore)
         .set('x-api-key', 'wqrVgXbS7J1AalyxdMG6W4QIGRQrnptP2PnV2KfV');
 
       const options = { headers: headers };
@@ -44,18 +68,10 @@ export class AppComponent {
         });
     }
 
-    processMenuResults(menu: Menu){
-      // TODO: Add code to create a list per category???
-      // how to know what categories?  hard code list types?  No need i don't think.
-      // Could I create a list for each distinct category? Object per category, since I need a title?  IDK
-
-      //TODO: Something like this... Create a list of lists?? **************************************************************************
-      //class SomeClass {
-      //public someVariable: Array<Array<AnyTypeYouWant>>;
-
+    processMenuResults(menu: Menu){ 
       menu.data.forEach(item => {
         let category = item.category.toLowerCase(); 
-        
+
         if (category.indexOf('flower') > -1) {
           this.flowers.push(item);
         }
@@ -88,5 +104,5 @@ export class AppComponent {
       this.vapes = [];
       this.tinctures = [];
       this.accessories = [];
-    }
+    } 
 }

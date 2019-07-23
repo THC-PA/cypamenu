@@ -4,44 +4,64 @@
     {{ title }}
   </h1> 
 </div> -->
-<mat-toolbar> {{ title }}</mat-toolbar>
+<mat-toolbar>
+  <div>{{ title }}</div>
+  
+  <!--
+  <mat-form-field> 
+      <mat-select [(value)]="selectedStore">
+        <mat-option *ngFor="let store of stores" value="store.id">
+          {{store.name}}
+        </mat-option>
+      </mat-select> 
+    </mat-form-field>-->
 
-<mat-form-field class="example-form-field">
+</mat-toolbar>
+
+<mat-form-field>
+    <select matNativeControl placeholder="category" [(ngModel)]="selectedCategory" name="category">
+      
+      <option *ngFor="let cat of categories" [value]="cat">
+        {{cat}}
+      </option>
+    </select>
+  </mat-form-field>
+
+<mat-form-field style="margin-left: 30px;"  class="example-form-field">
   <input matInput type="text" placeholder="Search Text" [(ngModel)]="searchText">
 </mat-form-field>
 
 <button (click)="search()" mat-button color="primary">Search</button>
 <div style="height:10px;"></div>
 
-<!-- 
-<div *ngIf="fullMenu && fullMenu.total_rows > 0">
-  <div *ngFor="let item of fullMenu.data | sortBy: 'category':'asc' let lastCat = item.catgetory"> 
-      <mat-card>
-        <h4>{{ item.category }}</h4>
-        <h5>{{ item.name }}</h5>
-      </mat-card>
-  </div>
-</div>--> 
-
-
-<!--
-<div *ngIf="flowers && flowers.length > 0">
-  <div *ngFor="let item of flowers">
-    <mat-card>
-      <h4>{{ item.name }}</h4>
-    </mat-card>
-  </div>
-</div>-->
-
-<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="flowers && flowers.length > 0">
+<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="(flowers && flowers.length > 0) && (selectedCategory === 'all' || selectedCategory === 'flower')">
     <mat-card-title>Flower</mat-card-title>
-    <div *ngFor="let item of flowers | sortBy: 'brand':'asc'">
+    <div *ngFor="let item of flowers | sortBy: sortBy:'desc'">
       <mat-card>  
           <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name  }}</div>
-          <img style="width: auto; height: 150px;" *ngIf="item.product_strain && item.product_strain.image_url_main !== null 
-          && item.product_strain.image_url_main !== undefined" [src]="item.product_strain.image_url_main" 
-          onerror="this.onerror=null;this.src=item.product.image_url_alt;" />
+           
+          <div *ngIf="item.product_strain && (item.product === undefined || item.product === null)">
+                <img *ngIf="item.product_strain && (item.product === undefined || item.product === null)" style="width: auto; height: 150px;" [src]="item.product_strain.image_url_main" 
+              default="{{item.product._strain.image_url_alt}}" 
+              class="img">
+          </div>
+         
+          
+          <div *ngIf="item.product && (item.product_strain === undefined || item.product_strain === null)">
+            <img *ngIf="item.product && (item.product_strain === undefined || item.product_strain === null)" style="width: auto; height: 150px;" [src]="item.product.image_url_main" 
+                  default="{{item.product.image_url_alt}}" 
+                  class="img"/>
+          </div>
+      
+
+        <div *ngIf="item.product && item.product_strain">
+            <img *ngIf="item.product && item.product_strain" style="width: auto; height: 150px;" [src]="item.product_strain.image_url_main" 
+            default="{{item.product.image_url_main}}" 
+            class="img"/>
+        </div>
+ 
         
+
           <div *ngIf="item.product_strain && item.product_strain.description" style="font-size: 16px;">{{ item.product_strain.description }}</div>
           <div *ngIf="item.product_strain && item.product_strain.lineage">Lineage: {{ item.product_strain.lineage }}</div>
           <div *ngIf="item.product_strain && item.product_strain.flavors">Flavors: {{ item.product_strain.flavors }}</div>
@@ -50,14 +70,20 @@
           <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
           <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
           <div>price: ${{ item.price_point.prices[0].price}}</div>
+          <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
+<!--
+          <div *ngIf="item.product_strain">strain img url main: {{ item.product_strain.image_url_main }}</div>
+          <div *ngIf="item.product_strain">strain img url alt: {{ item.product_strain.image_url_alt }}</div>
+          <div *ngIf="item.product">product img url main: {{ item.product.image_url_main }}</div>
+          <div *ngIf="item.product">product img url alt: {{ item.product.image_url_alt }}</div> -->
 
       </mat-card>
     </div>
 </div>
 
-<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="vapes && vapes.length > 0">
+<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="vapes && vapes.length > 0  && (selectedCategory === 'all' || selectedCategory === 'vapes')">
     <mat-card-title>Vapes</mat-card-title>
-    <div *ngFor="let item of vapes | sortBy: 'brand':'asc'">
+    <div *ngFor="let item of vapes | sortBy: 'bt_potency_thc':'desc'">
       <mat-card>
           <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
           <div *ngIf="item.product_strain && item.product_strain.description" style="font-size: 16px;">{{ item.product_strain.description }}</div>
@@ -65,13 +91,14 @@
           <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
           <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
           <div>price: ${{ item.price_point.prices[0].price}}</div>
+          <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
       </mat-card>
     </div>
 </div>
 
-<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="concentrates && concentrates.length > 0">
+<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="concentrates && concentrates.length > 0  && (selectedCategory === 'all' || selectedCategory === 'concentrates')">
     <mat-card-title>Concentrates</mat-card-title>
-    <div *ngFor="let item of concentrates | sortBy: 'brand':'asc'">
+    <div *ngFor="let item of concentrates | sortBy: sortBy:'desc'">
       <mat-card>
           <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
           <div *ngIf="item.product_strain && item.product_strain.description" style="font-size: 16px;">{{ item.product_strain.description }}</div>
@@ -79,48 +106,52 @@
           <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
           <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
           <div>price: ${{ item.price_point.prices[0].price}}</div>
+          <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
           <!--bt_potency_cbda-->
       </mat-card>
     </div>
 </div>
 
-<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="tinctures && tinctures.length > 0">
+<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="tinctures && tinctures.length > 0  && (selectedCategory === 'all' || selectedCategory === 'tinctures')">
     <mat-card-title>Tinctures</mat-card-title>
     <div *ngFor="let item of tinctures | sortBy: 'brand':'asc'">
       <mat-card>
           <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
-        thc: {{ item.bt_potency_thc|| 0  }}%
-        thca: {{ item.bt_potency_thca|| 0  }}%
-        price: ${{ item.price_point.prices[0].price}}
+          <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
+          <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
+          <div>price: ${{ item.price_point.prices[0].price}}</div>
+          <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
       </mat-card>
     </div>
 </div>
 
-<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="capsules && capsules.length > 0">
+<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="capsules && capsules.length > 0  && (selectedCategory === 'all' || selectedCategory === 'capsules')">
     <mat-card-title>Capsules</mat-card-title>
     <div *ngFor="let item of capsules | sortBy: 'brand':'asc'">
       <mat-card>
           <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
-        thc: {{ item.bt_potency_thc|| 0  }}%
-        thca: {{ item.bt_potency_thca || 0 }}%
-        price: ${{ item.price_point.prices[0].price}}
+          <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
+          <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
+          <div>price: ${{ item.price_point.prices[0].price}}</div>
+          <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
       </mat-card>
     </div>
 </div>
 
-<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="topicals && topicals.length > 0">
+<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="topicals && topicals.length > 0  && (selectedCategory === 'all' || selectedCategory === 'topicals')">
     <mat-card-title>Topicals</mat-card-title>
     <div *ngFor="let item of topicals | sortBy: 'brand':'asc'">
       <mat-card>
           <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
-        thc: {{ item.bt_potency_thc || 0 }}%
-        thca: {{ item.bt_potency_thca || 0 }}%
-        price: ${{ item.price_point.prices[0].price}}
+          <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
+          <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
+          <div>price: ${{ item.price_point.prices[0].price}}</div>
+          <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
       </mat-card>
     </div>
 </div>
 
-<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="accessories && accessories.length > 0">
+<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="accessories && accessories.length > 0  && (selectedCategory === 'all' || selectedCategory === 'accessories')">
     <mat-card-title>Accessories</mat-card-title>
     <div *ngFor="let item of accessories | sortBy: 'brand':'asc'">
       <mat-card>
