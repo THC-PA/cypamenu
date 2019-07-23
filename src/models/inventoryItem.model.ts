@@ -16,7 +16,7 @@ export class InventoryItem {
     bt_potency_thca: number;
     cultivator: string;
     product: Product;
-    product_train: ProductStrain;
+    product_strain: ProductStrain;
     price_point: PricePoint;
     //store: Store;
 }

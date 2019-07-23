@@ -37,10 +37,17 @@
     <mat-card-title>Flower</mat-card-title>
     <div *ngFor="let item of flowers | sortBy: 'brand':'asc'">
       <mat-card> 
-          <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
-        thc: {{ item.bt_potency_thc || 0 }}%
-        thca: {{ item.bt_potency_thca || 0 }}%  
-        price: ${{ item.price_point.prices[0].price}}
+          <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name  }}</div>
+          <div *ngIf="item.product_strain && item.product_strain.description" style="font-size: 16px;">{{ item.product_strain.description }}</div>
+          <div *ngIf="item.product_strain && item.product_strain.lineage">Lineage: {{ item.product_strain.lineage }}</div>
+          <div *ngIf="item.product_strain && item.product_strain.flavors">Flavors: {{ item.product_strain.flavors }}</div>
+          <div *ngIf="item.product_strain && item.product_strain.effects">Effects: {{ item.product_strain.effects }}</div>
+          <div *ngIf="item.product_strain && item.product_strain.symptoms !== null">Symptoms: {{ item.product_strain.symptoms }}</div>
+
+          <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
+          <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
+          <div>price: ${{ item.price_point.prices[0].price}}</div>
+
       </mat-card>
     </div>
 </div>
@@ -50,9 +57,11 @@
     <div *ngFor="let item of vapes | sortBy: 'brand':'asc'">
       <mat-card>
           <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
-        thc: {{ item.bt_potency_thc|| 0  }}%
-        thca: {{ item.bt_potency_thca|| 0  }}%
-        price: ${{ item.price_point.prices[0].price}}
+          <div *ngIf="item.product_strain && item.product_strain.description" style="font-size: 16px;">{{ item.product_strain.description }}</div>
+       
+          <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
+          <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
+          <div>price: ${{ item.price_point.prices[0].price}}</div>
       </mat-card>
     </div>
 </div>
@@ -62,9 +71,12 @@
     <div *ngFor="let item of concentrates | sortBy: 'brand':'asc'">
       <mat-card>
           <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
-        thc: {{ item.bt_potency_thc || 0 }}%
-        thca: {{ item.bt_potency_thca || 0 }}%
-        price: ${{ item.price_point.prices[0].price}}
+          <div *ngIf="item.product_strain && item.product_strain.description" style="font-size: 16px;">{{ item.product_strain.description }}</div>
+       
+          <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
+          <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
+          <div>price: ${{ item.price_point.prices[0].price}}</div>
+          <!--bt_potency_cbda-->
       </mat-card>
     </div>
 </div>
@@ -109,7 +121,7 @@
     <mat-card-title>Accessories</mat-card-title>
     <div *ngFor="let item of accessories | sortBy: 'brand':'asc'">
       <mat-card>
-          <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
+          <div style="font-size: 20px;">{{ item.name }}</div>
        
         price: ${{ item.price_point.prices[0].price}}
         <br/>
