@@ -11,13 +11,15 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule, MatTableModule, MatPaginatorModule, MatSortModule } 
 from '@angular/material';
 import { SortByPipe } from './pipes/sortBy.pipe';
+import { MenuFilterPipe } from './pipes/menuFilter.pipe';
 import { ImagePreloadDirective } from './directives/imagePreload.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     SortByPipe,
-    ImagePreloadDirective
+    ImagePreloadDirective,
+    MenuFilterPipe
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,7 @@ import { ImagePreloadDirective } from './directives/imagePreload.directive';
     MatToolbarModule,
     MatSelectModule
   ],
-  exports: [SortByPipe, ImagePreloadDirective],
+  exports: [SortByPipe, ImagePreloadDirective, MenuFilterPipe],
   providers: [],
   bootstrap: [AppComponent]
 })

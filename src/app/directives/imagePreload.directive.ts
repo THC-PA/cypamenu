@@ -13,8 +13,7 @@ import {Directive, Input, HostBinding} from '@angular/core'
     @Input() default:string;
     @HostBinding('class') className
   
-    updateUrl() {
-       console.log('*** SETTING DEFAULT IMG SRC: ' + this.default);
+    updateUrl() { 
       this.src = this.default;
     }
     load(){

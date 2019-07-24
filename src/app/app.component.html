@@ -1,23 +1,17 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<!--<div style="text-align:center">
-  <h1>
-    {{ title }}
-  </h1> 
-</div> -->
 <mat-toolbar>
   <div>{{ title }}</div>
-  
-  <!--
-  <mat-form-field> 
-      <mat-select [(value)]="selectedStore">
-        <mat-option *ngFor="let store of stores" value="store.id">
-          {{store.name}}
-        </mat-option>
-      </mat-select> 
-    </mat-form-field>-->
 
 </mat-toolbar>
 <!--<div>New Kensington: 229    Butler: 202    Pittsburgh: 203</div> -->
+
+<mat-form-field style="margin-left: 30px;" >
+    <select (change)="filterChanged();" matNativeControl placeholder="filter" [(ngModel)]="selectedFilter" name="filter">
+      <option *ngFor="let filter of filters" [value]="filter">
+        {{filter}}
+      </option>
+    </select>
+</mat-form-field>
+
 <mat-form-field style="margin-left: 30px;" >
     <select (change)="storeChanged();" matNativeControl placeholder="store" [(ngModel)]="selectedStore" name="store">
       <option *ngFor="let store of stores" [value]="store.id">
@@ -27,7 +21,7 @@
 </mat-form-field>
 
 <mat-form-field style="margin-left: 30px;" >
-    <select matNativeControl placeholder="category" [(ngModel)]="selectedCategory" name="category">
+    <select (change)="categoryChanged();" matNativeControl placeholder="category" [(ngModel)]="selectedCategory" name="category">
       <option *ngFor="let cat of categories" [value]="cat">
         {{cat}}
       </option>
@@ -42,31 +36,63 @@
 <div style="height:10px;"></div>
 
 <div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="(flowers && flowers.length > 0) && (selectedCategory === 'all' || selectedCategory === 'flower')">
-    <mat-card-title>Flower</mat-card-title>
-    <div *ngFor="let item of flowers | sortBy: sortBy:'desc'">
+    <mat-card-title *ngIf="selectedCategory === 'flower'">Flower ({{filterMetadata.count}})</mat-card-title>
+    <mat-card-title *ngIf="selectedCategory === 'all'">Flower ({{flowers.length}})</mat-card-title>
+    <div *ngFor="let item of flowers | sortBy: sortBy:'desc' | menuFilter:selectedFilter:filterMetadata">
       <mat-card>  
-          <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name  }}</div>
+        <div *ngIf="(item.product && item.product.name) && !item.product_strain">
+          <div style="font-weight: bold;">
+         <!-- {{item.brand}}-->
+          {{item.product.name}}
+          -
+          {{item.name}} {{item.type}}
+        </div>
+        </div>
+        <div *ngIf="(item.product_strain && item.product_strain.name) && !item.product">
+            <div style="font-weight: bold;">
+                 <!-- {{item.brand}}-->
+                {{item.product_strain.name || item.product_strain.name}}  - 
+                {{item.name}} {{item.type}}
+            </div>
+        </div>
+        <div *ngIf="item.product_strain && item.product">
+          <div *ngIf="item.product_strain.name && item.product.name">
+              <div style="font-weight: bold;">
+                 <!-- {{item.brand}}-->
+                  {{item.product_strain.name}}
+                  -
+                  {{item.name}} {{item.type}}
+                </div>
+         
+          </div>
+        </div>
+        
+        <div *ngIf="item.product && item.product_strain">
+            <img *ngIf="item.product.image_url_main || item.product_strain.image_url_main" style="width: auto; height: 150px;" [src]="item.product_strain.image_url_main" 
+            default="{{item.product.image_url_main}}" 
+            class="img"/>
+        </div>
+
+         <!-- <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }} <div *ngIf="item.type">({{ item.type }})</div>
+          </div>
            
-          <div *ngIf="item.product_strain && (item.product === undefined || item.product === null)">
+          <div *ngIf="item && item.product_strain && (item.product === undefined || item.product === null)">
                 <img *ngIf="item.product_strain && (item.product === undefined || item.product === null)" style="width: auto; height: 150px;" [src]="item.product_strain.image_url_main" 
               default="{{item.product._strain.image_url_alt}}" 
               class="img">
           </div>
-         
           
           <div *ngIf="item.product && (item.product_strain === undefined || item.product_strain === null)">
             <img *ngIf="item.product && (item.product_strain === undefined || item.product_strain === null)" style="width: auto; height: 150px;" [src]="item.product.image_url_main" 
                   default="{{item.product.image_url_alt}}" 
                   class="img"/>
           </div>
-      
-
+    
         <div *ngIf="item.product && item.product_strain">
             <img *ngIf="item.product && item.product_strain" style="width: auto; height: 150px;" [src]="item.product_strain.image_url_main" 
             default="{{item.product.image_url_main}}" 
             class="img"/>
-        </div>
- 
+        </div>-->
         
 
           <div *ngIf="item.product_strain && item.product_strain.description" style="font-size: 16px;">{{ item.product_strain.description }}</div>
@@ -78,6 +104,9 @@
           <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
           <div>price: ${{ item.price_point.prices[0].price}}</div>
           <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
+          <div *ngIf="item.product_strain && item.product_strain.indica_pct">indica: {{ item.product_strain.indica_pct }}%</div>
+          <div *ngIf="item.product_strain && item.product_strain.sativa_pct">sativa: {{ item.product_strain.sativa_pct }}%</div>
+        <div *ngIf="item.product_strain && item.product_strain.strain_type">strain type: {{item.product_strain.strain_type}}</div>
 <!--
           <div *ngIf="item.product_strain">strain img url main: {{ item.product_strain.image_url_main }}</div>
           <div *ngIf="item.product_strain">strain img url alt: {{ item.product_strain.image_url_alt }}</div>
@@ -86,6 +115,7 @@
 
       </mat-card>
     </div>
+  
 </div>
 
 <div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="vapes && vapes.length > 0  && (selectedCategory === 'all' || selectedCategory === 'vapes')">

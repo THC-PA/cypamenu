@@ -16,9 +16,10 @@ export class AppComponent {
     new Store('Butler', '202'),
     new Store('Pittsburgh', '203')
   ];
-
+  flowerResult: Array<InventoryItem> = [];
   title = 'CY+ Menu';
   selectedCategory = 'all';
+  filterMetadata = { count: 3 };
 
   fullMenu: Menu = new Menu();
   flowers: Array<InventoryItem> = [];
@@ -33,13 +34,23 @@ export class AppComponent {
   sortBy: string = 'bt_potency_thca';
   categories:string[] = ['all', 'flower', 'vapes', 'concentrates',
     'tinctures', 'tinctures', 'topicals', 'accessories'];
+    filters: string[] = ['All', 'Indica', 'Sativa', 'Hybrid'];
+    selectedFilter = 'All';
 
   constructor(private httpClient: HttpClient){
     this.title = 'CY+ ' + this.stores.find(x => x.id === this.selectedStore).name + ' Menu';
   }
 
+  filterChanged() {
+
+  }
+
   storeChanged() {
     this.title = 'CY+ ' + this.stores.find(x => x.id === this.selectedStore).name + ' Menu';
+  }
+
+  categoryChanged() {
+    this.clearResults();
   }
 
     search() {
@@ -76,9 +87,81 @@ export class AppComponent {
       menu.data.forEach(item => {
         let category = item.category.toLowerCase(); 
 
+       // if (category.indexOf('flower') > -1) {
+        //  if (item.product !== null && item.product !== undefined){
+           // alert('product - sativa: ' + item.product.sativa_pct + ' indica: ' + item.product.indica_pct);
+         // }
+          
+          if (item.product_strain !== null && item.product_strain !== undefined){
+           // alert('product_strain - sativa: ' + item.product_strain.sativa_pct + ' indica: ' + item.product_strain.indica_pct);
+            if (item.product_strain.indica_pct && item.product_strain.indica_pct > 0 
+                && item.product_strain.sativa_pct && item.product_strain.sativa_pct > 0) {
+                  
+                  if (item.product_strain.indica_pct > item.product_strain.sativa_pct) {
+                  //  item.type = 'Indica Dominant Hybrid';
+                  item.type = '(H/I)';
+                  } 
+                  else if (item.product_strain.sativa_pct > item.product_strain.indica_pct) {
+                    item.type = '(H/S)';
+                  } 
+                  else if (item.product_strain.indica_pct == 0) {
+                    item.type = '(S)';
+                  }
+                  else if (item.product_strain.sativa_pct == 0){
+                    item.type = '(I)';
+                  }
+                  else {
+                    //item.type = item.product_strain.strain_type;
+                    item.type = '(H)';
+                  }
+            } 
+            else if(item.product_strain) {
+              if (item.product_strain.strain_type){
+                if (item.product_strain.strain_type == 'indica'){
+                  item.type = '(I)';
+                } else if (item.product_strain.strain_type == 'sativa') {
+                  item.type = '(S)';
+                } else { 
+                  item.type = '(H)';
+                }
+              } 
+            } else {
+              //item.type = null;
+              let hasIndicaInName = item.product_strain.name.toLowerCase().indexOf('indica') > -1;
+              let hasSativaInName = item.product_strain.name.toLocaleLowerCase().indexOf('sativa') > -1;
+              let hasHybridInName = item.product_strain.name.toLocaleLowerCase().indexOf('hybrid') > -1;
+
+              let hasIndicaInPName = item.product.name.toLowerCase().indexOf('indica') > -1;
+              let hasSativaInPName = item.product.name.toLowerCase().indexOf('sativa') > -1;
+              let hasHybriInPName = item.product.name.toLowerCase().indexOf('hybrid') > -1;
+
+              if ((hasIndicaInName || hasIndicaInPName) && (hasHybridInName || hasHybriInPName)){
+                item.type = '(H/I)';
+              }
+              else if ((hasIndicaInName || hasIndicaInPName) && !(hasHybridInName || hasHybriInPName)){
+                item.type = '(I)';
+              }
+              else if ((hasSativaInName || hasSativaInPName) && (hasHybridInName || hasHybriInPName)) {
+                item.type = '(H/S)';
+              }
+              else if ((hasSativaInName || hasSativaInPName) && !(hasHybridInName || hasHybriInPName)) {
+                item.type = '(S)';
+              }
+              else {
+                item.type = 'Unknown type!!!'
+              }
+
+
+            }
+          } else {
+            item.type = '(H?)'
+          }
+          
+         
         if (category.indexOf('flower') > -1) {
           this.flowers.push(item);
         }
+          
         if (category.indexOf('concentrate') > -1) {
           this.concentrates.push(item);
         }
