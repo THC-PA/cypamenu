@@ -10,7 +10,14 @@ import { Store } from 'src/models/store.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'CY+ New Kensington Menu';
+  selectedStore = '229';
+  stores: Store[] = [
+    new Store('New Kensington', '229'),
+    new Store('Butler', '202'),
+    new Store('Pittsburgh', '203')
+  ];
+
+  title = 'CY+ Menu';
   selectedCategory = 'all';
 
   fullMenu: Menu = new Menu();
@@ -26,17 +33,14 @@ export class AppComponent {
   sortBy: string = 'bt_potency_thca';
   categories:string[] = ['all', 'flower', 'vapes', 'concentrates',
     'tinctures', 'tinctures', 'topicals', 'accessories'];
-  stores: Store[] = [
-    new Store('New Kensington', '229'),
-    new Store('Butler', '202'),
-    new Store('Pittsburgh', '203')
-  ];
 
-  selectedStore = '229';
-  
-selected = 'domain';
+  constructor(private httpClient: HttpClient){
+    this.title = 'CY+ ' + this.stores.find(x => x.id === this.selectedStore).name + ' Menu';
+  }
 
-  constructor(private httpClient: HttpClient){}
+  storeChanged() {
+    this.title = 'CY+ ' + this.stores.find(x => x.id === this.selectedStore).name + ' Menu';
+  }
 
     search() {
       this.clearResults();
