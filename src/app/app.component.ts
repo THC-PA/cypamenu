@@ -99,7 +99,10 @@ export class AppComponent implements OnInit {
         //  if (item.product !== null && item.product !== undefined){
            // alert('product - sativa: ' + item.product.sativa_pct + ' indica: ' + item.product.indica_pct);
          // }
-          
+       /*  if (item.bt_potency_cbd && (item.bt_potency_cbd > item.bt_potency_thc || item.bt_potency_cbd > item.bt_potency_) ) {
+           
+          item.type = '(CBD Dominant)'
+         }*/
           if (item.product_strain !== null && item.product_strain !== undefined){
            // alert('product_strain - sativa: ' + item.product_strain.sativa_pct + ' indica: ' + item.product_strain.indica_pct);
             if (item.product_strain.indica_pct && item.product_strain.indica_pct > 0 
@@ -133,16 +136,21 @@ export class AppComponent implements OnInit {
                   item.type = '(H)';
                 }
               } 
-            } else {
-              //item.type = null;
+            } else { 
               let hasIndicaInName = item.product_strain.name.toLowerCase().indexOf('indica') > -1;
               let hasSativaInName = item.product_strain.name.toLocaleLowerCase().indexOf('sativa') > -1;
               let hasHybridInName = item.product_strain.name.toLocaleLowerCase().indexOf('hybrid') > -1;
+              let hasCbdInName = item.product_strain.name.toLowerCase().indexOf('cbd') > -1;
 
               let hasIndicaInPName = item.product.name.toLowerCase().indexOf('indica') > -1;
               let hasSativaInPName = item.product.name.toLowerCase().indexOf('sativa') > -1;
               let hasHybriInPName = item.product.name.toLowerCase().indexOf('hybrid') > -1;
+              let hasCbdInPName = item.product.name.toLowerCase().indexOf('cbd') > -1;
 
+              
+              if (hasCbdInName || hasCbdInPName) {
+                item.type = '(CBD Dominant)';
+              }
               if ((hasIndicaInName || hasIndicaInPName) && (hasHybridInName || hasHybriInPName)){
                 item.type = '(H/I)';
               }
@@ -156,7 +164,7 @@ export class AppComponent implements OnInit {
                 item.type = '(S)';
               }
               else {
-                item.type = 'Unknown type!!!'
+                item.type = 'Unknown type';
               }
 
 
@@ -185,17 +193,17 @@ export class AppComponent implements OnInit {
 
 
         if (item.created_ago !== null && item.created_ago !== undefined) {
+           
+          if (item.created_ago.toLowerCase().indexOf('hours') > -1 
+          ||  item.created_ago.toLowerCase().indexOf('day ago') > -1) {
+              this.newItems.push(item);
+             // let createdAgoStr = item.created_ago.substring(0, 2).trim();
 
-
-            if (item.created_ago.toLowerCase().indexOf('hours ago') > -1) {
+             // let createdAgo = parseInt(createdAgoStr);
               
-              let createdAgoStr = item.created_ago.substring(0, 2).trim();
-
-              let createdAgo = parseInt(createdAgoStr);
-              
-              if (createdAgo < this.newWithinHours) {
-                this.newItems.push(item);
-              }
+              //if (createdAgo < this.newWithinHours) {
+             //   this.newItems.push(item);
+             // }
             
             }
           

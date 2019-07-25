@@ -14,6 +14,7 @@ export class InventoryItem {
     product_strain_id: number;
     bt_potency_thc: number;
     bt_potency_thca: number;
+    bt_potency_cbd: number;
     cultivator: string;
     product: Product;
     product_strain: ProductStrain;

@@ -52,7 +52,7 @@
         </mat-panel-title>
          <mat-panel-description>
           last {{newWithinHours}} hours
-      </mat-panel-description>-
+      </mat-panel-description>
       </mat-expansion-panel-header>
       <div *ngFor="let item of newItems">
           <mat-card>
@@ -123,6 +123,7 @@
           <div *ngIf="item.product_strain && item.product_strain.symptoms !== null">Symptoms: {{ item.product_strain.symptoms }}</div>
           <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
           <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
+          <div>cbd: {{ item.bt_potency_cbd || 0 }}%</div>
           <div>price: ${{ item.price_point.prices[0].price}}</div>
           <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
           <div *ngIf="item.product_strain && item.product_strain.indica_pct">indica: {{ item.product_strain.indica_pct }}%</div>
