@@ -20,7 +20,7 @@ export class AppComponent {
   title = 'CY+ Menu';
   selectedCategory = 'all';
   filterMetadata = { count: 3 };
-
+  newWithinHours = 24;
   fullMenu: Menu = new Menu();
   flowers: Array<InventoryItem> = [];
   newItems: Array<InventoryItem> = [];
@@ -186,7 +186,7 @@ export class AppComponent {
 
               let createdAgo = parseInt(createdAgoStr);
               
-              if (createdAgo < 24) {
+              if (createdAgo < this.newWithinHours) {
                 this.newItems.push(item);
               }
             

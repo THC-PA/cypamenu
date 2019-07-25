@@ -34,8 +34,10 @@
 <button (click)="search()" mat-button color="primary">Search</button>
 <div style="height:10px;"></div>
 
-
-
+<!--
+<mat-form-field style="margin-left: 30px;"  class="example-form-field">
+    <input matInput type="text" placeholder="hours" [(ngModel)]="newWithinHours">
+  </mat-form-field>-->
 
 <mat-accordion style="margin-top: 5px; margin-bottom: 5px;" *ngIf="newItems && newItems.length > 0">
     <mat-expansion-panel>
@@ -43,6 +45,9 @@
         <mat-panel-title>
             New Items ({{ newItems.length }})
         </mat-panel-title>
+         <mat-panel-description>
+          last {{newWithinHours}} hours
+      </mat-panel-description>-
       </mat-expansion-panel-header>
       <div *ngFor="let item of newItems">
           <mat-card>
