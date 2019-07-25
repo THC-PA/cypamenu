@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Menu } from 'src/models/menu.model';
 import { InventoryItem } from 'src/models/inventoryItem.model';
@@ -9,8 +9,9 @@ import { Store } from 'src/models/store.model';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   selectedStore = '229';
+  isLoading: boolean = false;
   stores: Store[] = [
     new Store('New Kensington', '229'),
     new Store('Butler', '202'),
@@ -42,6 +43,10 @@ export class AppComponent {
     this.title = 'CY+ ' + this.stores.find(x => x.id === this.selectedStore).name + ' Menu';
   }
 
+  ngOnInit() {
+    this.search();
+  }
+
   filterChanged() {
 
   }
@@ -55,6 +60,7 @@ export class AppComponent {
   }
 
     search() {
+      this.isLoading = true;
       this.clearResults();
 
       let baseUrl: string = 'https://api.crescolabs.com/p/inventory?limit=1000';
@@ -81,6 +87,7 @@ export class AppComponent {
           this.fullMenu = res;
           this.processMenuResults(res);
           this.searchComplete = true;
+          this.isLoading = false;
         });
     }
 
