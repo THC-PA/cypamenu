@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   flowerResult: Array<InventoryItem> = [];
   title = 'CY+ Menu';
   selectedCategory = 'all';
-  filterMetadata = { count: 3 };
+  filterMetadata = { count: 0 };
   newWithinHours = 24;
   fullMenu: Menu = new Menu();
   flowers: Array<InventoryItem> = [];
@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
   }
 
   categoryChanged() {
-    this.clearResults();
+   // this.clearResults();
   }
 
     search() {

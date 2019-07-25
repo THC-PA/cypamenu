@@ -69,12 +69,13 @@
 <mat-accordion style="margin-top: 5px; margin-bottom: 5px;" *ngIf="(flowers && flowers.length > 0) && (selectedCategory === 'all' || selectedCategory === 'flower')">
   <mat-expansion-panel>
     <mat-expansion-panel-header>
-      <mat-panel-title *ngIf="selectedCategory === 'flower'">
+     <!-- <mat-panel-title *ngIf="selectedCategory === 'flower'">-->
+       <mat-panel-title>
         Flower ({{filterMetadata.count}})
       </mat-panel-title>
-      <mat-panel-title *ngIf="selectedCategory === 'all'">
+      <!--<mat-panel-title *ngIf="selectedCategory === 'all'">
           Flower ({{flowers.length}})
-        </mat-panel-title>
+        </mat-panel-title>-->
    <!--<mat-panel-description>
         
       </mat-panel-description>-->
@@ -136,118 +137,12 @@
 
   </mat-expansion-panel>
 </mat-accordion>
-<!--
-<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="(flowers && flowers.length > 0) && (selectedCategory === 'all' || selectedCategory === 'flower')">
-    <mat-card-title *ngIf="selectedCategory === 'flower'">Flower ({{filterMetadata.count}})</mat-card-title>
-    <mat-card-title *ngIf="selectedCategory === 'all'">Flower ({{flowers.length}})</mat-card-title>
-    <div *ngFor="let item of flowers | sortBy: sortBy:'desc' | menuFilter:selectedFilter:filterMetadata">
-      <mat-card>  
-        <div *ngIf="(item.product && item.product.name) && !item.product_strain">
-          <div style="font-weight: bold;">
-        
-          {{item.product.name}}
-          -
-          {{item.name}} {{item.type}}
-        </div>
-        </div>
-        <div *ngIf="(item.product_strain && item.product_strain.name) && !item.product">
-            <div style="font-weight: bold;">
-       
-                {{item.product_strain.name || item.product_strain.name}}  - 
-                {{item.name}} {{item.type}}
-            </div>
-        </div>
-        <div *ngIf="item.product_strain && item.product">
-          <div *ngIf="item.product_strain.name && item.product.name">
-              <div style="font-weight: bold;">
-     
-                  {{item.product_strain.name}}
-                  -
-                  {{item.name}} {{item.type}}
-                </div>
-         
-          </div>
-        </div>
-        
-        <div *ngIf="item.product && item.product_strain">
-            <img *ngIf="item.product.image_url_main || item.product_strain.image_url_main" style="width: auto; height: 150px;" [src]="item.product_strain.image_url_main" 
-            default="{{item.product.image_url_main}}" 
-            class="img"/>
-        </div>
-
-         <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }} <div *ngIf="item.type">({{ item.type }})</div>
-          </div>
-           
-          <div *ngIf="item && item.product_strain && (item.product === undefined || item.product === null)">
-                <img *ngIf="item.product_strain && (item.product === undefined || item.product === null)" style="width: auto; height: 150px;" [src]="item.product_strain.image_url_main" 
-              default="{{item.product._strain.image_url_alt}}" 
-              class="img">
-          </div>
-          
-          <div *ngIf="item.product && (item.product_strain === undefined || item.product_strain === null)">
-            <img *ngIf="item.product && (item.product_strain === undefined || item.product_strain === null)" style="width: auto; height: 150px;" [src]="item.product.image_url_main" 
-                  default="{{item.product.image_url_alt}}" 
-                  class="img"/>
-          </div>
-    
-        <div *ngIf="item.product && item.product_strain">
-            <img *ngIf="item.product && item.product_strain" style="width: auto; height: 150px;" [src]="item.product_strain.image_url_main" 
-            default="{{item.product.image_url_main}}" 
-            class="img"/>
-        </div>
-        
-
-          <div *ngIf="item.product_strain && item.product_strain.description" style="font-size: 16px;">{{ item.product_strain.description }}</div>
-          <div *ngIf="item.product_strain && item.product_strain.lineage">Lineage: {{ item.product_strain.lineage }}</div>
-          <div *ngIf="item.product_strain && item.product_strain.flavors">Flavors: {{ item.product_strain.flavors }}</div>
-          <div *ngIf="item.product_strain && item.product_strain.effects">Effects: {{ item.product_strain.effects }}</div>
-          <div *ngIf="item.product_strain && item.product_strain.symptoms !== null">Symptoms: {{ item.product_strain.symptoms }}</div>
-          <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
-          <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
-          <div>price: ${{ item.price_point.prices[0].price}}</div>
-          <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
-          <div *ngIf="item.product_strain && item.product_strain.indica_pct">indica: {{ item.product_strain.indica_pct }}%</div>
-          <div *ngIf="item.product_strain && item.product_strain.sativa_pct">sativa: {{ item.product_strain.sativa_pct }}%</div>
-        <div *ngIf="item.product_strain && item.product_strain.strain_type">strain type: {{item.product_strain.strain_type}}</div>
-
-        <div *ngIf="item.product_strain">strain img url main: {{ item.product_strain.image_url_main }}</div>
-          <div *ngIf="item.product_strain">strain img url alt: {{ item.product_strain.image_url_alt }}</div>
-          <div *ngIf="item.product">product img url main: {{ item.product.image_url_main }}</div>
-          <div *ngIf="item.product">product img url alt: {{ item.product.image_url_alt }}</div> 
-
-      </mat-card>
-    </div> 
-  
-</div>-->
-<!--
-<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="vapes && vapes.length > 0  && (selectedCategory === 'all' || selectedCategory === 'vapes')">
-    <mat-card-title>Vapes</mat-card-title>
-    <div *ngFor="let item of vapes | sortBy: 'bt_potency_thc':'desc'">
-      <mat-card>
-          <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
-          <div *ngIf="item.product_strain && item.product_strain.description" style="font-size: 16px;">{{ item.product_strain.description }}</div>
-       
-          <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
-          <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
-          <div>price: ${{ item.price_point.prices[0].price}}</div>
-          <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
-      </mat-card>
-    </div>
-</div>-->
-
-
 <mat-accordion  style="margin-top: 5px; margin-bottom: 5px;" *ngIf="vapes && vapes.length > 0  && (selectedCategory === 'all' || selectedCategory === 'vapes')">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
-        <mat-panel-title *ngIf="selectedCategory === 'vapes'">
+        <mat-panel-title>
           Vapes ({{filterMetadata.count}})
         </mat-panel-title>
-        <mat-panel-title *ngIf="selectedCategory === 'all'">
-            Vapes ({{vapes.length}})
-          </mat-panel-title>
-          <!--<mat-panel-description>
-        
-      </mat-panel-description>-->
       </mat-expansion-panel-header>
       <div *ngFor="let item of vapes | sortBy: 'bt_potency_thc':'desc' |  menuFilter:selectedFilter:filterMetadata">
           <mat-card>
@@ -267,18 +162,12 @@
   <mat-accordion style="margin-top: 5px; margin-bottom: 5px;" *ngIf="concentrates && concentrates.length > 0  && (selectedCategory === 'all' || selectedCategory === 'concentrates')">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
-        <mat-panel-title *ngIf="selectedCategory === 'concentrates'">
+        <mat-panel-title>
           Concentrates ({{filterMetadata.count}})
         </mat-panel-title>
-        <mat-panel-title *ngIf="selectedCategory === 'all'">
-            Concentrates ({{concentrates.length}})
-          </mat-panel-title>
-       <!-- <mat-panel-description>
-          to help you concentrate
-        </mat-panel-description>-->
       </mat-expansion-panel-header>
 
-      <div *ngFor="let item of concentrates | sortBy: sortBy:'desc'">
+      <div *ngFor="let item of concentrates | sortBy: sortBy:'desc'| menuFilter:selectedFilter:filterMetadata">
           <mat-card>
               <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
               <div *ngIf="item.product_strain && item.product_strain.description" style="font-size: 16px;">{{ item.product_strain.description }}</div>
@@ -294,37 +183,17 @@
   </mat-accordion>
 
 
-<!--<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="concentrates && concentrates.length > 0  && (selectedCategory === 'all' || selectedCategory === 'concentrates')">
-    <mat-card-title>Concentrates</mat-card-title>
-    <div *ngFor="let item of concentrates | sortBy: sortBy:'desc'">
-      <mat-card>
-          <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
-          <div *ngIf="item.product_strain && item.product_strain.description" style="font-size: 16px;">{{ item.product_strain.description }}</div>
-       
-          <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
-          <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
-          <div>price: ${{ item.price_point.prices[0].price}}</div>
-          <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
-          
-      </mat-card>
-    </div>
-</div>-->
-
-
   <mat-accordion style="margin-top: 5px; margin-bottom: 5px;" *ngIf="tinctures && tinctures.length > 0  && (selectedCategory === 'all' || selectedCategory === 'tinctures')">
       <mat-expansion-panel>
       <mat-expansion-panel-header>
-        <mat-panel-title *ngIf="selectedCategory === 'tinctures'">
+        <mat-panel-title>
           Tinctures ({{filterMetadata.count}})
         </mat-panel-title>
-        <mat-panel-title *ngIf="selectedCategory === 'all'">
-           Tinctures ({{tinctures.length}})
-          </mat-panel-title>
           <!--<mat-panel-description>
         
       </mat-panel-description>-->
       </mat-expansion-panel-header>
-      <div *ngFor="let item of tinctures | sortBy: 'brand':'asc'">
+      <div *ngFor="let item of tinctures | sortBy: 'brand':'asc'| menuFilter:selectedFilter:filterMetadata">
           <mat-card>
               <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
               <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
@@ -337,38 +206,19 @@
     </mat-expansion-panel>
   </mat-accordion>
 
-  <!--
-<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="tinctures && tinctures.length > 0  && (selectedCategory === 'all' || selectedCategory === 'tinctures')">
-    <mat-card-title>Tinctures</mat-card-title>
-    <div *ngFor="let item of tinctures | sortBy: 'brand':'asc'">
-      <mat-card>
-          <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
-          <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
-          <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
-          <div>price: ${{ item.price_point.prices[0].price}}</div>
-          <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
-      </mat-card>
-    </div>
-</div>-->
-
-
-
 
 <mat-accordion style="margin-top: 5px; margin-bottom: 5px;" *ngIf="capsules && capsules.length > 0  && (selectedCategory === 'all' || selectedCategory === 'capsules')">
   <mat-expansion-panel>
     <mat-expansion-panel-header>
-      <mat-panel-title *ngIf="selectedCategory === 'capsules'">
+      <mat-panel-title>
         Capsules ({{filterMetadata.count}})
       </mat-panel-title>
-      <mat-panel-title *ngIf="selectedCategory === 'all'">
-         Capsules ({{capsules.length}})
-        </mat-panel-title>
         <!--<mat-panel-description>
         
       </mat-panel-description>-->
     </mat-expansion-panel-header>
 
-    <div *ngFor="let item of capsules | sortBy: 'brand':'asc'">
+    <div *ngFor="let item of capsules | sortBy: 'brand':'asc'| menuFilter:selectedFilter:filterMetadata">
         <mat-card>
             <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
             <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
@@ -380,37 +230,14 @@
   </mat-expansion-panel>
   </mat-accordion>
 
-<!--
-<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="capsules && capsules.length > 0  && (selectedCategory === 'all' || selectedCategory === 'capsules')">
-    <mat-card-title>Capsules</mat-card-title>
-    <div *ngFor="let item of capsules | sortBy: 'brand':'asc'">
-      <mat-card>
-          <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
-          <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
-          <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
-          <div>price: ${{ item.price_point.prices[0].price}}</div>
-          <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
-      </mat-card>
-    </div>
-</div>-->
-
-
-
-
 <mat-accordion style="margin-top: 5px; margin-bottom: 5px;" *ngIf="topicals && topicals.length > 0  && (selectedCategory === 'all' || selectedCategory === 'topicals')">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
-        <mat-panel-title *ngIf="selectedCategory === 'topicals'">
+        <mat-panel-title>
           Topicals ({{filterMetadata.count}})
         </mat-panel-title>
-        <mat-panel-title *ngIf="selectedCategory === 'all'">
-           Topicals ({{topicals.length}})
-          </mat-panel-title>
-      <!-- <mat-panel-description>
-          put it on your top
-        </mat-panel-description>-->
       </mat-expansion-panel-header>
-      <div *ngFor="let item of topicals | sortBy: 'brand':'asc'">
+      <div *ngFor="let item of topicals | sortBy: 'brand':'asc'| menuFilter:selectedFilter:filterMetadata">
           <mat-card>
               <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
               <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
@@ -422,37 +249,17 @@
     </mat-expansion-panel>
   </mat-accordion>
 
-<!--
-<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="topicals && topicals.length > 0  && (selectedCategory === 'all' || selectedCategory === 'topicals')">
-    <mat-card-title>Topicals</mat-card-title>
-    <div *ngFor="let item of topicals | sortBy: 'brand':'asc'">
-      <mat-card>
-          <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
-          <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
-          <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
-          <div>price: ${{ item.price_point.prices[0].price}}</div>
-          <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
-      </mat-card>
-    </div>
-</div>
--->
-
-
-
 <mat-accordion style="margin-top: 5px; margin-bottom: 5px;" *ngIf="accessories && accessories.length > 0  && (selectedCategory === 'all' || selectedCategory === 'accessories')">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
-        <mat-panel-title *ngIf="selectedCategory === 'accessories'">
+        <mat-panel-title>
             Accessories ({{filterMetadata.count}})
         </mat-panel-title>
-        <mat-panel-title *ngIf="selectedCategory === 'all'">
-            Accessories ({{accessories.length}})
-          </mat-panel-title>
        <!-- <mat-panel-description>
           stuff for your weed
         </mat-panel-description>-->
       </mat-expansion-panel-header>
-      <div *ngFor="let item of accessories | sortBy: 'brand':'asc'">
+      <div *ngFor="let item of accessories | sortBy: 'brand':'asc'| menuFilter:selectedFilter:filterMetadata">
           <mat-card>
               <div style="font-size: 20px;">{{ item.name }}</div>
            
@@ -463,19 +270,6 @@
 
     </mat-expansion-panel>
   </mat-accordion>
-
-  <!--
-<div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="accessories && accessories.length > 0  && (selectedCategory === 'all' || selectedCategory === 'accessories')">
-    <mat-card-title>Accessories</mat-card-title>
-    <div *ngFor="let item of accessories | sortBy: 'brand':'asc'">
-      <mat-card>
-          <div style="font-size: 20px;">{{ item.name }}</div>
-       
-        price: ${{ item.price_point.prices[0].price}}
-        <br/>
-      </mat-card>
-    </div>
-</div>-->
 
 <div *ngIf="fullMenu.total_rows === undefined && searchComplete">
   <mat-card>No Items Found.</mat-card>
