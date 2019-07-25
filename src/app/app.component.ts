@@ -23,6 +23,7 @@ export class AppComponent {
 
   fullMenu: Menu = new Menu();
   flowers: Array<InventoryItem> = [];
+  newItems: Array<InventoryItem> = [];
   concentrates: Array<InventoryItem> = [];
   vapes: Array<InventoryItem> = [];
   tinctures:Array<InventoryItem> = [];
@@ -156,8 +157,53 @@ export class AppComponent {
           } else {
             item.type = '(H?)'
           }
-          
          
+        /*if (item.updated !== null && item.updated !== undefined) {
+          let oneDay = 60 * 60 * 24 * 1000;
+          let now = new Date().getTime();
+          let updated = new Date(item.updated).getTime();
+         // let result = now - updated;
+
+          
+          if (item.name.toLowerCase().indexOf('lucinda') > -1 && item.name.toLowerCase().indexOf('7g') > -1) {
+         
+          }
+      
+          if ((now - updated) < oneDay) {
+            //alert('new item name: ' + item.name + 'updated date: ' + item.updated);
+           this.newItems.push(item);
+         }
+         
+        }*/
+
+
+        if (item.created_ago !== null && item.created_ago !== undefined) {
+
+
+            if (item.created_ago.toLowerCase().indexOf('hours ago') > -1) {
+              
+              let createdAgoStr = item.created_ago.substring(0, 2).trim();
+
+              let createdAgo = parseInt(createdAgoStr);
+              
+              if (createdAgo < 24) {
+                this.newItems.push(item);
+              }
+            
+            }
+          
+        /*  if (item.name.toLowerCase().indexOf('lucinda') > -1) {
+            alert(createdAgoStr);
+
+          alert(parseInt(createdAgoStr));
+          }
+          let createdAgo = parseInt(createdAgoStr);
+
+          if (createdAgo < 2) {
+            this.newItems.push(item);
+          }*/
+        }
+
         if (category.indexOf('flower') > -1) {
           this.flowers.push(item);
         }
@@ -185,6 +231,7 @@ export class AppComponent {
 
     clearResults() {
       this.searchComplete = false;
+      this.newItems = [];
       this.flowers = [];
       this.capsules = [];
       this.concentrates = [];

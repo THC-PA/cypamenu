@@ -19,5 +19,6 @@ export class InventoryItem {
     product_strain: ProductStrain;
     price_point: PricePoint;
     type: string;
+    created_ago: string;
     //store: Store;
 }

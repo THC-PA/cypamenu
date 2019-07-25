@@ -34,6 +34,28 @@
 <button (click)="search()" mat-button color="primary">Search</button>
 <div style="height:10px;"></div>
 
+
+
+
+<mat-accordion style="margin-top: 5px; margin-bottom: 5px;" *ngIf="newItems && newItems.length > 0">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+            New Items ({{ newItems.length }})
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div *ngFor="let item of newItems">
+          <mat-card>
+              <div style="font-size: 20px;">{{ item.name }} ({{item.category}})</div>
+           
+            price: ${{ item.price_point.prices[0].price}}
+            <br/>
+          </mat-card>
+        </div>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+
 <mat-accordion style="margin-top: 5px; margin-bottom: 5px;" *ngIf="(flowers && flowers.length > 0) && (selectedCategory === 'all' || selectedCategory === 'flower')">
   <mat-expansion-panel>
     <mat-expansion-panel-header>
