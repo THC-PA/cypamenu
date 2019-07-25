@@ -195,8 +195,8 @@
       </mat-expansion-panel-header>
       <div *ngFor="let item of tinctures | sortBy: 'brand':'asc'| menuFilter:selectedFilter:filterMetadata">
           <mat-card>
-              <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
-              <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
+              <div style="font-size: 20px;">{{ item.brand }} - {{ item.name }}</div>
+               <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
               <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
               <div>price: ${{ item.price_point.prices[0].price}}</div>
               <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
