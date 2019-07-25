@@ -194,7 +194,7 @@ export class AppComponent implements OnInit {
 
         if (item.created_ago !== null && item.created_ago !== undefined) {
            
-          if (item.created_ago.toLowerCase().indexOf('hours') > -1 
+          if (item.created_ago.toLowerCase().indexOf('hour') > -1 
           ||  item.created_ago.toLowerCase().indexOf('day ago') > -1) {
               this.newItems.push(item);
              // let createdAgoStr = item.created_ago.substring(0, 2).trim();
