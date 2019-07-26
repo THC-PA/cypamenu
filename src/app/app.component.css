@@ -31,14 +31,14 @@
   width: 100px;
 }
 .cardItem {
-  width: 10vw;
-  height: 33vh;
+  width: 100px;
+  height: 300px;
   margin: 5px 5px 5px 5px;
   cursor: pointer;
 }
 
 .popupImg{ 
-  width: 30%;
+  width: 200px;
   align-content: center;
 }
 .flexRow {
@@ -58,7 +58,7 @@
   /*left: 0;*/
   background-color: grey;
   font-weight: bold;
-  height: 120px;
+  height: 10vh;
 }
 
 
