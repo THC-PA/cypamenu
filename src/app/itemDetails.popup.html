@@ -1,0 +1,60 @@
+<h1 mat-dialog-title>
+    <div *ngIf="(data.product && data.product.name) && !data.product_strain">
+        <div style="font-weight: bold;">
+        <!-- {{data.brand}}-->
+        {{data.product.name}}
+        -
+        {{data.name}} {{data.type}}
+        </div> 
+    </div>
+    <div *ngIf="(data.product_strain && data.product_strain.name) && !data.product">
+        <div style="font-weight: bold;">
+            <!-- {{data.brand}}-->
+            {{data.product_strain.name || data.product_strain.name}}  - 
+            {{data.name}} {{data.type}}
+        </div>
+    </div>
+    <div *ngIf="data.product_strain && data.product">
+        <div *ngIf="data.product_strain.name && data.product.name">
+            <div style="font-weight: bold;">
+                <!-- {{item.brand}}-->
+                {{data.product_strain.name}}
+                -
+                {{data.name}} {{data.type}}
+                </div>
+        </div>
+    </div>
+</h1>
+
+<div mat-dialog-content>    
+    <div *ngIf="data.product && data.product_strain">
+        <img *ngIf="data.product.image_url_main || data.product_strain.image_url_main"
+        style="width: 20vw; height: auto; margin: auto;" [src]="data.product_strain.image_url_main" 
+        default="{{data.product.image_url_main}}" 
+        class="popupImg"/>
+    </div>
+
+    <div *ngIf="data.product_strain && data.product_strain.description" style="font-size: 16px;">{{ data.product_strain.description }}</div>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Add to cart</button>
+</div>
+
+<!--
+
+    <div *ngIf="item.product_strain && item.product_strain.description" style="font-size: 16px;">{{ item.product_strain.description }}</div>
+            <div *ngIf="item.product_strain && item.product_strain.lineage">Lineage: {{ item.product_strain.lineage }}</div>
+            <div *ngIf="item.product_strain && item.product_strain.flavors">Flavors: {{ item.product_strain.flavors }}</div>
+            <div *ngIf="item.product_strain && item.product_strain.effects">Effects: {{ item.product_strain.effects }}</div>
+            <div *ngIf="item.product_strain && item.product_strain.symptoms !== null">Symptoms: {{ item.product_strain.symptoms }}</div>
+            <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
+            <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
+            <div>cbd: {{ item.bt_potency_cbd || 0 }}%</div>
+            <div>price: ${{ item.price_point.prices[0].price}}</div>
+            <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
+            <div *ngIf="item.product_strain && item.product_strain.indica_pct">indica: {{ item.product_strain.indica_pct }}%</div>
+            <div *ngIf="item.product_strain && item.product_strain.sativa_pct">sativa: {{ item.product_strain.sativa_pct }}%</div>
+          <div *ngIf="item.product_strain && item.product_strain.strain_type">strain type: {{item.product_strain.strain_type}}</div>
+-->

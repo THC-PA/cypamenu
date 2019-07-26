@@ -3,7 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Menu } from 'src/models/menu.model';
 import { InventoryItem } from 'src/models/inventoryItem.model';
 import { Store } from 'src/models/store.model';
-import { AlertPromise } from 'selenium-webdriver';
+import { MatDialog } from '@angular/material'; 
+import { ItemDetailsPopup } from './itemDetails.popup';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,9 @@ export class AppComponent implements OnInit {
   selectedCategory = 'all';
   filterMetadata = { count: 0 };
   newWithinHours = 24;
+
+  cart: InventoryItem[] = [];
+
   fullMenu: Menu = new Menu();
   flowers: Array<InventoryItem> = [];
   newItems: Array<InventoryItem> = [];
@@ -40,7 +44,8 @@ export class AppComponent implements OnInit {
     filters: string[] = ['All', 'Indica', 'Sativa', 'Hybrid'];
     selectedFilter = 'All';
 
-  constructor(private httpClient: HttpClient){
+  constructor(private httpClient: HttpClient,
+    private dialog: MatDialog){
     this.title = 'CY+ ' + this.stores.find(x => x.id === this.selectedStore).name + ' Menu';
   }
 
@@ -50,6 +55,25 @@ export class AppComponent implements OnInit {
 
   filterChanged() {
 
+  }
+
+  clearCart() {
+    this.cart = [];
+  }
+
+  displayDetails(item: InventoryItem): void {
+    const dialogRef = this.dialog.open(ItemDetailsPopup, { 
+      width: '35%',
+      data: item
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+     // this.animal = result;
+     if (result !== undefined && result !== null) {
+       this.cart.push(result);
+     }
+    });
   }
 
   getBrand(item: InventoryItem) {

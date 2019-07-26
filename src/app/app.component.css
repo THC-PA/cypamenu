@@ -2,6 +2,60 @@
     flex: 1 1 auto;
 }
 
+.title  {
+  font-size: 35px;
+}
+
+.userCart {
+  position:fixed; 
+  top: 60px; 
+  right: 0;
+}
+
+.content {
+  margin-top: 120px;
+}
+
+.container {
+  background: lightyellow;
+  width: 500px;
+}
+
+.new {
+  background: lightblue;
+  width: 100px;
+}
+.cardItem {
+  width: 10vw;
+  height: 33vh;
+  margin: 5px 5px 5px 5px;
+}
+
+.popupImg{ 
+  width: 30%;
+  align-content: center;
+}
+.flexRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+
+.fixedToolbar {
+  z-index: 999;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  /*left: 0;*/
+  background-color: grey;
+  font-weight: bold;
+  height: 120px;
+}
+
+
 /* Absolute Center Spinner */
 .loading {
     position: fixed;
@@ -121,27 +175,3 @@
       transform: rotate(360deg);
     }
   }
-
-  .container {
-    background: lightyellow;
-    width: 500px;
-  }
-  
-  .new {
-    background: lightblue;
-    width: 100px;
-  }
-  .cardItem {
-    width: 10vw;
-    height: 35vh;
-    margin: 5px 5px 5px 5px;
-  }
-
-  .flexRow {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    flex-wrap: wrap;
-  }
- 
