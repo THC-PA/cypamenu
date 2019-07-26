@@ -32,11 +32,16 @@
 }
 .cardItem {
   width: 100px;
-  height: 300px;
+  height: 275px;
   margin: 5px 5px 5px 5px;
   cursor: pointer;
 }
 
+.cardImg {
+  height: auto;
+  width: 2px;
+  margin: auto;
+}
 .popupImg{ 
   width: 200px;
   align-content: center;
