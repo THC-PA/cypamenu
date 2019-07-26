@@ -1,39 +1,6 @@
 <div fxLayout="row wrap" class="fixedToolbar">
  
-  <div class="title">{{ title }}</div>  
-  <br />
-  
-  <!--<div>New Kensington: 229    Butler: 202    Pittsburgh: 203</div> -->
-  <mat-form-field style="margin-left: 30px;" >
-      <select (change)="storeChanged();" matNativeControl placeholder="store" [(ngModel)]="selectedStore" name="store">
-        <option *ngFor="let store of stores" [value]="store.id">
-          {{store.name}}
-        </option>
-      </select>
-  </mat-form-field>
-
-  <mat-form-field style="margin-left: 30px;" >
-      <select (change)="filterChanged();" matNativeControl placeholder="filter" [(ngModel)]="selectedFilter" name="filter">
-        <option *ngFor="let filter of filters" [value]="filter">
-          {{filter}}
-        </option>
-      </select>
-  </mat-form-field>
-
-  <mat-form-field style="margin-left: 30px;" >
-      <select (change)="categoryChanged();" matNativeControl placeholder="category" [(ngModel)]="selectedCategory" name="category">
-        <option *ngFor="let cat of categories" [value]="cat">
-          {{cat}}
-        </option>
-      </select>
-  </mat-form-field>
-
-  <mat-form-field style="margin-left: 30px;"  class="example-form-field">
-    <input matInput type="text" placeholder="Search Text" [(ngModel)]="searchText">
-  </mat-form-field>
-
-  <button (click)="search()" mat-button color="primary">Search</button>
-
+  <div class="title">{{ title }}</div> 
   <div class="userCart">
       <mat-icon matBadge="{{cart.length}}" matBadgeColor="primary">shopping_cart</mat-icon>
         <!-- Include text description of the icon's meaning for screen-readers -->
@@ -41,7 +8,54 @@
         </span>
       <button style="margin-left: 25px;" mat-button color="warn" (click)="clearCart()">Clear cart</button>
 
-  </div>      
+  </div>  
+  <br />
+  
+  <mat-accordion style="margin-top: 5px; margin-bottom: 5px;">
+      <mat-expansion-panel class="searchPanel">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Search Selection
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+       
+        
+            <!--<div>New Kensington: 229    Butler: 202    Pittsburgh: 203</div> -->
+            <mat-form-field style="margin-left: 30px;" >
+                <select (change)="storeChanged();" matNativeControl placeholder="store" [(ngModel)]="selectedStore" name="store">
+                  <option *ngFor="let store of stores" [value]="store.id">
+                    {{store.name}}
+                  </option>
+                </select>
+            </mat-form-field>
+
+            <mat-form-field style="margin-left: 30px;" >
+                <select (change)="filterChanged();" matNativeControl placeholder="filter" [(ngModel)]="selectedFilter" name="filter">
+                  <option *ngFor="let filter of filters" [value]="filter">
+                    {{filter}}
+                  </option>
+                </select>
+            </mat-form-field>
+
+            <mat-form-field style="margin-left: 30px;" >
+                <select (change)="categoryChanged();" matNativeControl placeholder="category" [(ngModel)]="selectedCategory" name="category">
+                  <option *ngFor="let cat of categories" [value]="cat">
+                    {{cat}}
+                  </option>
+                </select>
+            </mat-form-field>
+
+            <mat-form-field style="margin-left: 30px;"  class="example-form-field">
+              <input matInput type="text" placeholder="Search Text" [(ngModel)]="searchText">
+            </mat-form-field>
+
+            <button (click)="search()" mat-button color="primary">Search</button>
+
+      
+
+      </mat-expansion-panel>
+    </mat-accordion>
+     
 
 <!--
   <mat-form-field style="margin-left: 30px;"  class="example-form-field">
