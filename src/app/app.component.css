@@ -121,3 +121,27 @@
       transform: rotate(360deg);
     }
   }
+
+  .container {
+    background: lightyellow;
+    width: 500px;
+  }
+  
+  .new {
+    background: lightblue;
+    width: 100px;
+  }
+  .cardItem {
+    width: 10vw;
+    height: 35vh;
+    margin: 5px 5px 5px 5px;
+  }
+
+  .flexRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+ 

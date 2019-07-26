@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component'; 
 import { HttpClientModule } from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatIconModule, MatToolbarModule, MatSelectModule, MatExpansionModule, MatProgressSpinnerModule} from '@angular/material';
+import {MatButtonModule, MatCheckboxModule, MatIconModule, MatToolbarModule, MatSelectModule, MatExpansionModule, MatProgressSpinnerModule, MatGridListModule} from '@angular/material';
 import { MatCardModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule, MatTableModule, MatPaginatorModule, MatSortModule } 
@@ -38,7 +38,7 @@ import { ImagePreloadDirective } from './directives/imagePreload.directive';
     MatToolbarModule,
     MatSelectModule,
     MatExpansionModule,
-    MatProgressSpinnerModule
+    MatGridListModule
   ],
   exports: [SortByPipe, ImagePreloadDirective, MenuFilterPipe],
   providers: [],

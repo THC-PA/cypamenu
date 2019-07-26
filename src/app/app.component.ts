@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Menu } from 'src/models/menu.model';
 import { InventoryItem } from 'src/models/inventoryItem.model';
 import { Store } from 'src/models/store.model';
+import { AlertPromise } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-root',
@@ -51,6 +52,15 @@ export class AppComponent implements OnInit {
 
   }
 
+  getBrand(item: InventoryItem) {
+    if (item.cultivator !== null && item.cultivator  !== undefined) {
+      return item.cultivator;
+    }
+
+    if (item.brand !== null && item.brand !== undefined) {
+      return item.brand;
+    }
+  }
   storeChanged() {
     this.title = 'CY+ ' + this.stores.find(x => x.id === this.selectedStore).name + ' Menu';
   }
