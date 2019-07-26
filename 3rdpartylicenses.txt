@@ -89,11 +89,11 @@ THE SOFTWARE.
 
 @angular/material/card
 
-@angular/material/dialog
-
 @angular/material/expansion
 
 @angular/material/form-field
+
+@angular/material/toolbar
 
 @angular/material/tooltip
 
