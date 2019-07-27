@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>
+<h1 align="center" mat-dialog-title>
     <div *ngIf="(data.product && data.product.name) && !data.product_strain">
         <div style="font-weight: bold;">
         <!-- {{data.brand}}-->
@@ -26,18 +26,18 @@
     </div>
 </h1>
 
-<div mat-dialog-content>    
-    <div *ngIf="data.product && data.product_strain">
-        <img *ngIf="data.product.image_url_main || data.product_strain.image_url_main"
-        style="width: 20vw; height: auto; margin: auto;" [src]="data.product_strain.image_url_main" 
+<div fxLayout="column" fxLayoutAlign="center" mat-dialog-content>    
+    <div align="center" *ngIf="data.product && data.product_strain">
+        <img style="width: 30%; height: auto; margin-top: 10px;"  *ngIf="data.product.image_url_main || data.product_strain.image_url_main"
+        [src]="data.product_strain.image_url_main" 
         default="{{data.product.image_url_main}}" 
-        class="popupImg"/>
+        />
     </div>
 
     <div *ngIf="data.product_strain && data.product_strain.description" style="font-size: 16px;">{{ data.product_strain.description }}</div>
 
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions align="end">
   <button mat-button (click)="onNoClick()">Close</button>
   <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Add to cart</button>
 </div>

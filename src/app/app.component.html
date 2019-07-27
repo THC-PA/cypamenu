@@ -1,6 +1,6 @@
 <div fxLayout="row wrap" class="fixedToolbar">
  
-  <div class="title">{{ title }}</div> 
+  <div align="center" class="title">{{ title }}</div> 
   <!--
   <div class="userCart">
       <mat-icon matBadge="{{cart.length}}" matBadgeColor="primary">shopping_cart</mat-icon>
@@ -11,7 +11,7 @@
   </div>  -->
   <br />
   
-  <mat-accordion style="margin-top: 5px; margin-bottom: 5px;">
+  <mat-accordion>
       <mat-expansion-panel class="searchPanel">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -99,8 +99,18 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
+      <!--
+          fxFlex="100"
+      fxFlex.md="33"
+      fxFlex.sm="50"
+      fxFlex.xs="100"
+      -->
     <div class="flexRow">
-      <div *ngFor="let item of flowers | sortBy: sortBy:'desc' | menuFilter:selectedFilter:filterMetadata">
+      <div *ngFor="let item of flowers | sortBy: sortBy:'desc' | menuFilter:selectedFilter:filterMetadata"
+      fxFlex.xs="44"
+      fxFlex.sm="33"
+      fxFlex="20"
+      >
         <mat-card (click)="displayDetails(item)" class="cardItem">  
           <div *ngIf="(item.product && item.product.name) && !item.product_strain">
             <div style="font-weight: bold;">
@@ -129,10 +139,10 @@
           </div>
           
           <div *ngIf="item.product && item.product_strain">
-              <img *ngIf="item.product.image_url_main || item.product_strain.image_url_main"
-              style="width: 75px; height: auto; margin: auto;" [src]="item.product_strain.image_url_main" 
+              <img id="cardImg" *ngIf="item.product.image_url_main || item.product_strain.image_url_main"
+              [src]="item.product_strain.image_url_main" 
               default="{{item.product.image_url_main}}" 
-              class="img"/>
+              />
           </div>
           <div>{{ getBrand(item) }}</div> 
           <div>thc: {{ item.bt_potency_thc || 0 }}%</div>

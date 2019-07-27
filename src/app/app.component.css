@@ -11,41 +11,38 @@
   top: 30px; 
   right: 0;
 }
+
  
 .content {
   margin-top: 120px;
 }
 
-.searchPanel {
-  margin-top: 10px;
+.searchPanel { 
   background: grey !important;
+  position: fixed;
+  top: 35px;
+  width: 100%;
+  left: 0;
 }
 
-.container {
-  background: lightyellow;
-  width: 500px;
-}
-
-.new {
-  background: lightblue;
-  width: 100px;
-}
-.cardItem {
-  width: 100px;
-  height: 275px;
+.cardItem { 
+  height: 345px;
   margin: 5px 5px 5px 5px;
   cursor: pointer;
 }
 
-.cardImg {
+#cardImg {
+  width: 100%;
   height: auto;
-  width: 2px;
   margin: auto;
 }
-.popupImg{ 
-  width: 200px;
-  align-content: center;
+
+#popupImg{ 
+  width: 10px;
+  height: auto; 
+  margin-top: 100px;
 }
+
 .flexRow {
   display: flex;
   flex-direction: row;

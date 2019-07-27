@@ -14,7 +14,7 @@ import { SortByPipe } from './pipes/sortBy.pipe';
 import { MenuFilterPipe } from './pipes/menuFilter.pipe';
 import { ImagePreloadDirective } from './directives/imagePreload.directive';
 import { ItemDetailsPopup } from './itemDetails.popup';
-import { LayoutModule } from '@angular/cdk/layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -43,8 +43,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatExpansionModule,
     MatGridListModule,
     MatDialogModule,
-    MatBadgeModule,
-    LayoutModule
+    MatBadgeModule, 
+    FlexLayoutModule
   ],
   exports: [SortByPipe, ImagePreloadDirective, MenuFilterPipe],
   providers: [],

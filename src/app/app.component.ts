@@ -63,7 +63,6 @@ export class AppComponent implements OnInit {
 
   displayDetails(item: InventoryItem): void {
     const dialogRef = this.dialog.open(ItemDetailsPopup, { 
-      width: '35%',
       data: item
     });
 
