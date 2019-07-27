@@ -109,11 +109,13 @@
       <div *ngFor="let item of flowers | sortBy: sortBy:'desc' | menuFilter:selectedFilter:filterMetadata"
       fxFlex.xs="49"
       fxFlex.sm="33"
+      fxFlex.md="44"
       fxFlex="20"
       >
         <mat-card (click)="displayDetails(item)" class="cardItem"
         [ngStyle.xs]="{'height': '250px'}"
         [ngStyle.sm]="{'height': '375px'}"
+        [ngStyle.md]="{'height': '375px'}"
         >  
           <div [ngStyle.xs]="{'font-size': '10px'}"  style="font-weight: bold;">
             <!-- {{item.brand}}-->

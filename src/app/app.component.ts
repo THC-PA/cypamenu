@@ -63,6 +63,17 @@ export class AppComponent implements OnInit {
     this.cart = [];
   }
 
+  test1(event) {
+    alert('detected small screen');
+  }
+
+  test2(event){
+    alert('detected medium screen ' + JSON.stringify(event));
+  }
+
+  test(event) {
+    alert('detected extra small screen!' + JSON.stringify(event));
+  }
   getDisplayName(item: InventoryItem) {
    return this.itemParser.getDisplayName(item);
   }
