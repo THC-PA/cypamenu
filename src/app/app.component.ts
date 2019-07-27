@@ -5,6 +5,7 @@ import { InventoryItem } from 'src/models/inventoryItem.model';
 import { Store } from 'src/models/store.model';
 import { MatDialog } from '@angular/material'; 
 import { ItemDetailsPopup } from './itemDetails.popup';
+import { InventoryItemParser } from './services/inventoryItemParser.service';
 
 @Component({
   selector: 'app-root',
@@ -45,7 +46,8 @@ export class AppComponent implements OnInit {
     selectedFilter = 'All';
 
   constructor(private httpClient: HttpClient,
-    private dialog: MatDialog){
+    private dialog: MatDialog,
+    private itemParser: InventoryItemParser){
     this.title = 'CY+ ' + this.stores.find(x => x.id === this.selectedStore).name + ' Menu';
   }
 
@@ -59,6 +61,10 @@ export class AppComponent implements OnInit {
 
   clearCart() {
     this.cart = [];
+  }
+
+  getDisplayName(item: InventoryItem) {
+   return this.itemParser.getDisplayName(item);
   }
 
   displayDetails(item: InventoryItem): void {

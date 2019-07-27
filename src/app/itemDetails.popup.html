@@ -1,40 +1,23 @@
-<h1 align="center" mat-dialog-title>
-    <div *ngIf="(data.product && data.product.name) && !data.product_strain">
-        <div style="font-weight: bold;">
-        <!-- {{data.brand}}-->
-        {{data.product.name}}
-        -
-        {{data.name}} {{data.type}}
-        </div> 
-    </div>
-    <div *ngIf="(data.product_strain && data.product_strain.name) && !data.product">
-        <div style="font-weight: bold;">
-            <!-- {{data.brand}}-->
-            {{data.product_strain.name || data.product_strain.name}}  - 
-            {{data.name}} {{data.type}}
-        </div>
-    </div>
-    <div *ngIf="data.product_strain && data.product">
-        <div *ngIf="data.product_strain.name && data.product.name">
-            <div style="font-weight: bold;">
-                <!-- {{item.brand}}-->
-                {{data.product_strain.name}}
-                -
-                {{data.name}} {{data.type}}
-                </div>
-        </div>
+<h1 [ngStyle.xs]="{'font-size': '10px'}" align="center" mat-dialog-title>
+    
+    <div style="font-weight: bold;">
+        {{getDisplayName(data)}}
     </div>
 </h1>
 
 <div fxLayout="column" fxLayoutAlign="center" mat-dialog-content>    
     <div align="center" *ngIf="data.product && data.product_strain">
-        <img style="width: 30%; height: auto; margin-top: 10px;"  *ngIf="data.product.image_url_main || data.product_strain.image_url_main"
+        <img 
+        [ngStyle.xs]="{'width': '90%;'}" 
+        style="width: 30%; height: auto; margin-top: 10px;"  *ngIf="data.product.image_url_main || data.product_strain.image_url_main"
         [src]="data.product_strain.image_url_main" 
         default="{{data.product.image_url_main}}" 
         />
     </div>
 
-    <div *ngIf="data.product_strain && data.product_strain.description" style="font-size: 16px;">{{ data.product_strain.description }}</div>
+    <div
+    [ngStyle.xs]="{'font-size': '10px'}" 
+     *ngIf="data.product_strain && data.product_strain.description" style="font-size: 16px;">{{ data.product_strain.description }}</div>
 
 </div>
 <div mat-dialog-actions align="end">

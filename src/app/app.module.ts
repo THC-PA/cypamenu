@@ -15,6 +15,7 @@ import { MenuFilterPipe } from './pipes/menuFilter.pipe';
 import { ImagePreloadDirective } from './directives/imagePreload.directive';
 import { ItemDetailsPopup } from './itemDetails.popup';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { InventoryItemParser } from './services/inventoryItemParser.service';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FlexLayoutModule
   ],
   exports: [SortByPipe, ImagePreloadDirective, MenuFilterPipe],
-  providers: [],
+  providers: [InventoryItemParser],
   entryComponents: [ItemDetailsPopup],
   bootstrap: [AppComponent]
 })

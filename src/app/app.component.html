@@ -1,6 +1,6 @@
 <div fxLayout="row wrap" class="fixedToolbar">
  
-  <div align="center" class="title">{{ title }}</div> 
+  <div class="title">{{ title }}</div> 
   <!--
   <div class="userCart">
       <mat-icon matBadge="{{cart.length}}" matBadgeColor="primary">shopping_cart</mat-icon>
@@ -107,36 +107,19 @@
       -->
     <div class="flexRow">
       <div *ngFor="let item of flowers | sortBy: sortBy:'desc' | menuFilter:selectedFilter:filterMetadata"
-      fxFlex.xs="44"
+      fxFlex.xs="49"
       fxFlex.sm="33"
       fxFlex="20"
       >
-        <mat-card (click)="displayDetails(item)" class="cardItem">  
-          <div *ngIf="(item.product && item.product.name) && !item.product_strain">
-            <div style="font-weight: bold;">
-          <!-- {{item.brand}}-->
-            {{item.product.name}}
-            -
-            {{item.name}} {{item.type}}
-          </div> 
+        <mat-card (click)="displayDetails(item)" class="cardItem"
+        [ngStyle.xs]="{'height': '250px'}"
+        [ngStyle.sm]="{'height': '375px'}"
+        >  
+          <div [ngStyle.xs]="{'font-size': '10px'}"  style="font-weight: bold;">
+            <!-- {{item.brand}}-->
+              {{ getDisplayName(item) }}
           </div>
-          <div *ngIf="(item.product_strain && item.product_strain.name) && !item.product">
-              <div style="font-weight: bold;">
-                  <!-- {{item.brand}}-->
-                  {{item.product_strain.name || item.product_strain.name}}  - 
-                  {{item.name}} {{item.type}}
-              </div>
-          </div>
-          <div *ngIf="item.product_strain && item.product">
-            <div *ngIf="item.product_strain.name && item.product.name">
-                <div style="font-weight: bold;">
-                  <!-- {{item.brand}}-->
-                    {{item.product_strain.name}}
-                    -
-                    {{item.name}} {{item.type}}
-                  </div>
-            </div>
-          </div>
+        
           
           <div *ngIf="item.product && item.product_strain">
               <img id="cardImg" *ngIf="item.product.image_url_main || item.product_strain.image_url_main"
@@ -213,7 +196,6 @@
           </div>
       </mat-expansion-panel>
     </mat-accordion>
-
 
     <mat-accordion style="margin-top: 5px; margin-bottom: 5px;" *ngIf="tinctures && tinctures.length > 0  && (selectedCategory === 'all' || selectedCategory === 'tinctures')">
         <mat-expansion-panel>

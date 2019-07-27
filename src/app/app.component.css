@@ -26,22 +26,17 @@
 }
 
 .cardItem { 
-  height: 345px;
-  margin: 5px 5px 5px 5px;
+  height: 340px;
+  margin: 2px;
   cursor: pointer;
 }
 
 #cardImg {
-  width: 100%;
+  width: 85%;
   height: auto;
   margin: auto;
 }
-
-#popupImg{ 
-  width: 10px;
-  height: auto; 
-  margin-top: 100px;
-}
+ 
 
 .flexRow {
   display: flex;
