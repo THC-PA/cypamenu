@@ -90,7 +90,7 @@
 
       </mat-expansion-panel>
     </mat-accordion>
-
+ 
   <mat-accordion style="margin-top: 5px; margin-bottom: 5px;" *ngIf="(flowers && flowers.length > 0) && (selectedCategory === 'all' || selectedCategory === 'flower')">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
@@ -104,18 +104,17 @@
       fxFlex.md="33"
       fxFlex.sm="50"
       fxFlex.xs="100"
-      -->
-    <div class="flexRow">
-      <div *ngFor="let item of flowers | sortBy: sortBy:'desc' | menuFilter:selectedFilter:filterMetadata"
-      fxFlex.xs="49"
-      fxFlex.sm="33"
-      fxFlex.md="44"
-      fxFlex="20"
-      >
-        <mat-card (click)="displayDetails(item)" class="cardItem"
-        [ngStyle.xs]="{'height': '250px'}"
+[ngStyle.xs]="{'height': '250px'}"
         [ngStyle.sm]="{'height': '375px'}"
         [ngStyle.md]="{'height': '375px'}"
+          fxFlex.xs="{{getfxFlexXs()}}"
+      fxFlex.sm="{{getFlexSm()}}"
+      -->
+    <div class="flexRow">
+      <div *ngFor="let item of flowers | sortBy: sortBy:'desc' | menuFilter:selectedFilter:filterMetadata"       
+      >
+        <mat-card (click)="displayDetails(item)" class="cardItem"
+        [ngStyle]="getCardStyle()"
         >  
           <div [ngStyle.xs]="{'font-size': '10px'}"  style="font-weight: bold;">
             <!-- {{item.brand}}-->

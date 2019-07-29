@@ -15,12 +15,15 @@
  
 .content {
   margin-top: 120px;
+  word-wrap: break-all;
+  word-break: break-all;
+  -ms-word-break: break-all;
 }
 
 .searchPanel { 
   background: grey !important;
   position: fixed;
-  top: 35px;
+  top: 31px;
   width: 100%;
   left: 0;
 }

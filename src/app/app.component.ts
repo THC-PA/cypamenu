@@ -6,15 +6,41 @@ import { Store } from 'src/models/store.model';
 import { MatDialog } from '@angular/material'; 
 import { ItemDetailsPopup } from './itemDetails.popup';
 import { InventoryItemParser } from './services/inventoryItemParser.service';
+import {LayoutModule, BreakpointObserver, BreakpointState, Breakpoints} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent implements OnInit {
   selectedStore = '229';
   isLoading: boolean = false;
+/*
+  isExtraSmallScreen: boolean = false;
+  isSmallHandset: boolean = false;
+  isMediumHandset: boolean = false;
+
+  isLargeTablet: boolean = false;
+  isSmallTablet: boolean = false;
+  */
+
+  //isSmallHandset: boolean = false;
+/*
+  isExtraSmallScreen: boolean = false;
+  isSmallScreen: boolean = false;
+  isMediumScreen: boolean = false;
+  isLargeScreen: boolean = false;
+  isExtraLargeScreen: boolean = false;*/
+
+  isMediumScreen: boolean = false;
+  isLargeScreen: boolean = false;
+  isExtraLargeScreen: boolean = false;
+
+  isHandset: boolean = false;
+
+  isOrientationPortrait : boolean = true;
   stores: Store[] = [
     new Store('New Kensington', '229'),
     new Store('Butler', '202'),
@@ -25,6 +51,9 @@ export class AppComponent implements OnInit {
   selectedCategory = 'all';
   filterMetadata = { count: 0 };
   newWithinHours = 24;
+
+  orientationPortrait: string = '(orientation: portrait)';
+  orientationLandscape: string = '(orientation: landscape)';
 
   cart: InventoryItem[] = [];
 
@@ -46,13 +75,280 @@ export class AppComponent implements OnInit {
     selectedFilter = 'All';
 
   constructor(private httpClient: HttpClient,
+    private breakpointObserver: BreakpointObserver,
     private dialog: MatDialog,
     private itemParser: InventoryItemParser){
+      /*const layoutChanges = this.breakpointObserver.observe([
+        '(orientation: portrait)',
+        '(orientation: landscape)',
+      ]);*/
+      /*this.breakpointObserver.observe([
+        Breakpoints.XSmall
+      ]).subscribe(result => {
+        if (result.matches) {
+          this.isExtraSmallScreen = true;
+          alert('found extra small screen with breakpoints: ' + JSON.stringify(result.breakpoints));
+          //alert('New observer HANDSET: ' + JSON.stringify(result));
+       //alert('found extra small  screen');
+        }
+      });
+
+      this.breakpointObserver.observe([
+        Breakpoints.Small
+      ]).subscribe(result => {
+        if (result.matches) {
+          this.isSmallScreen = true;
+          alert('found small screen with breakpoints: ' + JSON.stringify(result.breakpoints));
+          //alert('New observer HANDSET: ' + JSON.stringify(result));
+      // alert('found small  screen');
+        }
+      });*/
+
+      this.breakpointObserver.observe([
+        Breakpoints.HandsetPortrait
+      ]).subscribe(result => {
+        if (result.matches) {
+          this.isHandset = true;
+          this.isOrientationPortrait = true;
+          this.isMediumScreen = false;
+          this.isLargeScreen = false;
+          this.isExtraLargeScreen = false;
+         // alert('found Handset PORTRAIT with breakpoints: ' + JSON.stringify(result.breakpoints));
+          
+        }
+      });
+
+      this.breakpointObserver.observe([
+        Breakpoints.HandsetLandscape
+      ]).subscribe(result => {
+        if (result.matches) {
+          this.isOrientationPortrait = false;
+          this.isHandset = true;
+          this.isMediumScreen = false;
+          this.isLargeScreen = false;
+          this.isExtraLargeScreen = false;
+        //  alert('found Handset LANDSCAPE with breakpoints: ' + JSON.stringify(result.breakpoints));
+        
+        }
+      });
+
+      this.breakpointObserver.observe([
+        Breakpoints.TabletLandscape
+      ]).subscribe(result => {
+        if (result.matches) {
+        //  this.isOrientationPortrait = false;
+        //  this.isHandset = true;
+         // this.isMediumScreen = false;
+          //this.isLargeScreen = false;
+          //this.isExtraLargeScreen = false;
+          alert('found TABLET LANDSCAPE with breakpoints: ' + JSON.stringify(result.breakpoints));
+        
+        }
+      });
+
+      this.breakpointObserver.observe([
+        Breakpoints.TabletPortrait
+      ]).subscribe(result => {
+        if (result.matches) {
+        //  this.isOrientationPortrait = false;
+        //  this.isHandset = true;
+         // this.isMediumScreen = false;
+          //this.isLargeScreen = false;
+          //this.isExtraLargeScreen = false;
+          alert('found TABLET PORTRAIT with breakpoints: ' + JSON.stringify(result.breakpoints));
+        
+        }
+      });
+
+      this.breakpointObserver.observe([
+        Breakpoints.WebLandscape
+      ]).subscribe(result => {
+        if (result.matches) {
+        //  this.isOrientationPortrait = false;
+        //  this.isHandset = true;
+         // this.isMediumScreen = false;
+          //this.isLargeScreen = false;
+          //this.isExtraLargeScreen = false;
+          alert('found WEB Landscape with breakpoints: ' + JSON.stringify(result.breakpoints));
+        
+        }
+      });
+
+      this.breakpointObserver.observe([
+        Breakpoints.WebPortrait
+      ]).subscribe(result => {
+        if (result.matches) {
+        //  this.isOrientationPortrait = false;
+        //  this.isHandset = true;
+         // this.isMediumScreen = false;
+          //this.isLargeScreen = false;
+          //this.isExtraLargeScreen = false;
+          alert('found WEB PORTRAIT with breakpoints: ' + JSON.stringify(result.breakpoints));
+        
+        }
+      });
+
+
+      this.breakpointObserver.observe([
+        Breakpoints.Medium
+      ]).subscribe(result => {
+        if (result.matches) {
+          this.isHandset = false;
+          this.isMediumScreen = true; 
+          this.isLargeScreen = false;
+          this.isExtraLargeScreen = false;
+          //alert('found  Medium screen with breakpoints: ' + JSON.stringify(result.breakpoints));
+          //found  Medium screen with breakpoints: {"(min-width: 960px) and (max-width: 1279.99px)":true}
+          //alert('New observer HANDSET: ' + JSON.stringify(result));
+      // alert('found small  screen');
+        }
+      });
+
+      this.breakpointObserver.observe([
+        Breakpoints.Large
+      ]).subscribe(result => {
+        if (result.matches) {
+          this.isHandset = false;
+          this.isMediumScreen = false;
+          this.isLargeScreen = true;
+          this.isExtraLargeScreen = false;
+         // alert('found  large screen with breakpoints: ' + JSON.stringify(result.breakpoints));
+          //alert('New observer HANDSET: ' + JSON.stringify(result));
+      // alert('found small  screen');
+        }
+      });
+
+      this.breakpointObserver.observe([
+        Breakpoints.XLarge
+      ]).subscribe(result => {
+        if (result.matches) {
+          this.isHandset = false;
+          this.isMediumScreen = false;
+          this.isLargeScreen = false;
+          this.isExtraLargeScreen = true;
+         // alert('found extra large screen with breakpoints: ' + JSON.stringify(result.breakpoints));
+          //alert('New observer HANDSET: ' + JSON.stringify(result));
+      // alert('found small  screen');
+        }
+      });
+
+      /*
+      this.breakpointObserver.observe([
+        Breakpoints.HandsetLandscape,
+        Breakpoints.HandsetPortrait
+      ]).subscribe(result => {
+        if (result.matches) {
+          //alert('New observer HANDSET: ' + JSON.stringify(result));
+          this.isSmallScreen = true;
+          if (result.breakpoints['(max-width: 959.99px) and ' + this.orientationLandscape] || 
+            result.breakpoints['(max-width: 959px) and ' + this.orientationLandscape] ) {
+              this.isOrientationPortrait = false;
+          } 
+
+          if (result.breakpoints['(max-width: 959.99px) and ' + this.orientationPortrait] || 
+            result.breakpoints['(max-width: 959px) and ' + this.orientationPortrait] ) {
+              this.isOrientationPortrait = true;
+          } 
+        }
+      });*/
+
+
+      /*
+      New observer results: 
+      {"matches":true,
+      "breakpoints":{
+       "(max-width: 959.99px) and (orientation: landscape)":true,
+       "(max-width: 599.99px) and (orientation: portrait)":false}}
+
+
+orientation change: {"matches":true,"breakpoints":{"(orientation: portrait)":true,"(orientation: landscape)":false}}
+      */
+      
+     // layoutChanges.subscribe(result => {
+        //alert('orientation change: ' + JSON.stringify(result));
+        
+        //this.updateMyLayoutForOrientationChange(result);
+     // });
+
     this.title = 'CY+ ' + this.stores.find(x => x.id === this.selectedStore).name + ' Menu';
   }
 
   ngOnInit() {
     this.search();
+  }
+
+  /*getCardFlex(): number {
+    if (this.isHandset) {
+      if (this.isOrientationPortrait) {
+        
+        return 44;
+      } else {
+        return 22;
+      }
+    } else {
+      if (this.isMediumScreen) {
+        //alert('setting medium card')
+        return 11;
+      }
+      if (this.isLargeScreen) {
+        alert('setting large card')
+        return 44;
+      } 
+      if (this.isExtraLargeScreen) {
+        return 55;
+      } else {
+        return 11;
+      }
+    }
+  }*/
+
+  updateMyLayoutForOrientationChange(breakpointState: BreakpointState) {
+    if (breakpointState.matches === true) {
+      this.isOrientationPortrait = breakpointState.breakpoints[this.orientationPortrait];
+    }
+  }
+
+  setLargeTabletLandscape(): number {
+   // alert('setting large tablet');
+    return 33;
+  }
+
+  /*
+  getFlexXs(): number {
+    if (this.isOrientationPortrait) {
+       return 44;
+    } else {
+      return 22;
+    }
+  }*/
+
+  getCardStyle() {
+    if (this.isHandset && !this.isOrientationPortrait) {
+      return {
+        //'width' : '120px',
+        'width': '20vw',
+        'height': '50%'
+        //'height': '235px'
+      }
+    }
+
+    if (this.isHandset && this.isOrientationPortrait) {
+      return  {
+        'width': '100px',
+        'height': '50%'
+      }
+    }
+    
+  }
+
+  getFlexSm(): number {
+    /*if (this.isOrientationPortrait) {
+      return 44;
+    } else {
+      return 22;
+    }*/
+
+    return 33;
   }
 
   filterChanged() {
@@ -63,24 +359,20 @@ export class AppComponent implements OnInit {
     this.cart = [];
   }
 
-  test1(event) {
-    alert('detected small screen');
-  }
-
-  test2(event){
-    alert('detected medium screen ' + JSON.stringify(event));
-  }
-
-  test(event) {
-    alert('detected extra small screen!' + JSON.stringify(event));
-  }
   getDisplayName(item: InventoryItem) {
    return this.itemParser.getDisplayName(item);
   }
 
   displayDetails(item: InventoryItem): void {
+    let height = '30px;';
+/*
+    if (this.isHandset && !this.isOrientationPortrait) {
+      height = '300px';
+    }
+*/
     const dialogRef = this.dialog.open(ItemDetailsPopup, { 
-      data: item
+      data: item,
+      height: height
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -140,6 +432,30 @@ export class AppComponent implements OnInit {
           this.isLoading = false;
         });
     }
+/*
+    isExtraLargeScreen() { 
+      return this.breakpointObserver.isMatched('(min-width: 1920px)')
+        && this.breakpointObserver.isMatched('(max-width: 5000px)');
+    }
+
+    isLargeScreen() {
+      return this.breakpointObserver.isMatched('(min-width: 1280px)')
+        && this.breakpointObserver.isMatched('(max-width: 1919px)');
+    }
+
+    isMediumScreen() {
+      return this.breakpointObserver.isMatched('(min-width: 960px)')
+        && this.breakpointObserver.isMatched('(max-width: 1279px)');
+    }
+    
+    isSmallScreen() {
+      return this.breakpointObserver.isMatched('(min-width: 600px)')
+        && this.breakpointObserver.isMatched('(max-width: 959px)');
+    }
+
+    isExtraSmallScreen() {
+      return this.breakpointObserver.isMatched('(max-width: 599px)');
+    }*/
 
     processMenuResults(menu: Menu){ 
       menu.data.forEach(item => {

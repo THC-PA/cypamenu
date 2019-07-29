@@ -1,15 +1,14 @@
-<h1 [ngStyle.xs]="{'font-size': '10px'}" align="center" mat-dialog-title>
-    
-    <div style="font-weight: bold;">
-        {{getDisplayName(data)}}
-    </div>
+<h1 
+  align="center" mat-dialog-title>
+     
+        {{getDisplayName(data)}} 
 </h1>
 
-<div fxLayout="column" fxLayoutAlign="center" mat-dialog-content>    
+<div [ngStyle]="getContentStyle()" fxLayout="column" fxLayoutAlign="center" mat-dialog-content>    
     <div align="center" *ngIf="data.product && data.product_strain">
         <img 
-        [ngStyle.xs]="{'width': '90%;'}" 
-        style="width: 30%; height: auto; margin-top: 10px;"  *ngIf="data.product.image_url_main || data.product_strain.image_url_main"
+        [ngStyle]="getImgStyle()"
+        *ngIf="data.product.image_url_main || data.product_strain.image_url_main"
         [src]="data.product_strain.image_url_main" 
         default="{{data.product.image_url_main}}" 
         />
