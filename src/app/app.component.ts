@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material';
 import { ItemDetailsPopup } from './itemDetails.popup';
 import { InventoryItemParser } from './services/inventoryItemParser.service';
 import {LayoutModule, BreakpointObserver, BreakpointState, Breakpoints} from '@angular/cdk/layout';
+import { Prices } from 'src/models/prices.model';
 
 @Component({
   selector: 'app-root',
@@ -385,13 +386,7 @@ orientation change: {"matches":true,"breakpoints":{"(orientation: portrait)":tru
   }
 
   getBrand(item: InventoryItem) {
-    if (item.cultivator !== null && item.cultivator  !== undefined) {
-      return item.cultivator;
-    }
-
-    if (item.brand !== null && item.brand !== undefined) {
-      return item.brand;
-    }
+    return this.itemParser.getBrand(item);
   }
   storeChanged() {
     this.title = 'CY+ ' + this.stores.find(x => x.id === this.selectedStore).name + ' Menu';
@@ -457,9 +452,14 @@ orientation change: {"matches":true,"breakpoints":{"(orientation: portrait)":tru
       return this.breakpointObserver.isMatched('(max-width: 599px)');
     }*/
 
+    getWeight(item: InventoryItem): string {
+      return this.itemParser.getWeight(item);
+    }
+
     processMenuResults(menu: Menu){ 
       menu.data.forEach(item => {
         let category = item.category.toLowerCase(); 
+        item.prices = [];
 
        // if (category.indexOf('flower') > -1) {
         //  if (item.product !== null && item.product !== undefined){
@@ -586,7 +586,51 @@ orientation change: {"matches":true,"breakpoints":{"(orientation: portrait)":tru
         }
 
         if (category.indexOf('flower') > -1) {
-          this.flowers.push(item);
+          let context = this;
+          let currItemDisplayName = this.itemParser.getDisplayName(item);
+
+          let exists = this.flowers.find(filterItem => {
+            let fName = context.itemParser.getDisplayName(filterItem);
+            if (currItemDisplayName.indexOf(fName) > -1) {
+              
+              return true;
+            }
+          });
+          
+          if (exists) {
+           // console.log('found existing item ' + item.name + ', weight: ' + this.itemParser.getWeight(item));
+              let prices = new Prices();
+              let prices1 = new Prices();
+             // let existingPrice = exists.price_point[0].price;
+             // let existingWeight = this.itemParser.getWeight(exists);
+              prices1.price = exists.price_point.prices[0].price;
+              prices1.weight = this.itemParser.getWeight(exists);
+
+              prices.price = item.price_point.prices[0].price;
+              prices.weight = this.itemParser.getWeight(item);
+              console.log('adding to prices: ' + JSON.stringify(prices));
+              console.log('adding to prices: ' + JSON.stringify(prices1));
+              //item.prices.push(prices);
+              //item.prices.push(prices1);
+              let newPrices: Prices[] = [prices];
+              newPrices.push(prices1);
+
+              let updateIndex = this.flowers.findIndex(i => (i.id === exists.id));
+
+              if (updateIndex > -1) {
+                this.flowers[updateIndex].prices = newPrices;
+              }
+             
+             // this.flowers.push(item);
+              
+              //item.prices.push(new Prices());
+          } else {
+            let price = new Prices();
+            price.price = item.price_point.prices[0].price;
+            price.weight = this.itemParser.getWeight(item);
+            item.prices.push(price);
+            this.flowers.push(item);
+          }
         }
           
         if (category.indexOf('concentrate') > -1) {

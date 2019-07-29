@@ -1,12 +1,14 @@
 import { Product } from 'src/models/product.model';
 import { ProductStrain } from 'src/models/productStrain.model';
 import { PricePoint } from 'src/models/pricePoint.model';
+import { Prices } from './prices.model';
 
 export class InventoryItem {
     id: number;
     location_id: number;
     name: string;
     bt_remaining_quantity: number;
+    bt_weight: number;
     updated: string;
     category: string;
     product_id: number;
@@ -19,6 +21,7 @@ export class InventoryItem {
     product: Product;
     product_strain: ProductStrain;
     price_point: PricePoint;
+    prices: Prices[] = [];
     type: string;
     created_ago: string;
     //store: Store;

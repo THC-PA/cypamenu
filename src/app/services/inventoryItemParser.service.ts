@@ -11,6 +11,44 @@ export class InventoryItemParser {
 
         return item.product_strain.name + ' - ' + item.name + ' ' + item.type;    */
 
-        return item.name + ' ' + item.type;
+        let concatDisplay = item.name;// + ' ' + item.type;
+
+        let searchMask = "3.5g";
+        let regEx = new RegExp(searchMask, "ig");
+        let replaceMask = "";
+
+        let removedEigth = concatDisplay.replace(regEx, replaceMask);
+
+        let gramMask = "1g";
+        let regexGram = new RegExp(gramMask, "ig");
+
+        let flowerMask = "flower";
+        let regexFlower = new RegExp(flowerMask, "ig");
+        let removedWeight = removedEigth.replace(regexGram, replaceMask);
+
+        return removedWeight.replace(regexFlower, replaceMask);
+    }
+
+    getBrand(item: InventoryItem): string {
+        if (item.cultivator !== null && item.cultivator  !== undefined) {
+            return item.cultivator;
+        }
+    
+        if (item.brand !== null && item.brand !== undefined) {
+            return item.brand;
+        }
+    }
+
+    getWeight(item: InventoryItem): string {
+        if (item.bt_weight) {
+            return item.bt_weight + 'G';
+        } else {
+            if (item.name.indexOf('3.5') > -1) {
+                return 3.5 + 'G';
+            } 
+            if (item.name.toLowerCase().indexOf('1g') > -1) {
+                return 1 + 'G';
+            }
+        }
     }
 }
