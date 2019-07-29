@@ -142,7 +142,7 @@ export class AppComponent implements OnInit {
          // this.isMediumScreen = false;
           //this.isLargeScreen = false;
           //this.isExtraLargeScreen = false;
-          alert('found TABLET LANDSCAPE with breakpoints: ' + JSON.stringify(result.breakpoints));
+         // alert('found TABLET LANDSCAPE with breakpoints: ' + JSON.stringify(result.breakpoints));
         
         }
       });
@@ -156,7 +156,7 @@ export class AppComponent implements OnInit {
          // this.isMediumScreen = false;
           //this.isLargeScreen = false;
           //this.isExtraLargeScreen = false;
-          alert('found TABLET PORTRAIT with breakpoints: ' + JSON.stringify(result.breakpoints));
+          //alert('found TABLET PORTRAIT with breakpoints: ' + JSON.stringify(result.breakpoints));
         
         }
       });
@@ -170,7 +170,7 @@ export class AppComponent implements OnInit {
          // this.isMediumScreen = false;
           //this.isLargeScreen = false;
           //this.isExtraLargeScreen = false;
-          alert('found WEB Landscape with breakpoints: ' + JSON.stringify(result.breakpoints));
+         // alert('found WEB Landscape with breakpoints: ' + JSON.stringify(result.breakpoints));
         
         }
       });
@@ -184,7 +184,7 @@ export class AppComponent implements OnInit {
          // this.isMediumScreen = false;
           //this.isLargeScreen = false;
           //this.isExtraLargeScreen = false;
-          alert('found WEB PORTRAIT with breakpoints: ' + JSON.stringify(result.breakpoints));
+        //  alert('found WEB PORTRAIT with breakpoints: ' + JSON.stringify(result.breakpoints));
         
         }
       });
@@ -365,15 +365,14 @@ orientation change: {"matches":true,"breakpoints":{"(orientation: portrait)":tru
   }
 
   displayDetails(item: InventoryItem): void {
-    let height = '30px;';
+   // let height = '30px;';
 /*
     if (this.isHandset && !this.isOrientationPortrait) {
       height = '300px';
     }
 */
     const dialogRef = this.dialog.open(ItemDetailsPopup, { 
-      data: item,
-      height: height
+      data: item
     });
 
     dialogRef.afterClosed().subscribe(result => {

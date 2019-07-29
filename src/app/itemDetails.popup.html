@@ -7,7 +7,21 @@
 <div [ngStyle]="getContentStyle()" fxLayout="column" fxLayoutAlign="center" mat-dialog-content>    
     <div align="center" *ngIf="data.product && data.product_strain">
         <img 
-        [ngStyle]="getImgStyle()"
+        [ngStyle.md]="{
+          width: 'auto',
+          'height': '200px',
+          'margin': 'auto'
+        }"
+        [ngStyle.sm]="{
+          width: 'auto',
+          'height': '110px',
+          'margin-top': '10px'
+        }"
+        [ngStyle.xs]="{
+          width: 'auto',
+          'height': '100px',
+          'margin': 'auto'
+        }"
         *ngIf="data.product.image_url_main || data.product_strain.image_url_main"
         [src]="data.product_strain.image_url_main" 
         default="{{data.product.image_url_main}}" 
