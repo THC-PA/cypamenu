@@ -25,8 +25,12 @@ export class InventoryItemParser {
         let flowerMask = "flower";
         let regexFlower = new RegExp(flowerMask, "ig");
         let removedWeight = removedEigth.replace(regexGram, replaceMask);
+        let noWeight = removedWeight.replace(regexFlower, replaceMask);
 
-        return removedWeight.replace(regexFlower, replaceMask);
+        let noG = "3.5";
+        let regexNoG = new RegExp(noG, replaceMask);
+        return noWeight.replace(regexNoG, replaceMask);
+        
     }
 
     getBrand(item: InventoryItem): string {
