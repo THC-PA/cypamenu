@@ -4,7 +4,9 @@
         {{getDisplayName(data)}} 
 </h1>
 
-<div [ngStyle]="getContentStyle()" fxLayout="column" fxLayoutAlign="center" mat-dialog-content>    
+<div
+[ngStyle.xs]="{'height': '160px', 'overflow-y': 'auto'}"
+ fxLayout="column" fxLayoutAlign="center" mat-dialog-content>    
     <div align="center" *ngIf="data.product && data.product_strain">
         <img 
         [ngStyle.md]="{

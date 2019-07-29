@@ -108,42 +108,29 @@
           [ngStyle.sm]="
           {
             'height': '285px', 
-            width: '140px', 
-            'color': 'blue'
-          
+            width: '140px'
           }" 
           [ngStyle.xs]="
             {
               'height': '250px', 
-              width: '100px', 
-              'color': 'green'
-            
+              width: '100px'
             }"
           [ngStyle.md]=" {
             height: '300px',
-            width: '150px',
-            color: 'yellow' 
+            width: '150px'
           }"
           [ngStyle.lg]=" {
             height: '340px',
-            width: '150px',
-            color: 'red' 
+            width: '150px'
           }"
           >  
             <mat-card-title 
-            [ngStyle.xs]="
+            [ngStyle]="
             {
               'font-size': '15px',
               'text-align': 'center',
               'height': '35px'
-            }"
-            [ngStyle.sm]="
-            {
-              'font-size': '15px',
-              'text-align': 'center',
-              'height': '35px'
-            }"
-            >
+            }">
                 {{ getDisplayName(item) }}
             </mat-card-title>
           
