@@ -9,11 +9,14 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
     templateUrl: './itemDetails.popup.html',
   })
   export class ItemDetailsPopup {
-  isLargeScreen: boolean; 
-  isOrientationPortrait: boolean;
-  isHandset: boolean;
-  isMediumScreen: boolean;
-  isExtraLargeScreen: boolean;
+  showFlower: boolean = false;
+  isLargeScreen: boolean = false;
+  isOrientationPortrait: boolean = false;
+  isHandset: boolean = false;
+  isMediumScreen: boolean = false;
+  isExtraSmallScreen: boolean = false;
+  isSmallScreen: boolean = false;
+  isExtraLargeScreen: boolean = false;
     constructor(
       public dialogRef: MatDialogRef<ItemDetailsPopup>,
       @Inject(MAT_DIALOG_DATA) public data: InventoryItem,
@@ -29,7 +32,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
           this.isMediumScreen = false;
           this.isLargeScreen = false;
           this.isExtraLargeScreen = false;
-        //  alert('found Handset PORTRAIT with breakpoints: ' + JSON.stringify(result.breakpoints));
+         // alert('found Handset PORTRAIT');
           //alert('New observer HANDSET: ' + JSON.stringify(result));
       // alert('found small  screen');
         }
@@ -44,7 +47,49 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
           this.isMediumScreen = false;
           this.isLargeScreen = false;
           this.isExtraLargeScreen = false;
-         // alert('found Handset LANDSCAPE with breakpoints: ' + JSON.stringify(result.breakpoints));
+        // alert('found Handset LANDSCAPE ');
+          //alert('New observer HANDSET: ' + JSON.stringify(result));
+      // alert('found small  screen');
+        }
+      });
+
+      this.breakpointObserver.observe([
+        Breakpoints.XSmall
+      ]).subscribe(result => {
+        if (result.matches) {
+
+          if (this.isHandset) {
+            //alert('Found that its a handset, but also found XSmall screen?');
+          }
+          this.isHandset = false;
+          this.isMediumScreen = false; 
+          this.isLargeScreen = false;
+          this.isExtraLargeScreen = false;
+          this.isSmallScreen = false;
+          this.isExtraSmallScreen = true;
+          
+        //  alert('found  Medium screen with breakpoints: ' + JSON.stringify(result.breakpoints));
+          //found  Medium screen with breakpoints: {"(min-width: 960px) and (max-width: 1279.99px)":true}
+          //alert('New observer HANDSET: ' + JSON.stringify(result));
+      // alert('found small  screen');
+        }
+      });
+
+      this.breakpointObserver.observe([
+        Breakpoints.Small
+      ]).subscribe(result => {
+        if (result.matches) {
+          if (this.isHandset) {
+           // alert('Found that its a handset, but also found Small screen?');
+          }
+          this.isHandset = false;
+          this.isMediumScreen = false; 
+          this.isLargeScreen = false;
+          this.isExtraLargeScreen = false;
+          this.isSmallScreen = true;
+         
+        //  alert('found  Medium screen with breakpoints: ' + JSON.stringify(result.breakpoints));
+          //found  Medium screen with breakpoints: {"(min-width: 960px) and (max-width: 1279.99px)":true}
           //alert('New observer HANDSET: ' + JSON.stringify(result));
       // alert('found small  screen');
         }
@@ -102,41 +147,91 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
       return this.itemParser.getDisplayName(item);
     }
 
+    /*
+        [ngStyle.md]="{
+          width: 'auto',
+          'height': '200px',
+          'margin': 'auto'
+        }"
+        [ngStyle.sm]="{
+          width: 'auto',
+          'height': '110px',
+          'margin-top': '10px'
+        }"
+        [ngStyle.xs]="{
+          width: 'auto',
+          'height': '100px',
+          'margin': 'auto'
+        }"
+    */
+
     getImgStyle() {
       if (this.isHandset && !this.isOrientationPortrait) {
-          return {
-            'width': '120px',
-            'height': 'auto',
-            'margin-top': '25px'
-           // 'height': 'auto',
-           // 'margin-top': '5px'
+       // alert('111');  
+        return {
+            width: 'auto',
+            height: '110px'
           }
       } 
 
       if (this.isHandset && this.isOrientationPortrait){
+       // alert('222');  
         return {
           'width': 'auto',
-          'height': '100px',
+          'height': '200px',
          // 'height': 'auto',
-          'margin-top': '10px'
+          'margin-top': 'auto'
         }
+      }
+
+      if (!this.isHandset) {
+        if (this.isExtraSmallScreen) {
+         // alert('orientation portait? --> ' + this.isOrientationPortrait)
+        }
+        if (this.isSmallScreen) {
+         // alert('x11111');  
+          return {
+            width: 'auto',
+            height: '150px',
+            'margin-top':'140px'
+          }
+        }
+        if (this.isMediumScreen) {
+        //  alert('its medium');
+        }
+         if (this.isLargeScreen) {
+         // alert('tsi large')
+         }
       }
     }
 
-    getContentStyle() {
-      if (this.isHandset && !this.isOrientationPortrait) {
-        return {
-          'height': '90%',
-          'width': 'auto'
-        }
-      }
+    displayFlower() {
+      this.showFlower = true;
+    }
 
-      if (this.isHandset && this.isOrientationPortrait) {
-        return {
-          'height': '60%',
-          'width':'auto'
+    hideFlower() {
+      this.showFlower = false;
+    }
+
+    getContentStyle() {
+
+        if (this.isExtraSmallScreen) {
+        //  alert('its extra small');
         }
-      }
+        if (this.isSmallScreen) {
+          //alert('its small');
+          return {
+            height: '150px',
+            'overflow-y': 'auto'
+          }
+        }
+        if (this.isMediumScreen) {
+        //  alert('its medium');
+        }
+         if (this.isLargeScreen) {
+         //  alert('tsi large')
+         }
+      
     }
   
   }

@@ -4,25 +4,21 @@
         {{getDisplayName(data)}} 
 </h1>
 
-<div
-[ngStyle.xs]="{'height': '160px', 'overflow-y': 'auto'}"
+<div 
  fxLayout="column" fxLayoutAlign="center" mat-dialog-content>    
-    <div align="center" *ngIf="data.product && data.product_strain">
+    <div align="center" *ngIf="data.product && data.product_strain && showFlower">
         <img 
-        [ngStyle.md]="{
+        [ngStyle.xs]="{
           width: 'auto',
-          'height': '200px',
-          'margin': 'auto'
+          height: ' 250px'
         }"
         [ngStyle.sm]="{
           width: 'auto',
-          'height': '110px',
-          'margin-top': '10px'
+          height: '280px'
         }"
-        [ngStyle.xs]="{
-          width: 'auto',
-          'height': '100px',
-          'margin': 'auto'
+        [ngStyle.md]="{
+          width: 'auto', 
+          height: '350px'
         }"
         *ngIf="data.product.image_url_main || data.product_strain.image_url_main"
         [src]="data.product_strain.image_url_main" 
@@ -32,12 +28,14 @@
 
     <div
     [ngStyle.xs]="{'font-size': '10px'}" 
-     *ngIf="data.product_strain && data.product_strain.description" style="font-size: 16px;">{{ data.product_strain.description }}</div>
+     *ngIf="data.product_strain && data.product_strain.description && !showFlower" style="font-size: 16px;">{{ data.product_strain.description }}</div>
 
 </div>
 <div mat-dialog-actions align="end">
+    <button *ngIf="!showFlower" mat-button (click)="displayFlower()">Show flower</button>
+    <button *ngIf="showFlower" mat-button (click)="hideFlower()">Hide flower</button>
   <button mat-button (click)="onNoClick()">Close</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Add to cart</button>
+ <!-- <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Add to cart</button>-->
 </div>
 
 <!--
