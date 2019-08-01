@@ -12,4 +12,5 @@ export class Product {
     sativa_pct: number;
     image_url_main: string;
     image_url_alt: string;
+    description: string;
 }

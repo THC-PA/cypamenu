@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, AfterViewInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { InventoryItem } from '../models/inventoryItem.model';
 import { InventoryItemParser } from './services/inventoryItemParser.service';
@@ -8,14 +8,15 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
     selector: 'dialog-overview-example-dialog',
     templateUrl: './itemDetails.popup.html',
   })
-  export class ItemDetailsPopup {
+  export class ItemDetailsPopup implements AfterViewInit {
   showFlower: boolean = false;
-  isLargeScreen: boolean = false;
   isOrientationPortrait: boolean = false;
-  isHandset: boolean = false;
-  isMediumScreen: boolean = false;
+  //isHandset: boolean = false;
+  
   isExtraSmallScreen: boolean = false;
   isSmallScreen: boolean = false;
+  isMediumScreen: boolean = false;
+  isLargeScreen: boolean = false;
   isExtraLargeScreen: boolean = false;
     constructor(
       public dialogRef: MatDialogRef<ItemDetailsPopup>,
@@ -23,120 +24,94 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
       private itemParser: InventoryItemParser,
       private breakpointObserver: BreakpointObserver) { 
 
-      this.breakpointObserver.observe([
-        Breakpoints.HandsetPortrait
-      ]).subscribe(result => {
-        if (result.matches) {
-          this.isHandset = true;
-          this.isOrientationPortrait = true;
-          this.isMediumScreen = false;
-          this.isLargeScreen = false;
-          this.isExtraLargeScreen = false;
-         // alert('found Handset PORTRAIT');
-          //alert('New observer HANDSET: ' + JSON.stringify(result));
-      // alert('found small  screen');
-        }
-      });
-
-      this.breakpointObserver.observe([
-        Breakpoints.HandsetLandscape
-      ]).subscribe(result => {
-        if (result.matches) {
-          this.isOrientationPortrait = false;
-          this.isHandset = true;
-          this.isMediumScreen = false;
-          this.isLargeScreen = false;
-          this.isExtraLargeScreen = false;
-        // alert('found Handset LANDSCAPE ');
-          //alert('New observer HANDSET: ' + JSON.stringify(result));
-      // alert('found small  screen');
-        }
-      });
-
-      this.breakpointObserver.observe([
-        Breakpoints.XSmall
-      ]).subscribe(result => {
-        if (result.matches) {
-
-          if (this.isHandset) {
-            //alert('Found that its a handset, but also found XSmall screen?');
+        this.breakpointObserver.observe([
+          Breakpoints.XSmall
+        ]).subscribe(result => {
+          if (result.matches) {
+            console.log('*** EXTRA small screen detected.');
+            //this.isHandset = false;
+            this.isSmallScreen = false;
+            this.isMediumScreen = false; 
+            this.isLargeScreen = false;
+            this.isExtraLargeScreen = false;
+            this.isExtraSmallScreen = true;
+            //alert('found  Medium screen with breakpoints: ' + JSON.stringify(result.breakpoints));
+            //found  Medium screen with breakpoints: {"(min-width: 960px) and (max-width: 1279.99px)":true}
+            //alert('New observer HANDSET: ' + JSON.stringify(result));
+        // alert('found small  screen');
           }
-          this.isHandset = false;
-          this.isMediumScreen = false; 
-          this.isLargeScreen = false;
-          this.isExtraLargeScreen = false;
-          this.isSmallScreen = false;
-          this.isExtraSmallScreen = true;
-          
-        //  alert('found  Medium screen with breakpoints: ' + JSON.stringify(result.breakpoints));
-          //found  Medium screen with breakpoints: {"(min-width: 960px) and (max-width: 1279.99px)":true}
-          //alert('New observer HANDSET: ' + JSON.stringify(result));
-      // alert('found small  screen');
-        }
-      });
-
-      this.breakpointObserver.observe([
-        Breakpoints.Small
-      ]).subscribe(result => {
-        if (result.matches) {
-          if (this.isHandset) {
-           // alert('Found that its a handset, but also found Small screen?');
+        });
+  
+  
+        this.breakpointObserver.observe([
+          Breakpoints.Small
+        ]).subscribe(result => {
+          if (result.matches) {
+            //this.isHandset = false;
+            console.log('*** small screen detected.');
+            this.isExtraSmallScreen = false;
+            this.isSmallScreen = true;
+            this.isMediumScreen = false; 
+            this.isLargeScreen = false;
+            this.isExtraLargeScreen = false;
+            //alert('found  Medium screen with breakpoints: ' + JSON.stringify(result.breakpoints));
+            //found  Medium screen with breakpoints: {"(min-width: 960px) and (max-width: 1279.99px)":true}
+            //alert('New observer HANDSET: ' + JSON.stringify(result));
+        // alert('found small  screen');
           }
-          this.isHandset = false;
-          this.isMediumScreen = false; 
-          this.isLargeScreen = false;
-          this.isExtraLargeScreen = false;
-          this.isSmallScreen = true;
-         
-        //  alert('found  Medium screen with breakpoints: ' + JSON.stringify(result.breakpoints));
-          //found  Medium screen with breakpoints: {"(min-width: 960px) and (max-width: 1279.99px)":true}
-          //alert('New observer HANDSET: ' + JSON.stringify(result));
-      // alert('found small  screen');
-        }
-      });
-
-      this.breakpointObserver.observe([
-        Breakpoints.Medium
-      ]).subscribe(result => {
-        if (result.matches) {
-          this.isHandset = false;
-          this.isMediumScreen = true; 
-          this.isLargeScreen = false;
-          this.isExtraLargeScreen = false;
-        //  alert('found  Medium screen with breakpoints: ' + JSON.stringify(result.breakpoints));
-          //found  Medium screen with breakpoints: {"(min-width: 960px) and (max-width: 1279.99px)":true}
-          //alert('New observer HANDSET: ' + JSON.stringify(result));
-      // alert('found small  screen');
-        }
-      });
-
-      this.breakpointObserver.observe([
-        Breakpoints.Large
-      ]).subscribe(result => {
-        if (result.matches) {
-          this.isHandset = false;
-          this.isMediumScreen = false;
-          this.isLargeScreen = true;
-          this.isExtraLargeScreen = false;
-          //alert('found  large screen with breakpoints: ' + JSON.stringify(result.breakpoints));
-          //alert('New observer HANDSET: ' + JSON.stringify(result));
-      // alert('found small  screen');
-        }
-      });
-
-      this.breakpointObserver.observe([
-        Breakpoints.XLarge
-      ]).subscribe(result => {
-        if (result.matches) {
-          this.isHandset = false;
-          this.isMediumScreen = false;
-          this.isLargeScreen = false;
-          this.isExtraLargeScreen = true;
-        //  alert('found extra large screen with breakpoints: ' + JSON.stringify(result.breakpoints));
-          //alert('New observer HANDSET: ' + JSON.stringify(result));
-      // alert('found small  screen');
-        }
-      });
+        });
+  
+        this.breakpointObserver.observe([
+          Breakpoints.Medium
+        ]).subscribe(result => {
+          if (result.matches) {
+            console.log('*** Medium screen detected.');
+           // this.isHandset = false;
+           this.isSmallScreen = false;
+           this.isExtraSmallScreen = false;
+            this.isMediumScreen = true; 
+            this.isLargeScreen = false;
+            this.isExtraLargeScreen = false;
+            //alert('found  Medium screen with breakpoints: ' + JSON.stringify(result.breakpoints));
+            //found  Medium screen with breakpoints: {"(min-width: 960px) and (max-width: 1279.99px)":true}
+            //alert('New observer HANDSET: ' + JSON.stringify(result));
+        // alert('found small  screen');
+          }
+        });
+  
+        this.breakpointObserver.observe([
+          Breakpoints.Large
+        ]).subscribe(result => {
+          if (result.matches) {
+            console.log('*** Large screen detected.');
+            this.isExtraSmallScreen = false;
+            this.isSmallScreen = false;
+           // this.isHandset = false;
+            this.isMediumScreen = false;
+            this.isLargeScreen = true;
+            this.isExtraLargeScreen = false;
+           // alert('found  large screen with breakpoints: ' + JSON.stringify(result.breakpoints));
+            //alert('New observer HANDSET: ' + JSON.stringify(result));
+        // alert('found small  screen');
+          }
+        });
+  
+        this.breakpointObserver.observe([
+          Breakpoints.XLarge
+        ]).subscribe(result => {
+          if (result.matches) {
+           // this.isHandset = false;
+           console.log('*** EXTRA large screen detected.');
+           this.isExtraSmallScreen = false;
+           this.isSmallScreen = false;
+            this.isMediumScreen = false;
+            this.isLargeScreen = false;
+            this.isExtraLargeScreen = true;
+           // alert('found extra large screen with breakpoints: ' + JSON.stringify(result.breakpoints));
+            //alert('New observer HANDSET: ' + JSON.stringify(result));
+        // alert('found small  screen');
+          }
+        });
       }
   
     onNoClick(): void { 
@@ -147,26 +122,37 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
       return this.itemParser.getDisplayName(item);
     }
 
-    /*
-        [ngStyle.md]="{
-          width: 'auto',
-          'height': '200px',
-          'margin': 'auto'
-        }"
-        [ngStyle.sm]="{
-          width: 'auto',
-          'height': '110px',
-          'margin-top': '10px'
-        }"
-        [ngStyle.xs]="{
-          width: 'auto',
-          'height': '100px',
-          'margin': 'auto'
-        }"
-    */
+    ngAfterViewInit() {
+      document.body.scrollTop = 0;
+      window.scroll(0, 0);
+    }
 
     getImgStyle() {
-      if (this.isHandset && !this.isOrientationPortrait) {
+      if (this.isExtraSmallScreen) {
+        return {
+          width: 'auto',
+          height: '250px'
+        }
+      }
+      if (this.isSmallScreen) {
+        return {
+          width: 'auto',
+          height: '280px'
+        }
+      }
+      if (this.isMediumScreen) {
+        return {
+          width: 'auto', 
+          height: '350px'
+        }
+      }
+     
+      return {
+        width: 'auto',
+        height: '380px'
+      }
+
+     /* if (this.isHandset && !this.isOrientationPortrait) {
        // alert('111');  
         return {
             width: 'auto',
@@ -202,7 +188,11 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
          if (this.isLargeScreen) {
          // alert('tsi large')
          }
-      }
+      }*/
+    }
+
+    getType(item: InventoryItem): string {
+      return this.itemParser.getType(item);
     }
 
     displayFlower() {
@@ -214,15 +204,15 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
     }
 
     getContentStyle() {
-
         if (this.isExtraSmallScreen) {
-        //  alert('its extra small');
+          return {
+            'margin-top': '545px'
+          }
         }
         if (this.isSmallScreen) {
           //alert('its small');
           return {
-            height: '150px',
-            'overflow-y': 'auto'
+            'margin-top': '45px'
           }
         }
         if (this.isMediumScreen) {
@@ -231,7 +221,10 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
          if (this.isLargeScreen) {
          //  alert('tsi large')
          }
-      
+    }
+
+    getDescription(item: InventoryItem): string {
+      return this.itemParser.getDescription(item);
     }
   
   }

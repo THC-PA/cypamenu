@@ -12,7 +12,7 @@
     <br />
     
     <mat-accordion>
-        <mat-expansion-panel class="searchPanel">
+        <mat-expansion-panel class="searchPanel" [(expanded)]="searchPanelOpenState">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Search Selection
@@ -49,7 +49,7 @@
                 <input matInput type="text" placeholder="Search Text" [(ngModel)]="searchText">
               </mat-form-field>
   
-              <button (click)="search()" mat-button color="primary">Search</button>
+              <button (click)="search(); searchPanelOpenState=searchPanelOpenState?false:true;" mat-button color="primary">Search</button>
   
         
   
@@ -78,16 +78,116 @@
               last {{newWithinHours}} hours
           </mat-panel-description>
           </mat-expansion-panel-header>
+        <div fxLayout="row wrap">
           <div *ngFor="let item of newItems">
-              <mat-card>
+             <!-- <mat-card>
                   <div style="font-size: 20px;">{{ item.name }}&nbsp;({{item.category}})</div>
                   <div>{{ item.brand }}</div>
               
                 price: ${{ item.price_point.prices[0].price}}
                 <br/>
+              </mat-card> -->
+
+
+
+              <mat-card (click)="displayDetails(item)" 
+              style="word-break: normal; cursor:pointer; margin: 2px;" 
+              [ngStyle]="getCardStyle()"
+              >  
+                <mat-card-title 
+                [ngStyle]="
+                {
+                  'font-size': '15px',
+                  'text-align': 'center',
+                  'height': '35px'
+                }">
+                    {{ getDisplayName(item) }}
+                </mat-card-title> 
+
+                
+                <div *ngIf="item.product && item.category==='vapes'">
+                    <img mat-card-sm-image style="width: 100%; height: 100%;"
+                    [src]="item.product.image_url_main" 
+                    default="{{item.product.image_url_alt}}" 
+                    />
+                </div>
+                <div *ngIf="item.product && item.category==='concentrates' && item.sub_category==='syringe'">
+                    <img mat-card-sm-image style="width: 100%; height: 100%;"
+                    [src]="item.product.image_url_main" 
+                    default="{{item.product.image_url_alt}}" 
+                    />
+                </div>
+                <div *ngIf="item.category==='flower'">
+                    <div *ngIf="item.product && item.product_strain">
+                        <img mat-card-sm-image style="width: 100%; height: 100%;"
+                        [src]="item.product_strain.image_url_main" 
+                        default="{{item.product.image_url_main}}" 
+                        />
+                    </div>
+                    <div *ngIf="!item.product && item.product_strain">
+                        <img mat-card-sm-image style="width: 100%; height: 100%;"
+                        [src]="item.product_strain.image_url_main" 
+                        default="{{item.product_strain.image_url_alt}}" 
+                        />
+                    </div>
+                    <div *ngIf="item.product && !item.product_strain">
+                        <img mat-card-sm-image style="width: 100%; height: 100%;"
+                        [src]="item.product.image_url_main" 
+                        default="{{item.product.image_url_alt}}" 
+                        />
+                    </div>
+                </div>
+                <!--<div *ngIf="item.product && item.product_strain">
+                    <img mat-card-sm-image style="width: 100%; height: 100%;"
+                    [src]="item.product_strain.image_url_main" 
+                    default="{{item.product.image_url_main}}" 
+                    />
+                </div>
+                <div *ngIf="!item.product && item.product_strain">
+                    <img mat-card-sm-image style="width: 100%; height: 100%;"
+                    [src]="item.product_strain.image_url_main" 
+                    default="{{item.product_strain.image_url_alt}}" 
+                    />
+                </div>
+                <div *ngIf="item.product && !item.product_strain">
+                    <img mat-card-sm-image style="width: 100%; height: 100%;"
+                    [src]="item.product.image_url_main" 
+                    default="{{item.product.image_url_alt}}" 
+                    />
+                </div> -->
+                <div>{{ getBrand(item) }}
+                  <div class="muted">{{ getType(item) }}</div> 
+                  <div class="muted" fxLayout="row wrap" 
+                  [ngStyle]="getPotencyListStyle()">
+                    <div>thc: {{ item.bt_potency_thc || 0 | number:'1.1-1' }}% &nbsp;</div>
+                    <div>thca: {{ item.bt_potency_thca || 0 | number:'1.1-1'}}%  </div>
+                    <div *ngIf="item.bt_potency_cbd > 0">cbd: {{ item.bt_potency_cbd || 0 | number:'1.1-1' }}%</div>
+                  </div>
+               
+                  <mat-chip-list *ngIf="item.prices && item.prices.length > 0" fxLayoutAlign="center" style="position:absolute;bottom: 0; margin-bottom: 5px;">
+                      <mat-chip *ngFor="let price of item.prices" 
+                      style="font-size: 10px; background-color: #499b4a;" 
+                      >${{price.price}}<div *ngIf="item.category==='flower'">&nbsp;/&nbsp;{{price.weight}}</div></mat-chip>
+                      <br />
+                   
+                </mat-chip-list>
+                <mat-chip-list *ngIf="item.price_point && item.price_point.length > 0" fxLayoutAlign="center" style="position:absolute;bottom: 0; margin-bottom: 5px;">
+                    <mat-chip *ngFor="let price of item.price_point.prices" 
+                    style="font-size: 10px; background-color: #499b4a;" 
+                    >${{price.price}}<div *ngIf="item.category==='flower'">&nbsp;/&nbsp;{{price.weight}}</div></mat-chip>
+                    <br />
+                 
+              </mat-chip-list>
+                
+              <!--  <div *ngIf="!item.prices">
+                    price: ${{ item.price_point.prices[0].price}}
+                </div>-->
+      
+                </div>
               </mat-card>
+
             </div>
-  
+          </div>
         </mat-expansion-panel>
       </mat-accordion>
    
@@ -98,31 +198,13 @@
             Flower ({{filterMetadata.count}})
           </mat-panel-title>
         </mat-expansion-panel-header>
-    
-        <!--TabletLandscape-->
-      <div class="flexRow">
+     
+      <div fxLayout="row wrap">
         <div *ngFor="let item of flowers | sortBy: sortBy:'desc' | menuFilter:selectedFilter:filterMetadata"       
         >
-          <mat-card (click)="displayDetails(item)" class="cardItem" 
-          style="word-break: normal;" 
-          [ngStyle.sm]="
-          {
-            'height': '285px', 
-            width: '140px'
-          }" 
-          [ngStyle.xs]="
-            {
-              'height': '250px', 
-              width: '100px'
-            }"
-          [ngStyle.md]=" {
-            height: '300px',
-            width: '150px'
-          }"
-          [ngStyle.lg]=" {
-            height: '340px',
-            width: '150px'
-          }"
+          <mat-card (click)="displayDetails(item)" 
+          style="word-break: normal; cursor:pointer; margin: 2px;" 
+          [ngStyle]="getCardStyle()"
           >  
             <mat-card-title 
             [ngStyle]="
@@ -136,70 +218,45 @@
           
             
             <div *ngIf="item.product && item.product_strain">
-                <img mat-card-sm-image  style="width: 100%; height: 100%;"
-                *ngIf="item.product.image_url_main || item.product_strain.image_url_main"
+                <img mat-card-sm-image style="width: 100%; height: 100%;"
                 [src]="item.product_strain.image_url_main" 
                 default="{{item.product.image_url_main}}" 
                 />
             </div>
-            <div
-              [ngStyle.xs]="{'font-size': '12px'}" 
-              >{{ getBrand(item) }}
+            <div *ngIf="!item.product && item.product_strain">
+                <img mat-card-sm-image style="width: 100%; height: 100%;"
+                [src]="item.product_strain.image_url_main" 
+                default="{{item.product_strain.image_url_alt}}" 
+                />
+            </div>
+            <div *ngIf="item.product && !item.product_strain">
+                <img mat-card-sm-image style="width: 100%; height: 100%;"
+                [src]="item.product.image_url_main" 
+                default="{{item.product.image_url_alt}}" 
+                />
+            </div>
+            <div>{{ getBrand(item) }}
+              <div class="muted">{{ getType(item) }}</div> 
               <div class="muted" fxLayout="row wrap" 
-              [ngStyle.xs]="{'font-size': '10px'}">
+              [ngStyle]="getPotencyListStyle()">
                 <div>thc: {{ item.bt_potency_thc || 0 | number:'1.1-1' }}% &nbsp;</div>
                 <div>thca: {{ item.bt_potency_thca || 0 | number:'1.1-1'}}%  </div>
                 <div *ngIf="item.bt_potency_cbd > 0">cbd: {{ item.bt_potency_cbd || 0 | number:'1.1-1' }}%</div>
               </div>
-             <!--  <div>price: ${{ item.price_point.prices[0].price}}</div>-->
-      
-             <!--<div *ngIf="item.prices && item.prices.length > 0"
-               [ngStyle.xs]="{'font-size':'10px'}">
-                ${{item.prices[0].price}}/{{item.prices[0].weight }}
-                <br/>
-               ${{item.prices[1].price}}/{{item.prices[1].weight }} 
-             </div>-->
-  
-            <div 
-            *ngFor="let price of item.prices"
-             [ngStyle.xs]="{
-               'font-size': '8px',
-               'font-weight': 'bold'
-             }"
-             [ngStyle.sm]="{
-              'font-size': '12px',
-              'font-weight': 'bold'
-            }"
-            >
-                  ${{ price.price }}&nbsp;({{price.weight }})
-            </div>
-  
+           
+              <mat-chip-list fxLayoutAlign="center" style="position:absolute;bottom: 0; margin-bottom: 5px;">
+                  <mat-chip *ngFor="let price of item.prices" 
+                  style="font-size: 10px; background-color: #499b4a;" 
+                  >${{price.price}}&nbsp;/&nbsp;{{price.weight}}</mat-chip>
+                  <br />
+               
+            </mat-chip-list>
+            
           <!--  <div *ngIf="!item.prices">
                 price: ${{ item.price_point.prices[0].price}}
             </div>-->
   
             </div>
-            
-               
-            
-            
-            
-              <!--<div *ngIf="item.product_strain && item.product_strain.description" style="font-size: 16px;">{{ item.product_strain.description }}</div>
-              <div *ngIf="item.product_strain && item.product_strain.lineage">Lineage: {{ item.product_strain.lineage }}</div>
-              <div *ngIf="item.product_strain && item.product_strain.flavors">Flavors: {{ item.product_strain.flavors }}</div>
-              <div *ngIf="item.product_strain && item.product_strain.effects">Effects: {{ item.product_strain.effects }}</div>
-              <div *ngIf="item.product_strain && item.product_strain.symptoms !== null">Symptoms: {{ item.product_strain.symptoms }}</div>
-              <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
-              <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
-              <div>cbd: {{ item.bt_potency_cbd || 0 }}%</div>
-              <div>price: ${{ item.price_point.prices[0].price}}</div>
-              <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
-              <div *ngIf="item.product_strain && item.product_strain.indica_pct">indica: {{ item.product_strain.indica_pct }}%</div>
-              <div *ngIf="item.product_strain && item.product_strain.sativa_pct">sativa: {{ item.product_strain.sativa_pct }}%</div>
-            <div *ngIf="item.product_strain && item.product_strain.strain_type">strain type: {{item.product_strain.strain_type}}</div>
-              -->
-            
-           
           </mat-card>
         </div>
     </div>

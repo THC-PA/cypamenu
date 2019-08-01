@@ -1,40 +1,124 @@
 <h1 
-  align="center" mat-dialog-title>
+  fxLayoutAlign="center" mat-dialog-title>
      
         {{getDisplayName(data)}} 
 </h1>
 
 <div 
- fxLayout="column" fxLayoutAlign="center" mat-dialog-content>    
-    <div align="center" *ngIf="data.product && data.product_strain && showFlower">
+ fxLayout="column" mat-dialog-content
+ [ngStyle.xs]="{
+   'font-size': '12px'
+ }">    
+    <div *ngIf="data.product && data.product_strain && showFlower">
         <img 
-        [ngStyle.xs]="{
-          width: 'auto',
-          height: ' 250px'
-        }"
-        [ngStyle.sm]="{
-          width: 'auto',
-          height: '280px'
-        }"
-        [ngStyle.md]="{
-          width: 'auto', 
-          height: '350px'
-        }"
-        *ngIf="data.product.image_url_main || data.product_strain.image_url_main"
+        [ngStyle]="getImgStyle()"
         [src]="data.product_strain.image_url_main" 
         default="{{data.product.image_url_main}}" 
         />
     </div>
+    <div *ngIf="!data.product && data.product_strain && showFlower">
+        <img 
+        [ngStyle]="getImgStyle()"
+        [src]="data.product_strain.image_url_main" 
+        default="{{data.product_strain.image_url_alt}}" 
+        />
+    </div>
+    <div *ngIf="!data.product_strain && data.product && showFlower">
+        <img 
+        [ngStyle]="getImgStyle()"
+        [src]="data.product.image_url_main" 
+        default="{{data.product.image_url_alt}}" 
+        />
+    </div>
 
-    <div
-    [ngStyle.xs]="{'font-size': '10px'}" 
-     *ngIf="data.product_strain && data.product_strain.description && !showFlower" style="font-size: 16px;">{{ data.product_strain.description }}</div>
+    <div fxLayout="row wrap" *ngIf="!showFlower">
+      <p>{{ getDescription(data) }}</p>
+
+    </div>
+
+    <div *ngIf="!showFlower"
+      fxLayout="row wrap">
+      <div style="margin: 0 30px 0 30px;">
+          <h5>Type</h5>
+          <p>{{ getType(data) }}</p>
+      </div> 
+      <div style="margin: 0 30px 0 30px;">
+          <h5>THC</h5>
+          <p>{{ data.bt_potency_thc || 0 | number:'1.1-1' }}%</p>
+      </div>
+      <div style="margin: 0 30px 0 30px;">
+        <h5>THCA</h5>
+        <p> {{ data.bt_potency_thca || 0 | number:'1.1-1'}}%  </p>
+      </div>
+       <div *ngIf="data.bt_potency_cbd > 0" style="margin: 0 30px 0 30px;">
+          <h5>CBD</h5>
+          <p> {{ data.bt_potency_cbd || 0 | number:'1.1-1' }}%</p>
+       </div>
+       <div *ngIf="data.product_strain && data.product_strain.lineage" style="margin: 0 30px 0 30px;">
+          <h5>Lineage</h5>
+          <p>{{ data.product_strain.lineage }}</p>
+       </div>
+      <div *ngIf="data.product_strain && data.product_strain.flavors && data.product_strain.flavors.length > 0" style="margin: 0 30px 0 30px;">
+          <h5>Flavors</h5>
+          <p>{{ data.product_strain.flavors }}</p>
+      </div>
+      <div *ngIf="data.product_strain && data.product_strain.terpenes && data.product_strain.terpenes.length > 0" style="margin: 0 30px 0 30px;">
+          <h5>Terpenes</h5>
+          <p>{{ data.product_strain.terpenes }}</p>
+      </div>
+       
+      <div *ngIf="data.product_strain && data.product_strain.effects && data.product_strain.effects.length > 0" style="margin: 0 30px 0 30px;"> 
+            <h5>Effects</h5>
+              <div fxLayout="row wrap">
+                  <div *ngFor="let s of data.product_strain.effects; index as i;">
+                      <div *ngIf="data.product_strain.effects.length > i + 1">{{s}}, &nbsp;</div>
+                      <div *ngIf="i + 1 >= data.product_strain.effects.length">{{s}}</div>
+              </div>
+              </div>
+          
+      </div>
+      <div *ngIf="data.product_strain && data.product_strain.symptoms &&  data.product_strain.symptoms.length > 0" style="margin: 0 30px 0 30px;">
+    
+          <h5>Symptoms</h5>    
+          <div fxLayout="row wrap"> 
+          <div *ngFor="let s of data.product_strain.symptoms; index as i;">
+                  <div *ngIf="data.product_strain.symptoms.length > i + 1">{{s}}, &nbsp;</div>
+                  <div *ngIf="i + 1 >= data.product_strain.symptoms.length">{{s}}</div>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+
+      <!--<div *ngIf="item.product_strain && item.product_strain.description" style="font-size: 16px;">{{ item.product_strain.description }}</div>
+      <div *ngIf="item.product_strain && item.product_strain.lineage">Lineage: {{ item.product_strain.lineage }}</div>
+      <div *ngIf="item.product_strain && item.product_strain.flavors">Flavors: {{ item.product_strain.flavors }}</div>
+      <div *ngIf="item.product_strain && item.product_strain.effects">Effects: {{ item.product_strain.effects }}</div>
+      <div *ngIf="item.product_strain && item.product_strain.symptoms !== null">Symptoms: {{ item.product_strain.symptoms }}</div>
+      <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
+      <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
+      <div>cbd: {{ item.bt_potency_cbd || 0 }}%</div>
+      <div>price: ${{ item.price_point.prices[0].price}}</div>
+      <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
+      <div *ngIf="item.product_strain && item.product_strain.indica_pct">indica: {{ item.product_strain.indica_pct }}%</div>
+      <div *ngIf="item.product_strain && item.product_strain.sativa_pct">sativa: {{ item.product_strain.sativa_pct }}%</div>
+    <div *ngIf="item.product_strain && item.product_strain.strain_type">strain type: {{item.product_strain.strain_type}}</div>
+      -->
+
+
+    <mat-chip-list *ngIf="!showFlower" fxLayoutAlign="center">
+            <mat-chip  *ngFor="let price of data.prices"
+            style="font-size: 10px; background-color: #499b4a;" 
+            >${{price.price}}&nbsp;/&nbsp;{{price.weight}}</mat-chip>
+     
+  </mat-chip-list>
 
 </div>
 <div mat-dialog-actions align="end">
+    <button mat-button (click)="onNoClick()">Close</button>
     <button *ngIf="!showFlower" mat-button (click)="displayFlower()">Show flower</button>
     <button *ngIf="showFlower" mat-button (click)="hideFlower()">Hide flower</button>
-  <button mat-button (click)="onNoClick()">Close</button>
+  
  <!-- <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Add to cart</button>-->
 </div>
 

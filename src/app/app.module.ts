@@ -45,7 +45,8 @@ import { InventoryItemParser } from './services/inventoryItemParser.service';
     MatGridListModule,
     MatDialogModule,
     MatBadgeModule, 
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatChipsModule
   ],
   exports: [SortByPipe, ImagePreloadDirective, MenuFilterPipe],
   providers: [InventoryItemParser],

@@ -13,4 +13,5 @@ export class ProductStrain {
     terpenes: string[];
     description: string;
     image_url_main: string;
+    image_url_alt: string;
 }
