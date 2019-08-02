@@ -61,35 +61,35 @@ getCardStyle() {
       return {
         width: '100px',
         'max-height': '340px',
-        'min-height': '290px'
+        'min-height': '320px'
       }
     }
 
     if (this.currentScreenSize.isSmall) {
       return {
         width: '140px',
-        'min-height': '300px'
+        'min-height': '350px'
       }
     }
 
     if (this.currentScreenSize.isMedium) {
       return {
         width: '150px',
-        'min-height': '350px'
+        'min-height': '380px'
       }
     }
 
     if (this.currentScreenSize.isLarge) {
       return {
         width: '180px',
-        'min-height': '360px'
+        'min-height': '420px'
       }
     }
 
     if (this.currentScreenSize.isExtraLarge) {
       return {
         width: '180px',
-        'min-height': '360px'
+        'min-height': '450px'
       }
     }
   }

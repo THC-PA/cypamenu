@@ -112,9 +112,9 @@
     <div *ngIf="item.product_strain && item.product_strain.strain_type">strain type: {{item.product_strain.strain_type}}</div>
       -->
 
-      <mat-chip-list fxLayoutAlign="center" style="position:absolute;bottom: 0; margin-bottom: 5px;">
-          <mat-chip *ngFor="let price of item.price_point.prices"
-            style="font-size: 10px; background-color: #499b4a;">${{price.price}}<div *ngIf="item.category ==='flower'">&nbsp;/&nbsp;{{price.weight}}G</div>
+      <mat-chip-list fxLayoutAlign="center">
+          <mat-chip *ngFor="let price of data.price_point.prices"
+            style="font-size: 10px; background-color: #499b4a;">${{price.price}}<div *ngIf="data.category ==='flower'">&nbsp;/&nbsp;{{price.weight}}G</div>
           </mat-chip>
           <br />
 

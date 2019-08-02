@@ -10,7 +10,7 @@ import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/l
 import { Prices } from 'src/models/prices.model';
 import { CurrentScreenSize } from 'src/models/currentScreenSize.model';
 import { Subject } from 'rxjs';
-import { takeUntil, filter } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -26,8 +26,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   currentScreenSize: CurrentScreenSize = new CurrentScreenSize();
 
-  //isHandset: boolean = false;
-
   isOrientationPortrait: boolean = true;
   stores: Store[] = [
     new Store('New Kensington', '229'),
@@ -37,7 +35,6 @@ export class AppComponent implements OnInit, OnDestroy {
   flowerResult: Array<InventoryItem> = [];
   title = 'CY+ Menu';
   selectedCategory = 'all';
-  //filterMetadata = { count: 0 };
   newWithinHours = 24;
 
   orientationPortrait: string = '(orientation: portrait)';
@@ -45,7 +42,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   cart: InventoryItem[] = [];
 
-  fullMenu: Menu = new Menu();
   flowers: Array<InventoryItem> = [];
   newItems: Array<InventoryItem> = [];
   concentrates: Array<InventoryItem> = [];
@@ -68,68 +64,74 @@ export class AppComponent implements OnInit, OnDestroy {
     private itemParser: InventoryItemParser) {
     this.breakpointObserver.observe([
       Breakpoints.XSmall
-    ]).subscribe(result => {
-      if (result.matches) {
-        this.currentScreenSize.isSmall = false;
-        this.currentScreenSize.isMedium = false;
-        this.currentScreenSize.isLarge = false;
-        this.currentScreenSize.isExtraLarge = false;
-        this.currentScreenSize.isExtraSmall = true;
-      }
-    });
+    ])
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(result => {
+        if (result.matches) {
+          this.currentScreenSize.isSmall = false;
+          this.currentScreenSize.isMedium = false;
+          this.currentScreenSize.isLarge = false;
+          this.currentScreenSize.isExtraLarge = false;
+          this.currentScreenSize.isExtraSmall = true;
+        }
+      });
 
 
     this.breakpointObserver.observe([
       Breakpoints.Small
-    ]).subscribe(result => {
-      if (result.matches) {
-        this.currentScreenSize.isExtraSmall = false;
-        this.currentScreenSize.isSmall = true;
-        this.currentScreenSize.isMedium = false;
-        this.currentScreenSize.isLarge = false;
-        this.currentScreenSize.isExtraLarge = false;
-      }
-    });
+    ])
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(result => {
+        if (result.matches) {
+          this.currentScreenSize.isExtraSmall = false;
+          this.currentScreenSize.isSmall = true;
+          this.currentScreenSize.isMedium = false;
+          this.currentScreenSize.isLarge = false;
+          this.currentScreenSize.isExtraLarge = false;
+        }
+      });
 
     this.breakpointObserver.observe([
       Breakpoints.Medium
-    ]).subscribe(result => {
-      if (result.matches) {
-        this.currentScreenSize.isSmall = false;
-        this.currentScreenSize.isExtraSmall = false;
-        this.currentScreenSize.isMedium = true;
-        this.currentScreenSize.isLarge = false;
-        this.currentScreenSize.isExtraLarge = false;
-      }
-    });
+    ])
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(result => {
+        if (result.matches) {
+          this.currentScreenSize.isSmall = false;
+          this.currentScreenSize.isExtraSmall = false;
+          this.currentScreenSize.isMedium = true;
+          this.currentScreenSize.isLarge = false;
+          this.currentScreenSize.isExtraLarge = false;
+        }
+      });
 
     this.breakpointObserver.observe([
       Breakpoints.Large
-    ]).subscribe(result => {
-      if (result.matches) {
-        this.currentScreenSize.isExtraSmall = false;
-        this.currentScreenSize.isSmall = false;
-        // this.isHandset = false;
-        this.currentScreenSize.isMedium = false;
-        this.currentScreenSize.isLarge = true;
-        this.currentScreenSize.isExtraLarge = false;
-        // alert('found  large screen with breakpoints: ' + JSON.stringify(result.breakpoints));
-        //alert('New observer HANDSET: ' + JSON.stringify(result));
-        // alert('found small  screen');
-      }
-    });
+    ])
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(result => {
+        if (result.matches) {
+          this.currentScreenSize.isExtraSmall = false;
+          this.currentScreenSize.isSmall = false;
+          this.currentScreenSize.isMedium = false;
+          this.currentScreenSize.isLarge = true;
+          this.currentScreenSize.isExtraLarge = false;
+        }
+      });
 
     this.breakpointObserver.observe([
       Breakpoints.XLarge
-    ]).subscribe(result => {
-      if (result.matches) {
-        this.currentScreenSize.isExtraSmall = false;
-        this.currentScreenSize.isSmall = false;
-        this.currentScreenSize.isMedium = false;
-        this.currentScreenSize.isLarge = false;
-        this.currentScreenSize.isExtraLarge = true;
-      }
-    });
+    ])
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(result => {
+        if (result.matches) {
+          this.currentScreenSize.isExtraSmall = false;
+          this.currentScreenSize.isSmall = false;
+          this.currentScreenSize.isMedium = false;
+          this.currentScreenSize.isLarge = false;
+          this.currentScreenSize.isExtraLarge = true;
+        }
+      });
     this.title = 'CY+ ' + this.stores.find(x => x.id === this.selectedStore).name + ' Menu';
   }
 
@@ -251,7 +253,6 @@ export class AppComponent implements OnInit, OnDestroy {
           let index = this.newItems.indexOf(existingItem);
           let newPrice = new Prices(item.price_point.prices[0].price, newWeight, item.price_point.prices[0].price);
 
-
           if (this.newItems[index].price_point.prices[0].weight !== newPrice.weight) {
             this.newItems[index].price_point.prices.push(newPrice);
           }
@@ -260,12 +261,7 @@ export class AppComponent implements OnInit, OnDestroy {
           if (!actualWeight) {
             actualWeight = this.itemParser.getWeightFromName(item.name);
           }
-
-          //let currentPrice = item.price_point.prices[0].price;
-          //let currentWeight = item.price_point.prices[0].weight;
-          // if (currentWeight === 1 && currentPrice > 30) {
           item.price_point.prices[0].weight = actualWeight;
-          //}
 
           this.newItems.push(item);
         }
@@ -275,14 +271,9 @@ export class AppComponent implements OnInit, OnDestroy {
           actualWeight = this.itemParser.getWeightFromName(item.name);
         }
 
-        //let currentPrice = item.price_point.prices[0].price;
-        //let currentWeight = item.price_point.prices[0].weight;
-        // if (currentWeight === 1 && currentPrice > 30) {
         item.price_point.prices[0].weight = actualWeight;
-        //}
 
         this.newItems.push(item);
-        //    this.newItems.push(item);
       }
     }
   }
@@ -317,11 +308,8 @@ export class AppComponent implements OnInit, OnDestroy {
         actualWeight = this.itemParser.getWeightFromName(item.name);
       }
 
-      //let currentPrice = item.price_point.prices[0].price;
-      //let currentWeight = item.price_point.prices[0].weight;
-      // if (currentWeight === 1 && currentPrice > 30) {
       item.price_point.prices[0].weight = actualWeight;
-      //}
+      
       this.flowers.push(item);
     }
   }
@@ -352,7 +340,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.httpClient.get<Menu>(baseUrl, options)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(res => {
-        this.fullMenu = res;
+        //this.fullMenu = res;
         this.processMenuResults(res);
         this.searchComplete = true;
         this.isLoading = false;
@@ -371,16 +359,6 @@ export class AppComponent implements OnInit, OnDestroy {
   processMenuResults(menu: Menu) {
     menu.data.forEach(item => {
       let category = item.category.toLowerCase();
-      //item.prices = [];
-
-      // if (category.indexOf('flower') > -1) {
-      //  if (item.product !== null && item.product !== undefined){
-      // alert('product - sativa: ' + item.product.sativa_pct + ' indica: ' + item.product.indica_pct);
-      // }
-      /*  if (item.bt_potency_cbd && (item.bt_potency_cbd > item.bt_potency_thc || item.bt_potency_cbd > item.bt_potency_) ) {
-          
-         item.type = '(CBD Dominant)'
-        }*/
       item.type = this.itemParser.getType(item);
 
       if (item.created_ago !== null && item.created_ago !== undefined) {
