@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from "@angular/core";
 import { InventoryItem } from 'src/models/inventoryItem.model';
 import { CurrentScreenSize } from 'src/models/currentScreenSize.model';
 import { InventoryItemParser } from '../services/inventoryItemParser.service';
+import { ItemDetailsPopup } from '../itemDetails.popup';
+import { MatDialog } from '@angular/material';
 
 @Component({
     selector: 'capsules',
@@ -17,12 +19,23 @@ export class CapsulesComponent implements OnInit {
 
     filterMetadata = { count: 0 };
 
-    constructor(private parser: InventoryItemParser){}
+    constructor(private parser: InventoryItemParser, private dialog: MatDialog){}
 
     ngOnInit() {
     // alert(this.items.length);
     }
 
+    displayDetails(item: InventoryItem): void {
+      const dialogRef = this.dialog.open(ItemDetailsPopup, {
+        data: item
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result !== undefined && result !== null) {
+        //  this.cart.push(result);
+        }
+      });
+    }
 
 getWeight(item: InventoryItem): number {
     return this.parser.getWeight(item);

@@ -3,6 +3,8 @@ import { InventoryItem } from 'src/models/inventoryItem.model';
 import { CurrentScreenSize } from 'src/models/currentScreenSize.model';
 import { InventoryItemParser } from '../services/inventoryItemParser.service';
 import { Product } from 'src/models/product.model';
+import { ItemDetailsPopup } from '../itemDetails.popup';
+import { MatDialog } from '@angular/material';
 
 @Component({
     selector: 'concentrates',
@@ -18,7 +20,7 @@ export class ConcentratesComponent implements OnInit {
 
     filterMetadata = { count: 0 };
 
-    constructor(private parser: InventoryItemParser){}
+    constructor(private parser: InventoryItemParser, private dialog: MatDialog){}
 
     ngOnInit() {
     // alert(this.items.length);
@@ -28,6 +30,20 @@ export class ConcentratesComponent implements OnInit {
     test(item: Product) {
      return JSON.stringify(item);
     }
+
+
+    displayDetails(item: InventoryItem): void {
+      const dialogRef = this.dialog.open(ItemDetailsPopup, {
+        data: item
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result !== undefined && result !== null) {
+        //  this.cart.push(result);
+        }
+      });
+    }
+    
 getWeight(item: InventoryItem): number {
     return this.parser.getWeight(item);
 }

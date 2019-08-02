@@ -30,6 +30,13 @@
         default="{{data.product.image_url_alt}}" 
         />
     </div>
+    <div *ngIf="data.category === 'concentrate'">
+        <img 
+        [ngStyle]="getImgStyle()"
+        [src]="data.product.image_url_alt" 
+        default="{{data.product.image_url_main}}" 
+        />
+    </div>
 
     <div fxLayout="row wrap" *ngIf="!showFlower">
       <p>{{ getDescription(data) }}</p>
