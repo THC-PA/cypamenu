@@ -1,0 +1,20 @@
+<mat-accordion  style="margin-top: 5px; margin-bottom: 5px;" *ngIf="items && items.length > 0">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Vapes  <!--({{filterMetadata.count}})-->
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div *ngFor="let item of items | sortBy: 'bt_potency_thc':'desc' |  menuFilter:selectedFilter:filterMetadata">
+              <mat-card>
+                  <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
+                  <div *ngIf="item.product_strain && item.product_strain.description" style="font-size: 16px;">{{ item.product_strain.description }}</div>
+              
+                  <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
+                  <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
+                  <div>price: ${{ item.price_point.prices[0].price}}</div>
+                  <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
+              </mat-card>
+            </div>
+        </mat-expansion-panel>
+      </mat-accordion>

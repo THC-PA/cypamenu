@@ -21,7 +21,7 @@ export class InventoryItem {
     product: Product;
     product_strain: ProductStrain;
     price_point: PricePoint;
-    prices: Prices[] = [];
+    //prices: Prices[] = [];
     type: string;
     created_ago: string;
     //store: Store;

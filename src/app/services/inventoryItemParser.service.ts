@@ -4,6 +4,19 @@ import { InventoryItem } from 'src/models/inventoryItem.model';
 @Injectable()
 export class InventoryItemParser {
     getDisplayName(item: InventoryItem): string { 
+        let displayName = item.name;
+        let regex = new RegExp(/3.5g/i);
+        let eigthRemoved = displayName.replace(regex, '');
+
+        let regex1 = new RegExp(/1g/i);
+        let gramRemoved = eigthRemoved.replace(regex1, '');
+        
+        let regex2 = new RegExp(/7g/i);
+        return gramRemoved.replace(regex2, '');
+
+
+
+        //let result = item.name.match(/3.5g/i);
        /* if ((item.product && item.product.name) && !item.product_strain) {
             //return item.product.name + ' - ' + item.name + ' ' + item.type;
             return item.name + ' ' + item.type;
@@ -11,7 +24,7 @@ export class InventoryItemParser {
 
         return item.product_strain.name + ' - ' + item.name + ' ' + item.type;    */
 
-        let concatDisplay = item.name;// + ' ' + item.type;
+        /*let concatDisplay = item.name;// + ' ' + item.type;
 
         let searchMask = "3.5g";
         let regEx = new RegExp(searchMask, "ig");
@@ -33,11 +46,30 @@ export class InventoryItemParser {
 
         let noQtr1 = "7g";
         let regexNoQtr1 = new RegExp(noQtr1, "ig");
-        let clean2 = clean1.replace(noQtr1, replaceMask);
+        let clean2 = clean1.replace(regexNoQtr1, replaceMask);
 
         let noQtr2 = "7G";
         let regexNoQtr2 = new RegExp(noQtr2, "ig");
-        return clean2.replace(noQtr2, replaceMask).trim();
+        return clean2.replace(regexNoQtr2, replaceMask).trim();*/
+
+
+    }
+
+    getWeightFromName(name: string): number {
+      let matchedEigth = name.match(/3.5/i);
+      let matchedGram = name.match(/1g/i);
+      let matchedQuarter = name.match(/7g/i);
+
+      if (matchedEigth) {
+        return 3.5;
+      }
+      if (matchedGram) {
+        return 1;
+      }
+      if (matchedQuarter) {
+        return 7;
+      }
+      return null;
     }
 
     getType(item: InventoryItem): string {
@@ -195,15 +227,18 @@ export class InventoryItemParser {
         }
     }
 
-    getWeight(item: InventoryItem): string {
+    getWeight(item: InventoryItem): number {
         if (item.bt_weight) {
-            return item.bt_weight + 'G';
+            return item.bt_weight;
         } else {
             if (item.name.indexOf('3.5') > -1) {
-                return 3.5 + 'G';
+                return 3.5;
             } 
             if (item.name.toLowerCase().indexOf('1g') > -1) {
-                return 1 + 'G';
+                return 1;
+            }
+            if (item.name.toLowerCase().indexOf('7g') > -1) {
+              return 7;
             }
         }
     }

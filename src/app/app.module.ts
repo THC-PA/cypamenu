@@ -16,6 +16,10 @@ import { ImagePreloadDirective } from './directives/imagePreload.directive';
 import { ItemDetailsPopup } from './itemDetails.popup';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { InventoryItemParser } from './services/inventoryItemParser.service';
+import { NewItemsComponent } from './new-items/new-items.component';
+import { FlowersComponent } from './flowers/flowers.component';
+import { VapesComponent } from './vapes/vapes.component';
+import { ConcentratesComponent } from './concentrates/concentrates.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,11 @@ import { InventoryItemParser } from './services/inventoryItemParser.service';
     SortByPipe,
     ImagePreloadDirective,
     MenuFilterPipe,
-    ItemDetailsPopup
+    ItemDetailsPopup,
+    NewItemsComponent,
+    FlowersComponent,
+    VapesComponent,
+    ConcentratesComponent
   ],
   imports: [
     BrowserModule,
