@@ -1,7 +1,8 @@
 <div fxLayout="row wrap" class="fixedToolbar">
- 
-    <div class="title">{{ title }}</div> 
-    <!--
+
+  <div class="title">{{ title }}</div>
+
+  <!--
     <div class="userCart">
         <mat-icon matBadge="{{cart.length}}" matBadgeColor="primary">shopping_cart</mat-icon>
           <span class="cdk-visually-hidden">Items in cart
@@ -9,174 +10,94 @@
         <button style="margin-left: 25px;" mat-button color="warn" (click)="clearCart()">Clear cart</button>
   
     </div>  -->
-    <br />
-    
-    <mat-accordion>
-        <mat-expansion-panel class="searchPanel" [(expanded)]="searchPanelOpenState">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Search Selection
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-         
-          
-              <!--<div>New Kensington: 229    Butler: 202    Pittsburgh: 203</div> -->
-              <mat-form-field style="margin-left: 30px;" >
-                  <select (change)="storeChanged();" matNativeControl placeholder="store" [(ngModel)]="selectedStore" name="store">
-                    <option *ngFor="let store of stores" [value]="store.id">
-                      {{store.name}}
-                    </option>
-                  </select>
-              </mat-form-field>
-  
-              <mat-form-field style="margin-left: 30px;" >
-                  <select (change)="filterChanged();" matNativeControl placeholder="filter" [(ngModel)]="selectedFilter" name="filter">
-                    <option *ngFor="let filter of filters" [value]="filter">
-                      {{filter}}
-                    </option>
-                  </select>
-              </mat-form-field>
-  
-              <mat-form-field style="margin-left: 30px;" >
-                  <select matNativeControl placeholder="category" [(ngModel)]="selectedCategory" name="category">
-                    <option *ngFor="let cat of categories" [value]="cat">
-                      {{cat}}
-                    </option>
-                  </select>
-              </mat-form-field>
-  
-              <mat-form-field style="margin-left: 30px;"  class="example-form-field">
-                <input matInput type="text" placeholder="Search Text" [(ngModel)]="searchText">
-              </mat-form-field>
-  
-              <button (click)="search(); searchPanelOpenState=searchPanelOpenState?false:true;" mat-button color="primary">Search</button>
-  
-        
-  
-        </mat-expansion-panel>
-      </mat-accordion>
-       
-  
+  <br />
+
+  <mat-accordion>
+    <mat-expansion-panel class="searchPanel" [(expanded)]="searchPanelOpenState">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Search Selection
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+
+      <!--<div>New Kensington: 229    Butler: 202    Pittsburgh: 203</div> -->
+      <mat-form-field style="margin-left: 30px;">
+        <select (change)="storeChanged();" matNativeControl placeholder="store" [(ngModel)]="selectedStore"
+          name="store">
+          <option *ngFor="let store of stores" [value]="store.id">
+            {{store.name}}
+          </option>
+        </select>
+      </mat-form-field>
+
+      <mat-form-field style="margin-left: 30px;">
+        <select (change)="filterChanged();" matNativeControl placeholder="filter" [(ngModel)]="selectedFilter"
+          name="filter">
+          <option *ngFor="let filter of filters" [value]="filter">
+            {{filter}}
+          </option>
+        </select>
+      </mat-form-field>
+
+      <mat-form-field style="margin-left: 30px;">
+        <select matNativeControl placeholder="category" [(ngModel)]="selectedCategory" name="category">
+          <option *ngFor="let cat of categories" [value]="cat">
+            {{cat}}
+          </option>
+        </select>
+      </mat-form-field>
+
+      <mat-form-field style="margin-left: 30px;" class="example-form-field">
+        <input matInput type="text" placeholder="Search Text" [(ngModel)]="searchText">
+      </mat-form-field>
+
+      <button (click)="search(); searchPanelOpenState=searchPanelOpenState?false:true;" mat-button
+        color="primary">Search</button>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+
   <!--
     <mat-form-field style="margin-left: 30px;"  class="example-form-field">
         <input matInput type="text" placeholder="hours" [(ngModel)]="newWithinHours">
       </mat-form-field>-->
-        
-  </div>
-  
-  
-  <div *ngIf="isLoading" class="loading">Loading&#8230;</div>
-  
-  <div class="content">
-    <new-items *ngIf="newItems && newItems.length > 0" 
-      [currentScreenSize]="currentScreenSize" 
-      [items]="newItems"
-      [newWithinHours]="newWithinHours">
-    </new-items>
-   <flowers *ngIf="selectedCategory === 'all' || selectedCategory === 'flower'"
-    [currentScreenSize]="currentScreenSize"
-    [items]="flowers" 
-    [selectedFilter]="selectedFilter"
-    [sortBy]="sortBy">
-   </flowers>
-     
-   <vapes *ngIf="selectedCategory === 'all' || selectedCategory === 'vapes'"
-    [currentScreenSize]="currentScreenSize"
-    [items]="vapes" 
-    [selectedFilter]="selectedFilter"
-    [sortBy]="sortBy">
+
+</div>
+
+
+<div *ngIf="isLoading" class="loading">Loading&#8230;</div>
+
+<div class="content">
+  <new-items *ngIf="newItems && newItems.length > 0" [currentScreenSize]="currentScreenSize" [items]="newItems"
+    [newWithinHours]="newWithinHours">
+  </new-items>
+  <flowers *ngIf="selectedCategory === 'all' || selectedCategory === 'flower'" [currentScreenSize]="currentScreenSize"
+    [items]="flowers" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
+  </flowers>
+
+  <vapes *ngIf="selectedCategory === 'all' || selectedCategory === 'vapes'" [currentScreenSize]="currentScreenSize"
+    [items]="vapes" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
   </vapes>
   <concentrates *ngIf="selectedCategory === 'all' || selectedCategory === 'concentrates'"
-  [currentScreenSize]="currentScreenSize"
-  [items]="concentrates" 
-  [selectedFilter]="selectedFilter"
-  [sortBy]="sortBy"
-  >
+    [currentScreenSize]="currentScreenSize" [items]="concentrates" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
   </concentrates>
-       
-  
-      <mat-accordion style="margin-top: 5px; margin-bottom: 5px;" *ngIf="tinctures && tinctures.length > 0  && (selectedCategory === 'all' || selectedCategory === 'tinctures')">
-          <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Tinctures ({{filterMetadata.count}})
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div *ngFor="let item of tinctures | sortBy: 'brand':'asc'| menuFilter:selectedFilter:filterMetadata">
-              <mat-card>
-                  <div style="font-size: 20px;">{{ item.brand }} - {{ item.name }}</div>
-                  <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
-                  <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
-                  <div>price: ${{ item.price_point.prices[0].price}}</div>
-                  <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
-              </mat-card>
-            </div>
-  
-        </mat-expansion-panel>
-      </mat-accordion>
-  
-  
-    <mat-accordion style="margin-top: 5px; margin-bottom: 5px;" *ngIf="capsules && capsules.length > 0  && (selectedCategory === 'all' || selectedCategory === 'capsules')">
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Capsules ({{filterMetadata.count}})
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-  
-        <div *ngFor="let item of capsules | sortBy: 'brand':'asc'| menuFilter:selectedFilter:filterMetadata">
-            <mat-card>
-                <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
-                <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
-                <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
-                <div>price: ${{ item.price_point.prices[0].price}}</div>
-                <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
-            </mat-card>
-          </div>
-      </mat-expansion-panel>
-      </mat-accordion>
-  
-    <mat-accordion style="margin-top: 5px; margin-bottom: 5px;" *ngIf="topicals && topicals.length > 0  && (selectedCategory === 'all' || selectedCategory === 'topicals')">
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Topicals ({{filterMetadata.count}})
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div *ngFor="let item of topicals | sortBy: 'brand':'asc'| menuFilter:selectedFilter:filterMetadata">
-              <mat-card>
-                  <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
-                  <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
-                  <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
-                  <div>price: ${{ item.price_point.prices[0].price}}</div>
-                  <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
-              </mat-card>
-            </div>
-        </mat-expansion-panel>
-      </mat-accordion>
-  
-    <mat-accordion style="margin-top: 5px; margin-bottom: 5px;" *ngIf="accessories && accessories.length > 0  && (selectedCategory === 'all' || selectedCategory === 'accessories')">
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-                Accessories ({{filterMetadata.count}})
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div *ngFor="let item of accessories | sortBy: 'brand':'asc'| menuFilter:selectedFilter:filterMetadata">
-              <mat-card>
-                  <div style="font-size: 20px;">{{ item.name }}</div>
-              
-                price: ${{ item.price_point.prices[0].price}}
-                <br/>
-              </mat-card>
-            </div>
-  
-        </mat-expansion-panel>
-      </mat-accordion>
-  
-    <div *ngIf="fullMenu.total_rows === undefined && searchComplete">
-      <mat-card>No Items Found.</mat-card>
-    </div>
+  <tinctures *ngIf="selectedCategory === 'all' || selectedCategory === 'tinctures'"
+    [currentScreenSize]="currentScreenSize" [items]="tinctures" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
+  </tinctures>
+  <capsules *ngIf="selectedCategory === 'all' || selectedCategory === 'capsules'"
+    [currentScreenSize]="currentScreenSize" [items]="capsules" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
+  </capsules>
+  <topicals *ngIf="selectedCategory === 'all' || selectedCategory === 'topicals'"
+    [currentScreenSize]="currentScreenSize" [items]="topicals" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
+  </topicals>
+  <accessories *ngIf="selectedCategory === 'all' || selectedCategory === 'accessories'"
+    [currentScreenSize]="currentScreenSize" [items]="accessories" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
+
+  </accessories>
+
+  <div *ngIf="fullMenu.total_rows === undefined && searchComplete">
+    <mat-card>No Items Found.</mat-card>
   </div>
-  <router-outlet></router-outlet>
-  
+</div>
+<router-outlet></router-outlet>

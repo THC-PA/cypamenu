@@ -20,6 +20,10 @@ import { NewItemsComponent } from './new-items/new-items.component';
 import { FlowersComponent } from './flowers/flowers.component';
 import { VapesComponent } from './vapes/vapes.component';
 import { ConcentratesComponent } from './concentrates/concentrates.component';
+import { TincturesComponent } from './tinctures/tinctures.component';
+import { CapsulesComponent } from './capsules/capsules.component';
+import { TopicalsComponent } from './topicals/topicals.component';
+import { AccessoriesComponent } from './accessories/accessories.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,11 @@ import { ConcentratesComponent } from './concentrates/concentrates.component';
     NewItemsComponent,
     FlowersComponent,
     VapesComponent,
-    ConcentratesComponent
+    ConcentratesComponent,
+    TincturesComponent,
+    CapsulesComponent,
+    TopicalsComponent,
+    AccessoriesComponent
   ],
   imports: [
     BrowserModule,

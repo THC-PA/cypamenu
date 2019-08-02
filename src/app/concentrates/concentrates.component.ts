@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from "@angular/core";
 import { InventoryItem } from 'src/models/inventoryItem.model';
 import { CurrentScreenSize } from 'src/models/currentScreenSize.model';
 import { InventoryItemParser } from '../services/inventoryItemParser.service';
+import { Product } from 'src/models/product.model';
 
 @Component({
     selector: 'concentrates',
@@ -24,6 +25,9 @@ export class ConcentratesComponent implements OnInit {
     }
 
 
+    test(item: Product) {
+     return JSON.stringify(item);
+    }
 getWeight(item: InventoryItem): number {
     return this.parser.getWeight(item);
 }
@@ -37,17 +41,18 @@ getBrand(item: InventoryItem) {
 }
 
 getDisplayName(item: InventoryItem) {
-    return this.parser.getDisplayName(item);
+    //return this.parser.getDisplayName(item);
+    return item.name;
    }
 
 getPotencyListStyle() {
-    if (this.currentScreenSize.isExtraSmallScreen) {
+    if (this.currentScreenSize.isExtraSmall) {
         return { 'font-size': '10px' };
     }
 }
 
 getCardStyle() {
-    if (this.currentScreenSize.isExtraSmallScreen) {
+    if (this.currentScreenSize.isExtraSmall) {
       return {
         width: '100px',
         'max-height': '340px',
@@ -55,28 +60,28 @@ getCardStyle() {
       }
     }
 
-    if (this.currentScreenSize.isSmallScreen) {
+    if (this.currentScreenSize.isSmall) {
       return {
         width: '140px',
         'min-height': '300px'
       }
     }
 
-    if (this.currentScreenSize.isMediumScreen) {
+    if (this.currentScreenSize.isMedium) {
       return {
         width: '150px',
         'min-height': '350px'
       }
     }
 
-    if (this.currentScreenSize.isLargeScreen) {
+    if (this.currentScreenSize.isLarge) {
       return {
         width: '180px',
         'min-height': '360px'
       }
     }
 
-    if (this.currentScreenSize.isExtraLargeScreen) {
+    if (this.currentScreenSize.isExtraLarge) {
       return {
         width: '180px',
         'min-height': '360px'

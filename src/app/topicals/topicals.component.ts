@@ -2,16 +2,14 @@ import { Component, Input, OnInit } from "@angular/core";
 import { InventoryItem } from 'src/models/inventoryItem.model';
 import { CurrentScreenSize } from 'src/models/currentScreenSize.model';
 import { InventoryItemParser } from '../services/inventoryItemParser.service';
-import { ItemDetailsPopup } from '../itemDetails.popup';
-import { MatDialog } from '@angular/material';
 
 @Component({
-    selector: 'flowers',
-    templateUrl: './flowers.component.html',
-    styleUrls: ['./flowers.component.css']
+    selector: 'topicals',
+    templateUrl: './topicals.component.html',
+    styleUrls: ['./topicals.component.css']
 })
 
-export class FlowersComponent implements OnInit {
+export class TopicalsComponent implements OnInit {
     @Input() items: InventoryItem[];
     @Input() currentScreenSize: CurrentScreenSize;
     @Input() sortBy: string;
@@ -19,24 +17,13 @@ export class FlowersComponent implements OnInit {
 
     filterMetadata = { count: 0 };
 
-    constructor(private parser: InventoryItemParser, private dialog: MatDialog){}
+    constructor(private parser: InventoryItemParser){}
 
     ngOnInit() {
     // alert(this.items.length);
     }
 
-    displayDetails(item: InventoryItem): void {
-      const dialogRef = this.dialog.open(ItemDetailsPopup, {
-        data: item
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if (result !== undefined && result !== null) {
-        //  this.cart.push(result);
-        }
-      });
-    }
-    
+
 getWeight(item: InventoryItem): number {
     return this.parser.getWeight(item);
 }

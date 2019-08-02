@@ -2,7 +2,7 @@
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Concentrates ({{filterMetadata.count}})
+        Tinctures ({{filterMetadata.count}})
       </mat-panel-title>
     </mat-expansion-panel-header>
 
@@ -12,33 +12,21 @@
           [ngStyle]="getCardStyle()">
           <mat-card-title [ngStyle]="
                   {
-                    'font-size': '12px',
+                    'font-size': '15px',
                     'text-align': 'center',
                     'height': '35px'
-                  }"
-                  [ngStyle.xs]="{
-                    'font-size': '11px' 
-                  }"
-                  >
+                  }">
             {{ getDisplayName(item) }}
           </mat-card-title>
 
-          <div *ngIf="item.product && item.category==='concentrates' && item.sub_category==='syringe'">
+
+          <div *ngIf="item.product">
             <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="item.product.image_url_main"
               default="{{item.product.image_url_alt}}" />
           </div>
-          <div *ngIf="item.product && item.category==='concentrates' && item.sub_category !=='syringe'">
-            <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="item.product.image_url_main"
-              default="{{item.product.image_url_alt}}" />
+          <div *ngIf="!item.product">
+            <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="'assets/images/ilera-logo.jpg'" />
           </div>
-
-          <div>
-            <div *ngIf="!item.product && (item.sub_category ==='syringe' || item.sub_category === 'rso')">
-              <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="'assets/images/ilera-logo.jpg'" />
-            </div>
-          </div>
-
-
 
           <div>{{ getBrand(item) }}
             <div class="muted">{{ getType(item) }}</div>
@@ -50,8 +38,7 @@
 
             <mat-chip-list fxLayoutAlign="center" style="position:absolute;bottom: 0; margin-bottom: 5px;">
               <mat-chip *ngFor="let price of item.price_point.prices"
-                style="font-size: 10px; background-color: #499b4a;">${{price.price}}
-              </mat-chip>
+                style="font-size: 10px; background-color: #499b4a;">${{price.price}}</mat-chip>
               <br />
 
             </mat-chip-list>

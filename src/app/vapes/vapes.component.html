@@ -2,19 +2,63 @@
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Vapes  <!--({{filterMetadata.count}})-->
+              Vapes  ({{filterMetadata.count}})
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <div *ngFor="let item of items | sortBy: 'bt_potency_thc':'desc' |  menuFilter:selectedFilter:filterMetadata">
-              <mat-card>
-                  <div style="font-size: 20px;">{{ item.brand || item.product.name }} - {{ item.name }}</div>
-                  <div *ngIf="item.product_strain && item.product_strain.description" style="font-size: 16px;">{{ item.product_strain.description }}</div>
-              
-                  <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
-                  <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
-                  <div>price: ${{ item.price_point.prices[0].price}}</div>
-                  <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
-              </mat-card>
+
+            <div fxLayout="row wrap">
+                <div *ngFor="let item of items | sortBy: sortBy:'desc' | menuFilter:selectedFilter:filterMetadata"       
+                >
+                  <mat-card (click)="displayDetails(item)" 
+                  style="word-break: normal; cursor:pointer; margin: 2px;" 
+                  [ngStyle]="getCardStyle()"
+                  >  
+                    <mat-card-title 
+                    [ngStyle]="
+                    {
+                      'font-size': '15px',
+                      'text-align': 'center',
+                      'height': '35px'
+                    }">
+                        {{ getDisplayName(item) }}
+                    </mat-card-title>
+                  
+                    
+                    <div *ngIf="item.product">
+                        <img mat-card-sm-image style="width: 100%; height: 100%;"
+                        [src]="item.product.image_url_main" 
+                        default="{{item.product.image_url_alt}}" 
+                        />
+                    </div>
+                    <div *ngIf="!item.product">
+                        <img mat-card-sm-image style="width: 100%; height: 100%;"
+                        [src]="'assets/images/ilera-logo.jpg'" 
+                        />
+                    </div>
+                    
+                    <div>{{ getBrand(item) }}
+                      <div class="muted">{{ getType(item) }}</div> 
+                      <div class="muted" fxLayout="row wrap" 
+                      [ngStyle]="getPotencyListStyle()">
+                        <div>thc: {{ item.bt_potency_thc || 0 | number:'1.1-1' }}% &nbsp;</div>
+                        <div>thca: {{ item.bt_potency_thca || 0 | number:'1.1-1'}}%  </div>
+                        <div *ngIf="item.bt_potency_cbd > 0">cbd: {{ item.bt_potency_cbd || 0 | number:'1.1-1' }}%</div>
+                      </div>
+                   
+                      <mat-chip-list fxLayoutAlign="center" style="position:absolute;bottom: 0; margin-bottom: 5px;">
+                          <mat-chip *ngFor="let price of item.price_point.prices" 
+                          style="font-size: 10px; background-color: #499b4a;" 
+                          >${{price.price}}&nbsp;/&nbsp;{{price.weight}}G</mat-chip>
+                          <br />
+                       
+                    </mat-chip-list>
+                    
+          
+                    </div>
+                  </mat-card>
+                </div>
             </div>
+
+
         </mat-expansion-panel>
       </mat-accordion>

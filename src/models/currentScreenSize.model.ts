@@ -1,9 +1,9 @@
 export class CurrentScreenSize {
-    isExtraSmallScreen: boolean = false;
-  isSmallScreen: boolean = false;
-  isMediumScreen: boolean = false;
-  isLargeScreen: boolean = false;
-  isExtraLargeScreen: boolean = false;
+    isExtraSmall: boolean = false;
+  isSmall: boolean = false;
+  isMedium: boolean = false;
+  isLarge: boolean = false;
+  isExtraLarge: boolean = false;
 
   
 }
