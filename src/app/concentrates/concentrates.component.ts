@@ -105,4 +105,7 @@ getCardStyle() {
     }
   }
 
+  trackByFn(index, item: InventoryItem) {
+    return item.id;
+  }
 }

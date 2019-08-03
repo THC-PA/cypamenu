@@ -24,5 +24,6 @@ export class InventoryItem {
     //prices: Prices[] = [];
     type: string;
     created_ago: string;
+    showImage: boolean = false;
     //store: Store;
 }

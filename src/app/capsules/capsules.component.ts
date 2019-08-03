@@ -6,60 +6,65 @@ import { ItemDetailsPopup } from '../itemDetails.popup';
 import { MatDialog } from '@angular/material';
 
 @Component({
-    selector: 'capsules',
-    templateUrl: './capsules.component.html',
-    styleUrls: ['./capsules.component.css']
+  selector: 'capsules',
+  templateUrl: './capsules.component.html',
+  styleUrls: ['./capsules.component.css']
 })
 
 export class CapsulesComponent implements OnInit {
-    @Input() items: InventoryItem[];
-    @Input() currentScreenSize: CurrentScreenSize;
-    @Input() sortBy: string;
-    @Input() selectedFilter: string;
+  @Input() items: InventoryItem[];
+  @Input() currentScreenSize: CurrentScreenSize;
+  @Input() sortBy: string;
+  @Input() selectedFilter: string;
 
-    filterMetadata = { count: 0 };
+  filterMetadata = { count: 0 };
 
-    constructor(private parser: InventoryItemParser, private dialog: MatDialog){}
+  constructor(private parser: InventoryItemParser, private dialog: MatDialog) { }
 
-    ngOnInit() {
+  ngOnInit() {
     // alert(this.items.length);
-    }
+  }
 
-    displayDetails(item: InventoryItem): void {
-      const dialogRef = this.dialog.open(ItemDetailsPopup, {
-        data: item
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if (result !== undefined && result !== null) {
+
+  trackByFn(index, item: InventoryItem) {
+    return item.id;
+  }
+
+  displayDetails(item: InventoryItem): void {
+    const dialogRef = this.dialog.open(ItemDetailsPopup, {
+      data: item
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined && result !== null) {
         //  this.cart.push(result);
-        }
-      });
-    }
+      }
+    });
+  }
 
-getWeight(item: InventoryItem): number {
+  getWeight(item: InventoryItem): number {
     return this.parser.getWeight(item);
-}
+  }
 
-getType(item: InventoryItem): string {
+  getType(item: InventoryItem): string {
     return this.parser.getType(item);
-}
+  }
 
-getBrand(item: InventoryItem) {
+  getBrand(item: InventoryItem) {
     return this.parser.getBrand(item);
-}
+  }
 
-getDisplayName(item: InventoryItem) {
+  getDisplayName(item: InventoryItem) {
     return this.parser.getDisplayName(item);
-   }
+  }
 
-getPotencyListStyle() {
+  getPotencyListStyle() {
     if (this.currentScreenSize.isExtraSmall) {
-        return { 'font-size': '10px' };
+      return { 'font-size': '10px' };
     }
-}
+  }
 
-getCardStyle() {
+  getCardStyle() {
     if (this.currentScreenSize.isExtraSmall) {
       return {
         width: '100px',

@@ -7,7 +7,7 @@
     </mat-expansion-panel-header>
 
     <div fxLayout="row wrap">
-      <div *ngFor="let item of items | sortBy: sortBy:'desc' | menuFilter:selectedFilter:filterMetadata">
+      <div (deferLoad)="item.showImage = true" *ngFor="let item of items | sortBy: sortBy:'desc' | menuFilter:selectedFilter:filterMetadata;trackBy: trackByFn;">
         <mat-card (click)="displayDetails(item)" style="word-break: normal; cursor:pointer; margin: 2px;"
           [ngStyle]="getCardStyle()">
           <mat-card-title [ngStyle]="
@@ -19,15 +19,15 @@
             {{ getDisplayName(item) }}
           </mat-card-title>
 
-          <div *ngIf="item.product && item.product_strain">
+          <div *ngIf="item.showImage && item.product && item.product_strain">
             <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="item.product_strain.image_url_main"
               default="{{item.product.image_url_main}}" />
           </div>
-          <div *ngIf="!item.product && item.product_strain">
+          <div *ngIf="item.showImage && !item.product && item.product_strain">
             <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="item.product_strain.image_url_main"
               default="{{item.product_strain.image_url_alt}}" />
           </div>
-          <div *ngIf="item.product && !item.product_strain">
+          <div *ngIf="item.showImage && item.product && !item.product_strain">
             <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="item.product.image_url_main"
               default="{{item.product.image_url_alt}}" />
           </div>

@@ -7,7 +7,8 @@
     </mat-expansion-panel-header>
 
     <div fxLayout="row wrap">
-      <div *ngFor="let item of items | sortBy: sortBy:'desc' | menuFilter:selectedFilter:filterMetadata">
+      <div (deferLoad)="item.showImage = true"
+        *ngFor="let item of items | sortBy: sortBy:'desc' | menuFilter:selectedFilter:filterMetadata; trackBy: trackByFn">
         <mat-card (click)="displayDetails(item)" style="word-break: normal; cursor:pointer; margin: 2px;"
           [ngStyle]="getCardStyle()">
           <mat-card-title [ngStyle]="
@@ -15,26 +16,28 @@
                     'font-size': '12px',
                     'text-align': 'center',
                     'height': '35px'
-                  }"
-                  [ngStyle.xs]="{
+                  }" [ngStyle.xs]="{
                     'font-size': '11px' 
-                  }"
-                  >
+                  }">
             {{ getDisplayName(item) }}
           </mat-card-title>
 
-          <div *ngIf="item.product && item.category==='concentrates' && item.sub_category==='syringe'">
+
+          <div
+            *ngIf="item.showImage && item.product && item.category==='concentrates' && item.sub_category==='syringe'">
             <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="item.product.image_url_main"
               default="{{item.product.image_url_alt}}" />
           </div>
-          <div *ngIf="item.product && item.category==='concentrates' && item.sub_category !=='syringe'">
+          <div
+            *ngIf="item.showImage && item.product && item.category==='concentrates' && item.sub_category !=='syringe'">
             <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="item.product.image_url_main"
               default="{{item.product.image_url_alt}}" />
           </div>
 
           <div>
-            <div *ngIf="!item.product && (item.sub_category ==='syringe' || item.sub_category === 'rso')">
-              <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="'assets/images/ilera-logo.jpg'" />
+            <div
+              *ngIf="item.showImage && !item.product && (item.sub_category ==='syringe' || item.sub_category === 'rso')">
+              <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="'assets/images/default.jpg'" />
             </div>
           </div>
 

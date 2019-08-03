@@ -13,6 +13,7 @@ from '@angular/material';
 import { SortByPipe } from './pipes/sortBy.pipe';
 import { MenuFilterPipe } from './pipes/menuFilter.pipe';
 import { ImagePreloadDirective } from './directives/imagePreload.directive';
+import { LazyForDirective } from './directives/lazyFor.directive';
 import { ItemDetailsPopup } from './itemDetails.popup';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { InventoryItemParser } from './services/inventoryItemParser.service';
@@ -24,12 +25,14 @@ import { TincturesComponent } from './tinctures/tinctures.component';
 import { CapsulesComponent } from './capsules/capsules.component';
 import { TopicalsComponent } from './topicals/topicals.component';
 import { AccessoriesComponent } from './accessories/accessories.component';
+import { DeferLoadModule } from '@trademe/ng-defer-load';
 
 @NgModule({
   declarations: [
     AppComponent,
     SortByPipe,
     ImagePreloadDirective,
+    LazyForDirective,
     MenuFilterPipe,
     ItemDetailsPopup,
     NewItemsComponent,
@@ -62,7 +65,8 @@ import { AccessoriesComponent } from './accessories/accessories.component';
     MatDialogModule,
     MatBadgeModule, 
     FlexLayoutModule,
-    MatChipsModule
+    MatChipsModule,
+    DeferLoadModule
   ],
   exports: [SortByPipe, ImagePreloadDirective, MenuFilterPipe],
   providers: [InventoryItemParser],

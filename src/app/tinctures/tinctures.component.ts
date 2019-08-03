@@ -25,6 +25,11 @@ export class TincturesComponent implements OnInit {
     // alert(this.items.length);
   }
 
+
+  trackByFn(index, item: InventoryItem) {
+    return item.id;
+  }
+
   displayDetails(item: InventoryItem): void {
     const dialogRef = this.dialog.open(ItemDetailsPopup, {
       data: item
