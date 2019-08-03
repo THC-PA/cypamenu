@@ -111,8 +111,10 @@ export class ItemDetailsPopup implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    document.body.scrollTop = 0;
-    window.scroll(0, 0);
+  //  document.body.scrollTop = 0;
+    //window.scroll(0, 0);
+    //mat-dialog-container
+   // alert(document.querySelector('.mat-dialog-cotainer').scrollTop);
   }
 
   getImgStyle() {

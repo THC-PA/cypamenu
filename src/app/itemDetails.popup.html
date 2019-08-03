@@ -38,13 +38,11 @@
         />
     </div>
 
-    <div fxLayout="row wrap" *ngIf="!showFlower">
-      <p>{{ getDescription(data) }}</p>
-
-    </div>
+    
 
     <div *ngIf="!showFlower"
       fxLayout="row wrap">
+      <p>{{ getDescription(data) }}</p>
       <div style="margin: 0 30px 0 30px;">
           <h5>Type</h5>
           <p>{{ getType(data) }}</p>
@@ -94,6 +92,14 @@
           </div>
         </div>
       </div>
+      <mat-chip-list style="margin-top: 5px;" fxLayoutAlign="center">
+          <mat-chip *ngFor="let price of data.price_point.prices"
+            style="font-size: 10px; background-color: #499b4a;">${{price.price}}<div *ngIf="data.category ==='flower'">&nbsp;/&nbsp;{{price.weight}}G</div>
+          </mat-chip>
+          <br />
+
+        </mat-chip-list>
+
     
     </div>
 
@@ -112,14 +118,7 @@
     <div *ngIf="item.product_strain && item.product_strain.strain_type">strain type: {{item.product_strain.strain_type}}</div>
       -->
 
-      <mat-chip-list fxLayoutAlign="center">
-          <mat-chip *ngFor="let price of data.price_point.prices"
-            style="font-size: 10px; background-color: #499b4a;">${{price.price}}<div *ngIf="data.category ==='flower'">&nbsp;/&nbsp;{{price.weight}}G</div>
-          </mat-chip>
-          <br />
-
-        </mat-chip-list>
-
+    
 </div>
 <div mat-dialog-actions align="end">
     <button mat-button (click)="onNoClick()">Close</button>
