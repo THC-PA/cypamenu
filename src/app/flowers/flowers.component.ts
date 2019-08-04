@@ -36,9 +36,15 @@ export class FlowersComponent implements OnInit {
         }
       });
     }
-    
+   
+  /*
 getWeight(item: InventoryItem): number {
     return this.parser.getWeight(item);
+}*/
+
+getWeight(product: any) {
+ // return JSON.stringify(product);
+ return this.parser.getWeight(product);
 }
 
 getType(item: InventoryItem): string {
@@ -49,7 +55,8 @@ getBrand(item: InventoryItem) {
     return this.parser.getBrand(item);
 }
 
-getDisplayName(item: InventoryItem) {
+getDisplayName(item: string) {
+  //console.log('item.products[0].name===>' + JSON.stringify(item));
     return this.parser.getDisplayName(item);
    }
 
@@ -98,6 +105,10 @@ getCardStyle() {
   }
   trackByFn(index: number, item: InventoryItem) {
     return item.id + item.category;
+  }
+
+  test(item: any) {
+    return JSON.stringify(item);
   }
 
 }

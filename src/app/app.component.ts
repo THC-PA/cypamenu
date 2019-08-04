@@ -395,7 +395,10 @@ export class AppComponent implements OnInit, OnDestroy {
     source.pipe(
       groupBy(item => item.category.toLowerCase()),
       mergeMap(group => group.pipe(toArray())))
-        .subscribe(i => this.items.push(i));
+        .subscribe(i => {
+        //  console.log('adding item: ' + JSON.stringify(i));
+        this.items.push(i);
+        });
 
       source.pipe(
        filter(item => (item.created_ago.toLowerCase().indexOf('hour') > -1

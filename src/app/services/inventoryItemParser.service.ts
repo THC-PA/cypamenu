@@ -3,8 +3,10 @@ import { InventoryItem } from 'src/models/inventoryItem.model';
 
 @Injectable()
 export class InventoryItemParser {
-    getDisplayName(item: InventoryItem): string { 
-        let displayName = item.name;
+    getDisplayName(displayName: any): string { 
+        if (typeof(displayName) === 'object') {
+          displayName = displayName.name;
+        }
         let regex = new RegExp(/3.5g/i);
         let eigthRemoved = displayName.replace(regex, '');
 
@@ -227,20 +229,48 @@ export class InventoryItemParser {
         }
     }
 
-    getWeight(item: InventoryItem): number {
+    getWeight(item: any): number {
+      let weight: number = null;
+
+      if (item.bt_weight) {
+          weight = item.bt_weight;
+      } else {
+          if (item.name.indexOf('3.5') > -1) {
+              weight = 3.5;
+          } 
+          if (item.name.toLowerCase().indexOf('1g') > -1) {
+              weight = 1;
+          }
+          if (item.name.toLowerCase().indexOf('7g') > -1) {
+            weight = 7;
+          }
+      }
+
+      if (weight === 0) { 
+        return this.getWeightFromName(item.name);
+      }
+
+      return weight;
+     
+      /*let weight: number = null;
+
         if (item.bt_weight) {
-            return item.bt_weight;
+            weight = item.bt_weight;
         } else {
-            if (item.name.indexOf('3.5') > -1) {
-                return 3.5;
+            if (item.products[0].name.indexOf('3.5') > -1) {
+                weight = 3.5;
             } 
             if (item.name.toLowerCase().indexOf('1g') > -1) {
-                return 1;
+                weight = 1;
             }
             if (item.name.toLowerCase().indexOf('7g') > -1) {
-              return 7;
+              weight = 7;
             }
         }
+
+        if (weight === 0) {
+          return this.getWeightFromName(item.name);
+        }*/
     }
 
     getDescription(item: InventoryItem): string {

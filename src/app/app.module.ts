@@ -26,11 +26,13 @@ import { CapsulesComponent } from './capsules/capsules.component';
 import { TopicalsComponent } from './topicals/topicals.component';
 import { AccessoriesComponent } from './accessories/accessories.component';
 import { DeferLoadModule } from '@trademe/ng-defer-load';
+import { GroupByNamePipe } from './pipes/groupByName.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     SortByPipe,
+    GroupByNamePipe,
     ImagePreloadDirective,
     LazyForDirective,
     MenuFilterPipe,
@@ -68,7 +70,7 @@ import { DeferLoadModule } from '@trademe/ng-defer-load';
     MatChipsModule,
     DeferLoadModule
   ],
-  exports: [SortByPipe, ImagePreloadDirective, MenuFilterPipe],
+  exports: [SortByPipe, GroupByNamePipe, ImagePreloadDirective, MenuFilterPipe],
   providers: [InventoryItemParser],
   entryComponents: [ItemDetailsPopup],
   bootstrap: [AppComponent]
