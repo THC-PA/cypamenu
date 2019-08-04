@@ -8,7 +8,7 @@
   
       <div fxLayout="row wrap">
         <div (deferLoad)="item.showImage = true" *ngFor="let item of items | sortBy: sortBy:'desc' | menuFilter:selectedFilter:filterMetadata; trackBy: trackByFn;">
-          <mat-card (click)="displayDetails(item)" style="word-break: normal; cursor:pointer; margin: 2px;"
+          <mat-card *ngIf="item.showImage" (click)="displayDetails(item)" style="word-break: normal; cursor:pointer; margin: 2px;"
             [ngStyle]="getCardStyle()">
             <mat-card-title [ngStyle]="
                     {

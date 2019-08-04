@@ -27,7 +27,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   currentScreenSize: CurrentScreenSize = new CurrentScreenSize();
 
-  isOrientationPortrait: boolean = true;
   stores: Store[] = [
     new Store('New Kensington', '229'),
     new Store('Butler', '202'),
@@ -137,84 +136,11 @@ export class AppComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
-  updateMyLayoutForOrientationChange(breakpointState: BreakpointState) {
-    if (breakpointState.matches === true) {
-      this.isOrientationPortrait = breakpointState.breakpoints[this.orientationPortrait];
-    }
-  }
-
-  getCardStyle() {
-    if (this.currentScreenSize.isExtraSmall) {
-      return {
-        width: '100px',
-        'max-height': '340px',
-        'min-height': '290px'
-      }
-    }
-
-    if (this.currentScreenSize.isSmall) {
-      return {
-        width: '140px',
-        'min-height': '300px'
-      }
-    }
-
-    if (this.currentScreenSize.isMedium) {
-      return {
-        width: '150px',
-        'min-height': '350px'
-      }
-    }
-
-    if (this.currentScreenSize.isLarge) {
-      return {
-        width: '180px',
-        'min-height': '360px'
-      }
-    }
-
-    if (this.currentScreenSize.isExtraLarge) {
-      return {
-        width: '180px',
-        'min-height': '360px'
-      }
-    }
-  }
-
-  getPotencyListStyle() {
-    if (this.currentScreenSize.isExtraSmall) {
-      return { 'font-size': '10px' };
-    }
-  }
-
-  filterChanged() {
-
-  }
-
+  
   clearCart() {
     this.cart = [];
   }
 
-  getDisplayName(item: InventoryItem) {
-    return this.itemParser.getDisplayName(item);
-  }
-
-  displayDetails(item: InventoryItem): void {
-    const dialogRef = this.dialog.open(ItemDetailsPopup, {
-      data: item
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined && result !== null) {
-        this.cart.push(result);
-      }
-    });
-  }
-
-  getBrand(item: InventoryItem) {
-    return this.itemParser.getBrand(item);
-  }
   storeChanged() {
     this.title = 'CY+ ' + this.stores.find(x => x.id === this.selectedStore).name + ' Menu';
   }
@@ -331,18 +257,7 @@ export class AppComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(res => {
         this.processMenuResults(res);
-        this.searchComplete = true;
-        this.isLoading = false;
-
       });
-  }
-
-  getWeight(item: InventoryItem): number {
-    return this.itemParser.getWeight(item);
-  }
-
-  getType(item: InventoryItem): string {
-    return this.itemParser.getType(item);
   }
 
    compare(a, b) {
@@ -351,17 +266,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     return a < b ? -1 : 1;
 }
-
-  getTotalFlowers() {
-    let length = 0;
-     this.items.forEach(categoryGroup => {
-     length += categoryGroup.filter(c => {
-      return c.category === 'flower';
-     }).length;
-    });
-    
-    return length;
-  }
 
   processMenuResults(menu: Menu) {
     const context = this;
@@ -400,11 +304,17 @@ export class AppComponent implements OnInit, OnDestroy {
         this.items.push(i);
         });
 
-      source.pipe(
+      source
+      .pipe(
        filter(item => (item.created_ago.toLowerCase().indexOf('hour') > -1
          || item.created_ago.toLowerCase().indexOf('day ago') > -1)))
          .subscribe(newItem => this.newItems.push(newItem));
 
+
+         setTimeout(() => { 
+           this.isLoading = false;
+           this.searchComplete = true;
+          }, 100);
    //   if (item.created_ago.toLowerCase().indexOf('hour') > -1
     //  || item.created_ago.toLowerCase().indexOf('day ago') > -1) {
   }

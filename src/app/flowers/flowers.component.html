@@ -7,11 +7,11 @@
     </mat-expansion-panel-header>
 
     <div fxLayout="row wrap">
-      <div (deferLoad)="item.showImage = true"
-        *lazyFor="let item of items | GroupByName | sortBy: sortBy:'desc' | menuFilter:selectedFilter:filterMetadata;">
+      <div (deferLoad)="item.products[0].showImage = true"
+        *ngFor="let item of items | GroupByName | sortBy: sortBy:'desc' | menuFilter:selectedFilter:filterMetadata;trackBy: trackByFn;">
         <!--  {{ test(item)}}-->
 
-        <mat-card (click)="displayDetails(item)" style="word-break: normal; cursor:pointer; margin: 2px;"
+        <mat-card *ngIf="item.products[0].showImage" (click)="displayDetails(item)" style="word-break: normal; cursor:pointer; margin: 2px;"
           [ngStyle]="getCardStyle()">
           <mat-card-title [ngStyle]="
               {
@@ -23,8 +23,8 @@
 
           </mat-card-title>
           <div *ngIf="item.products[0].showImage && item.products[0].product && item.products[0].product_strain">
-            <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="item.product_strain.image_url_main"
-              default="{{item.product.image_url_main}}" />
+            <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="item.products[0].product_strain.image_url_main"
+              default="{{item.products[0].product.image_url_main}}" />
           </div>
           <div *ngIf="item.products[0].showImage && !item.products[0].product && item.products[0].product_strain">
             <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="item.products[0].product_strain.image_url_main"
@@ -36,22 +36,44 @@
           </div>
 
           <div style="font-size: 10px;">
-            total products: {{item.products.length }}
+            total diff weights: {{item.products.length }}
           </div>
-          <div *ngFor="let product of item.products">
-            <mat-chip-list fxLayout="center">
+
+          <div>{{ getBrand(item.products[0]) }}
+              <div class="muted">{{ getType(item.products[0]) }}</div>
+              <div class="muted" fxLayout="row wrap" [ngStyle]="getPotencyListStyle()">
+                <div>thc: {{ item.products[0].bt_potency_thc || 0 | number:'1.1-1' }}% &nbsp;</div>
+                <div>thca: {{ item.products[0].bt_potency_thca || 0 | number:'1.1-1'}}% </div>
+                <div *ngIf="item.bt_potency_cbd > 0">cbd: {{ item.products[0].bt_potency_cbd || 0 | number:'1.1-1' }}%</div>
+              </div>
+  
+              <div *ngFor="let product of item.products">
+              <mat-chip-list fxLayout="row wrap">
+                <mat-chip *ngFor="let price of product.price_point.prices"
+                  style="font-size: 10px; background-color: #499b4a; margin: 5px;">${{price.price}}&nbsp;/&nbsp;{{getWeight(product)}}G
+                </mat-chip>
+             
+              </mat-chip-list>
+  
+            </div>
+          </div>
+   
+         <!-- <div *ngFor="let product of item.products">
+            <mat-chip-list fxLayout="row">
               <mat-chip *ngFor="let price of product.price_point.prices"
                 style="font-size: 10px; background-color: #499b4a;">${{price.price}}&nbsp;/&nbsp;{{getWeight(product)}}G
               </mat-chip>
-              <br />
-
+           
             </mat-chip-list>
-            <!--   ${{price.price}}&nbsp;/&nbsp;{{getWeight(product)}}G-->
-
-            <br />
-
 
           </div>
+        -->
+
+
+
+
+
+
           <!-- <div *ngFor="let product of item.products">
               <mat-chip-list fxLayoutAlign="center" style="position:absolute;bottom: 0; margin-bottom: 5px;">
                   <mat-chip *ngFor="let price of product.price_point.prices"
