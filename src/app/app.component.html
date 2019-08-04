@@ -64,40 +64,56 @@
       </mat-form-field>-->
 
 </div>
-
+ 
 
 <div *ngIf="isLoading" class="loading">Loading&#8230;</div>
 
 <div class="content">
-  <new-items *ngIf="newItems && newItems.length > 0" [currentScreenSize]="currentScreenSize" [items]="newItems"
-    [newWithinHours]="newWithinHours">
-  </new-items>
-  <flowers *ngIf="selectedCategory === 'all' || selectedCategory === 'flower'" [currentScreenSize]="currentScreenSize"
-    [items]="flowers" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
-  </flowers>
+  <div *ngIf="newItems.length > 0">
+      <new-items *ngIf="newItems && newItems.length > 0" [currentScreenSize]="currentScreenSize" [items]="newItems"
+          [newWithinHours]="newWithinHours">
+        </new-items>
+  </div>
+ <div *ngFor="let item of items">
+    <div *ngIf="item[0].category === 'flower'">
+        <flowers *ngIf="selectedCategory === 'all' || selectedCategory === 'flower'" [currentScreenSize]="currentScreenSize"
+        [items]="item" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
+      </flowers>
+     </div>
+     <div *ngIf="item[0].category === 'vapes'">
+        <vapes *ngIf="selectedCategory === 'all' || selectedCategory === 'vapes'" [currentScreenSize]="currentScreenSize"
+        [items]="item" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
+     </vapes>
+     </div>
+     <div *ngIf="item[0].category === 'concentrates'">
+        <concentrates *ngIf="selectedCategory === 'all' || selectedCategory === 'concentrates'" [currentScreenSize]="currentScreenSize"
+        [items]="item" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
+      </concentrates>
+     </div>
+     <div *ngIf="item[0].category === 'tinctures'">
+        <tinctures *ngIf="selectedCategory === 'all' || selectedCategory === 'tinctures'" [currentScreenSize]="currentScreenSize"
+        [items]="item" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
+      </tinctures>
+     </div>
+     <div *ngIf="item[0].category === 'capsules'">
+        <capsules *ngIf="selectedCategory === 'all' || selectedCategory === 'capsules'" [currentScreenSize]="currentScreenSize"
+        [items]="item" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
+     </capsules>
+     </div>
+     <div *ngIf="item[0].category === 'topicals'">
+        <topicals *ngIf="selectedCategory === 'all' || selectedCategory === 'topicals'" [currentScreenSize]="currentScreenSize"
+        [items]="item" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
+     </topicals>
+     </div>
+     <div *ngIf="item[0].category === 'accessories'">
+        <accessories *ngIf="selectedCategory === 'all' || selectedCategory === 'accessories'" [currentScreenSize]="currentScreenSize"
+        [items]="item" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
+     </accessories>
+     </div>
+ </div>
 
-  <vapes *ngIf="selectedCategory === 'all' || selectedCategory === 'vapes'" [currentScreenSize]="currentScreenSize"
-    [items]="vapes" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
-  </vapes>
-  <concentrates *ngIf="selectedCategory === 'all' || selectedCategory === 'concentrates'"
-    [currentScreenSize]="currentScreenSize" [items]="concentrates" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
-  </concentrates>
-  <tinctures *ngIf="selectedCategory === 'all' || selectedCategory === 'tinctures'"
-    [currentScreenSize]="currentScreenSize" [items]="tinctures" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
-  </tinctures>
-  <capsules *ngIf="selectedCategory === 'all' || selectedCategory === 'capsules'"
-    [currentScreenSize]="currentScreenSize" [items]="capsules" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
-  </capsules>
-  <topicals *ngIf="selectedCategory === 'all' || selectedCategory === 'topicals'"
-    [currentScreenSize]="currentScreenSize" [items]="topicals" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
-  </topicals>
-  <accessories *ngIf="selectedCategory === 'all' || selectedCategory === 'accessories'"
-    [currentScreenSize]="currentScreenSize" [items]="accessories" [selectedFilter]="selectedFilter" [sortBy]="sortBy">
-
-  </accessories>
-<!--
-  <div *ngIf="fullMenu.total_rows === undefined && searchComplete">
+  <div *ngIf="(items.length === undefined || items.length === 0) && searchComplete">
     <mat-card>No Items Found.</mat-card>
-  </div> -->
+  </div> 
 </div>
 <router-outlet></router-outlet>

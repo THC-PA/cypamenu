@@ -9,8 +9,8 @@ import { InventoryItemParser } from './services/inventoryItemParser.service';
 import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
 import { Prices } from 'src/models/prices.model';
 import { CurrentScreenSize } from 'src/models/currentScreenSize.model';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, from } from 'rxjs';
+import { takeUntil, groupBy, mergeMap, toArray, map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +19,7 @@ import { takeUntil } from 'rxjs/operators';
 
 export class AppComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
+  items: any[] = [];
 
   selectedStore = '229';
   isLoading: boolean = false;
@@ -32,7 +33,6 @@ export class AppComponent implements OnInit, OnDestroy {
     new Store('Butler', '202'),
     new Store('Pittsburgh', '203')
   ];
-  flowerResult: Array<InventoryItem> = [];
   title = 'CY+ Menu';
   selectedCategory = 'all';
   newWithinHours = 24;
@@ -42,14 +42,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   cart: InventoryItem[] = [];
 
-  flowers: Array<InventoryItem> = [];
   newItems: Array<InventoryItem> = [];
-  concentrates: Array<InventoryItem> = [];
-  vapes: Array<InventoryItem> = [];
-  tinctures: Array<InventoryItem> = [];
-  capsules: Array<InventoryItem> = [];
-  topicals: Array<InventoryItem> = [];
-  accessories: Array<InventoryItem> = [];
+
   searchComplete: boolean = false;
   searchText: string = '';
   sortBy: string = 'bt_potency_thca';
@@ -144,10 +138,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  addToConcentrates(item: InventoryItem) {
-    this.concentrates.push(item);
-  }
-
   updateMyLayoutForOrientationChange(breakpointState: BreakpointState) {
     if (breakpointState.matches === true) {
       this.isOrientationPortrait = breakpointState.breakpoints[this.orientationPortrait];
@@ -228,7 +218,7 @@ export class AppComponent implements OnInit, OnDestroy {
   storeChanged() {
     this.title = 'CY+ ' + this.stores.find(x => x.id === this.selectedStore).name + ' Menu';
   }
-
+/*
   addToNewList(item: InventoryItem) {
     if (item.created_ago.toLowerCase().indexOf('hour') > -1
       || item.created_ago.toLowerCase().indexOf('day ago') > -1) {
@@ -312,7 +302,7 @@ export class AppComponent implements OnInit, OnDestroy {
       
       this.flowers.push(item);
     }
-  }
+  }*/
 
   search() {
     this.isLoading = true;
@@ -340,7 +330,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.httpClient.get<Menu>(baseUrl, options)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(res => {
-        //this.fullMenu = res;
         this.processMenuResults(res);
         this.searchComplete = true;
         this.isLoading = false;
@@ -356,49 +345,70 @@ export class AppComponent implements OnInit, OnDestroy {
     return this.itemParser.getType(item);
   }
 
-  processMenuResults(menu: Menu) {
-    menu.data.forEach(item => {
-      let category = item.category.toLowerCase();
-      item.type = this.itemParser.getType(item);
+   compare(a, b) {
+    if (a === b) {
+        return 0;
+    }
+    return a < b ? -1 : 1;
+}
 
-      if (item.created_ago !== null && item.created_ago !== undefined) {
-        this.addToNewList(item);
-      }
-
-      if (category.indexOf('flower') > -1) {
-        this.addToFlowers(item);
-      }
-
-      if (category.indexOf('concentrate') > -1) {
-        this.addToConcentrates(item);
-      }
-      if (category.indexOf('vape') > -1) {
-        this.vapes.push(item);
-      }
-      if (category.indexOf('tincture') > -1) {
-        this.tinctures.push(item);
-      }
-      if (category.indexOf('capsule') > -1) {
-        this.capsules.push(item);
-      }
-      if (category.indexOf('topical') > -1) {
-        this.topicals.push(item);
-      }
-      if (category.indexOf('accessories') > -1) {
-        this.accessories.push(item);
-      }
+  getTotalFlowers() {
+    let length = 0;
+     this.items.forEach(categoryGroup => {
+     length += categoryGroup.filter(c => {
+      return c.category === 'flower';
+     }).length;
     });
+    
+    return length;
+  }
+
+  processMenuResults(menu: Menu) {
+    const context = this;
+    let sortOrder = {
+      'flower': 0,
+      'vapes': 1,
+      'concentrates': 2,
+      'capsules': 3,
+      'tinctures': 4,
+      'topicals': 5,
+      'accessories': 6
+    };
+
+    menu.data.sort(function (a, b) {
+
+      // First compare corresponding values
+      var index_result = context.compare(sortOrder[a.category],
+          sortOrder[b.category]);
+  
+      // If they are equal
+      if (index_result === 0) {
+  
+          // Return the result of comparing
+          return context.compare(a.category, b.category);
+      }
+  
+      return index_result;
+  });
+
+    const source = from(menu.data);
+    source.pipe(
+      groupBy(item => item.category.toLowerCase()),
+      mergeMap(group => group.pipe(toArray())))
+        .subscribe(i => this.items.push(i));
+
+      source.pipe(
+       filter(item => (item.created_ago.toLowerCase().indexOf('hour') > -1
+         || item.created_ago.toLowerCase().indexOf('day ago') > -1)))
+         .subscribe(newItem => this.newItems.push(newItem));
+
+   //   if (item.created_ago.toLowerCase().indexOf('hour') > -1
+    //  || item.created_ago.toLowerCase().indexOf('day ago') > -1) {
   }
 
   clearResults() {
+    this.items = [];
     this.searchComplete = false;
     this.newItems = [];
-    this.flowers = [];
-    this.capsules = [];
-    this.concentrates = [];
-    this.topicals = [];
-    this.vapes = [];
-    this.tinctures = [];
-    this.accessories = [];
   }
 }

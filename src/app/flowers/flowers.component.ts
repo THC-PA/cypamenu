@@ -97,7 +97,7 @@ getCardStyle() {
     }
   }
   trackByFn(index: number, item: InventoryItem) {
-    return item.id;
+    return item.id + item.category;
   }
 
 }
