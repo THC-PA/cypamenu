@@ -275,7 +275,7 @@ export class AppComponent implements OnInit, OnDestroy {
     const options = { headers: headers };
 
 
-    if (this.initialLoad) {
+    if (this.initialLoad || this.selectedStore !== '229') {
       this.httpClient.get<Menu>(baseUrl, options)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(res => {
