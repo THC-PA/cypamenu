@@ -25,9 +25,15 @@ export class FlowersComponent implements OnInit {
     // alert(this.items.length);
     }
 
-    displayDetails(item: InventoryItem): void {
+    displayDetails(item: any): void {
+      let height = '250px';
+      if (this.currentScreenSize.isExtraSmall) {
+        height = '275px';
+      }
+
       const dialogRef = this.dialog.open(ItemDetailsPopup, {
-        data: item
+        data: item,
+        height: height
       });
   
       dialogRef.afterClosed().subscribe(result => {

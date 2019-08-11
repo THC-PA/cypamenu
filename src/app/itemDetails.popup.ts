@@ -12,7 +12,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class ItemDetailsPopup implements AfterViewInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
-  showFlower: boolean = false;
+  showImage: boolean = false;
   isOrientationPortrait: boolean = false;
 
   isExtraSmallScreen: boolean = false;
@@ -22,7 +22,7 @@ export class ItemDetailsPopup implements AfterViewInit, OnDestroy {
   isExtraLargeScreen: boolean = false;
   constructor(
     public dialogRef: MatDialogRef<ItemDetailsPopup>,
-    @Inject(MAT_DIALOG_DATA) public data: InventoryItem,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private itemParser: InventoryItemParser,
     private breakpointObserver: BreakpointObserver) {
 
@@ -147,12 +147,12 @@ export class ItemDetailsPopup implements AfterViewInit, OnDestroy {
     return this.itemParser.getType(item);
   }
 
-  displayFlower() {
-    this.showFlower = true;
+  displayImage() {
+    this.showImage = true;
   }
 
   hideFlower() {
-    this.showFlower = false;
+    this.showImage = false;
   }
 
   getContentStyle() {

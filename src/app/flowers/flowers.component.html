@@ -45,6 +45,7 @@
                 <div>thc: {{ item.products[0].bt_potency_thc || 0 | number:'1.1-1' }}% &nbsp;</div>
                 <div>thca: {{ item.products[0].bt_potency_thca || 0 | number:'1.1-1'}}% </div>
                 <div *ngIf="item.bt_potency_cbd > 0">cbd: {{ item.products[0].bt_potency_cbd || 0 | number:'1.1-1' }}%</div>
+              <div>Added: {{item.products[0].created_ago}}</div>
               </div>
   
               <div *ngFor="let product of item.products">
