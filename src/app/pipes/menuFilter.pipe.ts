@@ -43,8 +43,8 @@ export class MenuFilterPipe implements PipeTransform {
         });
 
         filterMetadata.count = filteredItems.length;
-     console.log('set filterMetaData count to : ' + filterMetadata.count  + 
-            ' For category: ' + items[0].category);
+    // console.log('set filterMetaData count to : ' + filterMetadata.count  + 
+        //    ' For category: ' + items[0].category);
         return filteredItems;
     }
 }

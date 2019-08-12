@@ -122,28 +122,28 @@ export class InventoryItemParser {
  
                
                if (hasCbdInName || hasCbdInPName) {
-                 item.type = '(CBD Dominant)';
+                 return '(CBD Dominant)';
                }
                if ((hasIndicaInName || hasIndicaInPName) && (hasHybridInName || hasHybriInPName)){
                  //item.type = '(H/I)';
-                 item.type = 'Indica/Hybrid';
+                 return 'Indica/Hybrid';
                }
                else if ((hasIndicaInName || hasIndicaInPName) && !(hasHybridInName || hasHybriInPName)){
-                 item.type = 'Indica';
+                 return 'Indica';
                }
                else if ((hasSativaInName || hasSativaInPName) && (hasHybridInName || hasHybriInPName)) {
-                 item.type = 'Sativa/Hibrid';
+                 return 'Sativa/Hibrid';
                }
                else if ((hasSativaInName || hasSativaInPName) && !(hasHybridInName || hasHybriInPName)) {
                    
-                 item.type = 'Sativa';
+                 return 'Sativa';
                }
                else {
-                 item.type = 'Unknown type';
+                 return 'Unknown type';
                }
              }
            } else {
-             item.type = 'Hybrid'
+             return 'Hybrid';
            }
     }
 

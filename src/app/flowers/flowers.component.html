@@ -2,13 +2,13 @@
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Flower ({{filterMetadata.count}})
+        Flower ({{groupMetaData.count}})
       </mat-panel-title>
     </mat-expansion-panel-header>
 
     <div fxLayout="row wrap">
       <div (deferLoad)="item.products[0].showImage = true"
-        *ngFor="let item of items | GroupByName | sortBy: sortBy:'desc' | menuFilter:selectedFilter:filterMetadata;trackBy: trackByFn;">
+        *ngFor="let item of items | GroupByName:groupMetaData | sortBy: sortBy:'desc';trackBy: trackByFn;">
         <!--  {{ test(item)}}-->
 
         <mat-card *ngIf="item.products[0].showImage" (click)="displayDetails(item)" style="word-break: normal; cursor:pointer; margin: 2px;"

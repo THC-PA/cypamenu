@@ -2,13 +2,13 @@
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Concentrates ({{filterMetadata.count}})
+        Concentrates ({{items.length}})
       </mat-panel-title>
     </mat-expansion-panel-header>
 
     <div fxLayout="row wrap">
       <div (deferLoad)="item.showImage = true"
-        *ngFor="let item of items | sortBy: sortBy:'desc' | menuFilter:selectedFilter:filterMetadata; trackBy: trackByFn">
+        *ngFor="let item of items | sortBy: sortBy:'desc'; trackBy: trackByFn">
         <mat-card *ngIf="item.showImage"  (click)="displayDetails(item)" style="word-break: normal; cursor:pointer; margin: 2px;"
           [ngStyle]="getCardStyle()">
           <mat-card-title [ngStyle]="

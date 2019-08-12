@@ -17,7 +17,7 @@ export class CapsulesComponent implements OnInit {
   @Input() sortBy: string;
   @Input() selectedFilter: string;
 
-  filterMetadata = { count: 0 };
+  //filterMetadata = { count: 0 };
 
   constructor(private parser: InventoryItemParser, private dialog: MatDialog) { }
 

@@ -10,8 +10,9 @@ export class GroupByNamePipe implements PipeTransform {
 
     constructor(private parser: InventoryItemParser) {}
 
-    transform(collection: Array<InventoryItem>): Array<any> {
+    transform(collection: Array<InventoryItem>, groupMetaData: any): Array<any> {
 
+        groupMetaData.count = 0;
         if(!collection) {
             return null;
         }
@@ -34,12 +35,17 @@ export class GroupByNamePipe implements PipeTransform {
                     previous[this.parser.getDisplayName(current)].push(current);
                 }
 
+             
             return previous;
         }, {});
 
-        return Object.keys(groupedCollection).map(key => ({
+
+        let result =  Object.keys(groupedCollection).map(key => ({
             label: key,
             products: groupedCollection[key]
         }));
+
+        groupMetaData.count = result.length;
+        return result;
     }
 } 
