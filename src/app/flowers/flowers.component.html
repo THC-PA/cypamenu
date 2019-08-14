@@ -22,10 +22,11 @@
             {{ getDisplayName(item.products[0].name) }}
 
           </mat-card-title>
-          <div *ngIf="item.products[0].showImage && item.products[0].product && item.products[0].product_strain">
+         
+           <div *ngIf="item.products[0].showImage && item.products[0].product && item.products[0].product_strain">
             <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="item.products[0].product_strain.image_url_main"
-              default="{{item.products[0].product.image_url_main}}" />
-          </div>
+              default="{{item.products[0].product_strain.image_url_alt}}" onError="this.src='assets/images/default.jpg'" />
+          </div> 
           <div *ngIf="item.products[0].showImage && !item.products[0].product && item.products[0].product_strain">
             <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="item.products[0].product_strain.image_url_main"
               default="{{item.products[0].product_strain.image_url_alt}}" />
@@ -33,7 +34,7 @@
           <div *ngIf="item.products[0].showImage && item.products[0].product && !item.products[0].product_strain">
             <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="item.products[0].product.image_url_main"
               default="{{item.products[0].product.image_url_alt}}" />
-          </div>
+          </div> 
 
           <div style="font-size: 10px;">
             total diff weights: {{item.products.length }}

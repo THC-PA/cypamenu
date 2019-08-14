@@ -7,10 +7,10 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'dialog-overview-example-dialog',
-  templateUrl: './itemDetails.popup.html',
+  selector: 'flower-popup-dialog',
+  templateUrl: './flower.popup.html',
 })
-export class ItemDetailsPopup implements AfterViewInit, OnDestroy, OnInit {
+export class FlowerPopup implements AfterViewInit, OnDestroy, OnInit {
   private unsubscribe$ = new Subject<void>();
   showImage: boolean = false;
   isOrientationPortrait: boolean = false;
@@ -21,7 +21,7 @@ export class ItemDetailsPopup implements AfterViewInit, OnDestroy, OnInit {
   isLargeScreen: boolean = false;
   isExtraLargeScreen: boolean = false;
   constructor(
-    public dialogRef: MatDialogRef<ItemDetailsPopup>,
+    public dialogRef: MatDialogRef<FlowerPopup>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private itemParser: InventoryItemParser,
     private breakpointObserver: BreakpointObserver) {
@@ -118,7 +118,7 @@ export class ItemDetailsPopup implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    //console.log('loading : ' + JSON.stringify(this.data));
+    console.log('loading : ' + JSON.stringify(this.data));
   }
 
   getImgStyle() {
@@ -151,8 +151,7 @@ export class ItemDetailsPopup implements AfterViewInit, OnDestroy, OnInit {
     return this.itemParser.getType(item);
   }
 
-  displayImage(item: InventoryItem) {
-    JSON.stringify('display image from data: ' + JSON.stringify(item));
+  displayImage() {
     this.showImage = true;
   }
 

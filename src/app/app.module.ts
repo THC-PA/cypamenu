@@ -27,6 +27,7 @@ import { TopicalsComponent } from './topicals/topicals.component';
 import { AccessoriesComponent } from './accessories/accessories.component';
 import { DeferLoadModule } from '@trademe/ng-defer-load';
 import { GroupByNamePipe } from './pipes/groupByName.pipe';
+import { FlowerPopup } from './flower.popup';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { GroupByNamePipe } from './pipes/groupByName.pipe';
     ImagePreloadDirective,
     LazyForDirective,
     MenuFilterPipe,
+    FlowerPopup,
     ItemDetailsPopup,
     NewItemsComponent,
     FlowersComponent,
@@ -72,7 +74,7 @@ import { GroupByNamePipe } from './pipes/groupByName.pipe';
   ],
   exports: [SortByPipe, GroupByNamePipe, ImagePreloadDirective, MenuFilterPipe],
   providers: [InventoryItemParser],
-  entryComponents: [ItemDetailsPopup],
+  entryComponents: [ItemDetailsPopup, FlowerPopup],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

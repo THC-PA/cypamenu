@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { InventoryItem } from 'src/models/inventoryItem.model';
 import { CurrentScreenSize } from 'src/models/currentScreenSize.model';
-import { InventoryItemParser } from '../services/inventoryItemParser.service';
-import { ItemDetailsPopup } from '../itemDetails.popup';
+import { InventoryItemParser } from '../services/inventoryItemParser.service'; 
 import { MatDialog } from '@angular/material';
+import { FlowerPopup } from '../flower.popup';
 
 @Component({
     selector: 'flowers',
@@ -31,7 +31,7 @@ export class FlowersComponent implements OnInit {
         height = '275px';
       }
 
-      const dialogRef = this.dialog.open(ItemDetailsPopup, {
+      const dialogRef = this.dialog.open(FlowerPopup, {
         data: item,
         height: height
       });
