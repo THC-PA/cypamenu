@@ -67,12 +67,12 @@
 
 <div *ngIf="isLoading" class="loading">Loading&#8230;</div>
 
-<div class="content">
-  <!-- <div *ngIf="newItems.length > 0">
+<div class="content"> 
+  <div *ngIf="newItems.length > 0">
       <new-items *ngIf="newItems && newItems.length > 0" [currentScreenSize]="currentScreenSize" [items]="newItems"
           [newWithinHours]="newWithinHours">
         </new-items>
-  </div> -->
+  </div> 
   <div *ngFor="let item of items">
     <div *ngIf="item[0].category === 'flower'">
       <flowers *ngIf="selectedCategory === 'all' || selectedCategory === 'flower'"

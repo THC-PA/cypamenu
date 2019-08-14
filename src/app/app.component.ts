@@ -240,7 +240,9 @@ export class AppComponent implements OnInit, OnDestroy {
     source
       .pipe(
         filter(item => (item.created_ago.toLowerCase().indexOf('hour') > -1
-          || item.created_ago.toLowerCase().indexOf('day ago') > -1)))
+          || item.created_ago.toLowerCase().indexOf('day ago') > -1
+      || item.created_ago.toLowerCase().indexOf('minute') > -1
+      || item.created_ago.toLowerCase().indexOf('minutes') > -1)))
       .subscribe(newItem => this.newItems.push(newItem));
 
 

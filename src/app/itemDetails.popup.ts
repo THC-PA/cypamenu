@@ -151,8 +151,7 @@ export class ItemDetailsPopup implements AfterViewInit, OnDestroy, OnInit {
     return this.itemParser.getType(item);
   }
 
-  displayImage(item: InventoryItem) {
-    JSON.stringify('display image from data: ' + JSON.stringify(item));
+  displayImage() { 
     this.showImage = true;
   }
 

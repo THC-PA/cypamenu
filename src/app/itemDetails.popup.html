@@ -11,86 +11,9 @@
     <img mat-card-sm-image style="width: auto; height: 250px; margin: auto; display: block;" [src]="showImage && data.product.image_url_main"
       default="{{data.product.image_url_alt}}" />
   </div>
-  <div *ngIf="showimage && data.showImage && !data.product">
+  <div *ngIf="showImage && data.showImage && !data.product">
     <img mat-card-sm-image style="width: auto; height: 250px; margin: auto; display: block;" [src]="'assets/images/default.jpg'" />
-  </div>
-  <!--
-
-  {"id":41463,"location_id":25,"bt_inventory_id":null,
-  "price_point":{
-    "prices":
-    [{"price":50,"units":"","weight":1,"quantity":1,"is_default":true,"location_id":1,"post_tax_price":50,"
-    member_discount_id":0}],"hasErrors":false},"name":"Honey Boo LLR Cartridge 500mg","bt_inventory_type_name":null,
-    "bt_product_strain":null,"bt_inventory_strain":null,"bt_remaining_quantity":100,"hidden":false,
-    "updated":"2019-08-05T17:20:40.909Z","bt_weight":0.5,"category":"vapes","sub_category":"live_cartridge",
-    "brand_name":null,"sub_category_01":null,"bt_product_category_name":null,"bt_product_vendor_name":null,
-    "product_id":225,"bt_usable_weight":null,"bt_inventory_room_id":null,"bt_inventory_room_name":null,"brand":"Cresco",
-    "image_url_main":null,"image_url_alt":null,"tags":null,"product_strain_id":61,"hash":null,"total_weight":null,
-    "usable_thc":null,"usable_cbd":null,"bt_potency_cbd":null,"bt_potency_cbda":null,"bt_potency_thc":55.59,
-    "bt_potency_thca":14.59,"bt_potency_total":null,"name_override":null,"cultivator":"Cresco Labs",
-    "bt_product_name":null,"product":{"id":225,"sku":null,"name":"Cresco Rest BHO Cart","tags":[],"brand":"Cresco",
-    "hidden":false,"created":"2019-06-20T21:53:13.443235",
-    "deleted":"2019-07-31T20:29:22.713599","effects":[],"flavors":[],"lineage":null,"updated":"2019-07-31T14:30:16.946856"
-    category":"vapes","symptoms":[],"terpenes":[],"exclusive":false,"cultivator":"Cresco Labs","indica_pct":null,
-    "sativa_pct":null,"avg_thc_low":null,"description":null,"strain_type":"indica","avg_thc_high":null,"product_type":
-    "product","sub_category":"cartridge",
-    "image_url_alt":"https://s3-us-west-2.amazonaws.com/prod-secure-cresco-uploads/42d2f481-0438-4717-aa07-066711694
-    e76.jpg","image_url_main":"https://s3-us-west-2.amazonaws.com/prod-secure-cresco-uploads/53cbd5a7-d327-4c95-a3f7
-    -b8b32c6b6a97.jpg","sub_category_01":"bho","available_states":null,"is_shown_strain_finder":false},"product_strai
-    n":{"id":61,"sku":null,"name":"Honey Boo","tags":[],"brand":null,"hidden":false,"created":"2019-04-24T16:23:02.9
-    77283","deleted":null,"effects":["relaxed","euphoric"],"flavors":["sweet","honey"],"lineage":"Bubba Kush","upda
-    ted":"2019-06-24T15:50:32.66394","category":null,"symptoms":["pain","stress","depression"],"terpenes":["myrcen
-    e","pinene"],"exclusive":false,"cultivator":null,"indica_pct":75,"sativa_pct":25,"avg_thc_low":22,"description
-    ":"An 80% indica by DNA Genetics, Honey Boo Boo is a limited edition strain that crosses a Bubba Kush mother 
-    with a Captain Krypt OG male. With a sweet flavor that in part lends this strain her name, Honey Boo Boo deal
-    s a heavy-handed blast of euphoria that melts throughout the body. Her dense buds finish flowering after 8 to
-     9 weeks, and her maturation is often marked by darkened purple leaf tips.","strain_type":"indica","avg_thc
-     _high":24,"product_type":"strain","sub_category":null,"image_url_alt":"https://www.crescocannabis.com/wp-content/uploads/2018/10/honey-boo.png","image_url_main":"https://s3-us-west-2.amazonaws.com/prod-secure-cresco-uploads/02108745-c3ef-4980-b326-30fbaafada11.jpg","sub_category_01":null,"available_states":["IL","PA"],"is_shown_strain_finder":true},"store_id":229,"store":{"id":229,"name":"CY+","city":"New Kensington"},"last_updated":"9 days ago","updated_ago":"9 days ago","created_ago":"2 months ago",
-     "showImage":true}
-
-
-  
-  <div *ngIf="showImage && item.showImage && item.product && item.product_strain">
-    <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="item.product_strain.image_url_main"
-      default="{{item.product.image_url_main}}" />
-  </div>
-  <div *ngIf="showImage && item.showImage && !item.product && item.product_strain">
-    <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="item.product_strain.image_url_main"
-      default="{{item.product_strain.image_url_alt}}" />
-  </div>
-  <div *ngIf="showImage && item.showImage && item.product && !item.product_strain">
-    <img mat-card-sm-image style="width: 100%; height: 100%;" [src]="item.product.image_url_main"
-      default="{{item.product.image_url_alt}}" />
-  </div>-->
-
-  <!-- <div *ngIf="data.product && data.product_strain && showImage">
-        <img 
-        [ngStyle]="getImgStyle()"
-        [src]="data.product_strain.image_url_main" 
-        default="{{data.product.image_url_main}}" 
-        />
-    </div>
-    <div *ngIf="!data.product && data.product_strain && showImage">
-        <img 
-        [ngStyle]="getImgStyle()"
-        [src]="data.product_strain.image_url_main" 
-        default="{{data.product_strain.image_url_alt}}" 
-        />
-    </div>
-    <div *ngIf="!data.product_strain && data.product && showImage">
-        <img 
-        [ngStyle]="getImgStyle()"
-        [src]="data.product.image_url_main" 
-        default="{{data.product.image_url_alt}}" 
-        />
-    </div>
-    <div *ngIf="data.category === 'concentrate'">
-        <img 
-        [ngStyle]="getImgStyle()"
-        [src]="data.product.image_url_alt" 
-        default="{{data.product.image_url_main}}" 
-        />
-    </div>-->
+  </div> 
 
   <div *ngIf="!showImage" fxLayout="row wrap">
     <p>{{ getDescription(data) }}</p>
@@ -170,45 +93,14 @@
     -->
 
   </div>
-
-  <!--<div *ngIf="item.product_strain && item.product_strain.description" style="font-size: 16px;">{{ item.product_strain.description }}</div>
-      <div *ngIf="item.product_strain && item.product_strain.lineage">Lineage: {{ item.product_strain.lineage }}</div>
-      <div *ngIf="item.product_strain && item.product_strain.flavors">Flavors: {{ item.product_strain.flavors }}</div>
-      <div *ngIf="item.product_strain && item.product_strain.effects">Effects: {{ item.product_strain.effects }}</div>
-      <div *ngIf="item.product_strain && item.product_strain.symptoms !== null">Symptoms: {{ item.product_strain.symptoms }}</div>
-      <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
-      <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
-      <div>cbd: {{ item.bt_potency_cbd || 0 }}%</div>
-      <div>price: ${{ item.price_point.prices[0].price}}</div>
-      <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
-      <div *ngIf="item.product_strain && item.product_strain.indica_pct">indica: {{ item.product_strain.indica_pct }}%</div>
-      <div *ngIf="item.product_strain && item.product_strain.sativa_pct">sativa: {{ item.product_strain.sativa_pct }}%</div>
-    <div *ngIf="item.product_strain && item.product_strain.strain_type">strain type: {{item.product_strain.strain_type}}</div>
-      -->
-
+ 
 
 </div>
 <div mat-dialog-actions align="end">
   <button mat-button (click)="onNoClick()">Close</button>
-  <button *ngIf="!showImage" mat-button (click)="displayImage(item)">Show Item</button>
+  <button *ngIf="!showImage" mat-button (click)="displayImage()">Show Item</button>
   <button *ngIf="showImage" mat-button (click)="hideFlower()">Hide Item</button>
 
   <!-- <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Add to cart</button>-->
 </div>
-
-<!--
-
-    <div *ngIf="item.product_strain && item.product_strain.description" style="font-size: 16px;">{{ item.product_strain.description }}</div>
-            <div *ngIf="item.product_strain && item.product_strain.lineage">Lineage: {{ item.product_strain.lineage }}</div>
-            <div *ngIf="item.product_strain && item.product_strain.flavors">Flavors: {{ item.product_strain.flavors }}</div>
-            <div *ngIf="item.product_strain && item.product_strain.effects">Effects: {{ item.product_strain.effects }}</div>
-            <div *ngIf="item.product_strain && item.product_strain.symptoms !== null">Symptoms: {{ item.product_strain.symptoms }}</div>
-            <div>thc: {{ item.bt_potency_thc || 0 }}%</div>
-            <div>thca: {{ item.bt_potency_thca || 0 }}%  </div>
-            <div>cbd: {{ item.bt_potency_cbd || 0 }}%</div>
-            <div>price: ${{ item.price_point.prices[0].price}}</div>
-            <div>quantity remaining: {{ item.bt_remaining_quantity }}</div>
-            <div *ngIf="item.product_strain && item.product_strain.indica_pct">indica: {{ item.product_strain.indica_pct }}%</div>
-            <div *ngIf="item.product_strain && item.product_strain.sativa_pct">sativa: {{ item.product_strain.sativa_pct }}%</div>
-          <div *ngIf="item.product_strain && item.product_strain.strain_type">strain type: {{item.product_strain.strain_type}}</div>
--->
+  
